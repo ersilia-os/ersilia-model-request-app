@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.10.0",
+    "@prisma/client": "^6.16.3",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -24,6 +25,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "husky": "^9.1.7",
+    "prisma": "^6.16.3",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
