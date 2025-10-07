@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 import { Dropzone } from "@/components/ui/shadcn-io/dropzone";
 
@@ -53,7 +54,7 @@ export default function PublicationForm({ userName }: Props) {
             Hello {userName || "<UserName>"}
           </h1>
           <p className="text-sm text-gray-400 text-center mt-2">
-            Enter the publication name and attach your file below
+            Place link for your publication or attach your file below
           </p>
         </CardHeader>
 
@@ -61,10 +62,15 @@ export default function PublicationForm({ userName }: Props) {
           <CardContent className="space-y-4">
             <Input
               id="publication"
-              placeholder="Publication name ..."
+              placeholder={
+                file
+                  ? "Disabled — remove the file to insert a link"
+                  : "Insert link here"
+              }
               value={publication}
               onChange={(e) => setPublication(e.target.value)}
-              className="border-2 border-plum rounded-2xl focus:ring-2 focus:ring-plum/40 outline-none"
+              className="border-2 border-plum rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed"
+              disabled={!!file}
             />
 
             <div className="w-full">
@@ -74,7 +80,13 @@ export default function PublicationForm({ userName }: Props) {
                   "application/pdf": [".pdf"],
                 }}
                 maxFiles={1}
-                className="rounded-xl hover:bg-gray-200 p-16 transition-colors cursor-pointer"
+                disabled={!!publication}
+                className={cn(
+                  "rounded-xl p-16 transition-colors cursor-pointer border-2 border-dashed border-gray-300",
+                  publication
+                    ? "bg-gray-100 opacity-60 cursor-not-allowed"
+                    : "hover:bg-gray-100 active:bg-gray-200"
+                )}
               >
                 {file ? (
                   <div className="flex items-center justify-between w-full max-w-xs bg-white px-3 py-2 rounded-md shadow-sm border">
@@ -94,10 +106,21 @@ export default function PublicationForm({ userName }: Props) {
                   </div>
                 ) : (
                   <div className="text-center text-sm">
-                    <p className="text-gray-600 mb-1">
-                      Drag & drop your file here
+                    <p
+                      className={cn(
+                        "mb-1 transition-colors",
+                        publication ? "text-gray-400" : "text-gray-600"
+                      )}
+                    >
+                      {publication
+                        ? "Disabled — clear the link to upload a file"
+                        : "Drag & drop your file here"}
                     </p>
-                    <p className="text-gray-400 text-xs">or click to browse</p>
+                    {!publication && (
+                      <p className="text-gray-400 text-xs">
+                        or click to browse
+                      </p>
+                    )}
                   </div>
                 )}
               </Dropzone>
