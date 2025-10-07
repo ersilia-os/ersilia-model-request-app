@@ -72,7 +72,6 @@ export default function PublicationForm({ userName }: Props) {
                 onDrop={handleDrop}
                 accept={{
                   "application/pdf": [".pdf"],
-                  "application/msword": [".doc", ".docx"],
                 }}
                 maxFiles={1}
                 className="rounded-xl hover:bg-gray-200 p-16 transition-colors cursor-pointer"
