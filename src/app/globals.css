@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme {
+  --color-plum: #50285A;
+  --color-mint: #BEE6B4;
+}
