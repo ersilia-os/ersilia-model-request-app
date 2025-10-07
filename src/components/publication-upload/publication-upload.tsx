@@ -82,7 +82,7 @@ export default function PublicationForm({ userName }: Props) {
                 maxFiles={1}
                 disabled={!!publication}
                 className={cn(
-                  "rounded-xl p-16 transition-colors cursor-pointer border-2 border-dashed border-gray-300",
+                  "rounded-xl min-h-48 transition-colors cursor-pointer border-2 border-dashed border-gray-300",
                   publication
                     ? "bg-gray-100 opacity-60 cursor-not-allowed"
                     : "hover:bg-gray-100 active:bg-gray-200"
