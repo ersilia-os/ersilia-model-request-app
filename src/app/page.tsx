@@ -1,6 +1,6 @@
 import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
-import PublicationForm from "./publication-upload";
+import PublicationForm from "../components/ui/publication-upload/page";
 
 export default async function Home() {
   const session = await auth0.getSession();
