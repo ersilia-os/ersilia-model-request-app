@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default async function Header() {
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-white text-plum border-b-4 border-plum shadow-sm">
+    <header className="flex items-center justify-between px-10 sm:px-15 md:px-25 lg:px-35 py-4 bg-[#f5f4f6] text-plum shadow-sm">
       <Link href="/">
         <Image
           src="/images/ersilia_logo.png"
