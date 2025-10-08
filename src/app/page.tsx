@@ -1,6 +1,5 @@
 import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
-import PublicationForm from "../components/publication-upload/publication-upload";
 import { getOrCreateUser } from "./actions";
 import WelcomeScreen from "@/components/WelcomeScreen";
 
