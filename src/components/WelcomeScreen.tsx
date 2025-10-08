@@ -22,8 +22,8 @@ export default function WelcomeScreen({ userName }: Props) {
         </CardHeader>
 
         <CardContent className="space-y-3 p-0 flex flex-col items-center">
-          <Link href="/new-model/step/1">
-            <Button className="font-bold md:py-4 lg:py-5 text-sm md:text-base lg:text-lg bg-plum hover:bg-[#6f3b73] text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer mb-2">
+          <Link href="/new-model">
+            <Button className="font-bold md:py-4 lg:py-5 text-sm md:text-base lg:text-lg bg-plum hover:bg-plum-hover text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer mb-2">
               Add New Model
             </Button>
           </Link>
