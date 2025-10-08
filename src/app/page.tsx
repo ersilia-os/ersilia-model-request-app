@@ -2,6 +2,7 @@ import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
 import PublicationForm from "../components/publication-upload/publication-upload";
 import { getOrCreateUser } from "./actions";
+import WelcomeScreen from "@/components/WelcomeScreen";
 
 export default async function Home() {
   const session = await auth0.getSession();
@@ -16,7 +17,8 @@ export default async function Home() {
 
   return (
     <>
-      <PublicationForm userName={user.name} />
+      {/* <PublicationForm userName={user.name} /> */}
+      <WelcomeScreen userName={user.name} />
     </>
   );
 }
