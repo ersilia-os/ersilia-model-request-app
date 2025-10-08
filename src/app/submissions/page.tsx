@@ -4,9 +4,8 @@ import Link from "next/link";
 import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
-
-import SubmissionsList from "@/components/submissions/submissions-list";
-import SubmissionsLoading from "@/components/submissions/submissions-loading";
+import SubmissionsLoading from "@/components/submissions/SubmissionsLoading";
+import SubmissionsList from "@/components/submissions/SubmissionsList";
 
 export default async function SubmissionPage() {
   const session = await auth0.getSession();
