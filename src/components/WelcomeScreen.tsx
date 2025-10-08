@@ -29,7 +29,7 @@ export default function WelcomeScreen({ userName }: Props) {
           </Link>
 
           <Link href="/submissions">
-            <Button className="text-plum-500 md:py-4 lg:py-5 text-sm md:text-base lg:text-lg bg-transparent hover:bg-gray-100 border-2 border-plum-200 py-3 font-semibold rounded-lg shadow-sm cursor-pointer mb-4">
+            <Button className="text-plum-500 md:py-4 lg:py-5 text-sm md:text-base lg:text-lg bg-transparent hover:bg-gray-100 border-2 border-plum/20 py-3 font-semibold rounded-lg shadow-sm cursor-pointer mb-4">
               View Previous Submissions
             </Button>
           </Link>
