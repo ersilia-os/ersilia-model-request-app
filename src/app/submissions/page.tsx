@@ -33,7 +33,7 @@ export default async function SubmissionPage() {
             </Link>
 
             <Link href="/" className="w-full">
-              <Button className="w-full text-plum-500 text-sm md:text-base bg-transparent hover:plum/85 border-2 border-plum-200 py-3 font-semibold rounded-lg shadow-sm">
+              <Button className="w-full text-plum-500 text-sm md:text-base bg-transparent hover:bg-gray-100 border-2 border-plum-200 py-3 font-semibold rounded-lg shadow-sm">
                 Back to Home
               </Button>
             </Link>
