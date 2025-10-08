@@ -1,20 +1,23 @@
 import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
-import PublicationForm from "../components/publication-upload/publication-upload";
+import { getOrCreateUser } from "./actions";
+import WelcomeScreen from "@/components/WelcomeScreen";
 
 export default async function Home() {
   const session = await auth0.getSession();
 
-  console.log("🟥", session);
   if (!session) {
     redirect("/auth/login");
   }
 
-  const userName = session.user.name || session.user.nickname || "User";
+  const user = await getOrCreateUser(session.internal.sid, {
+    name: session.user.name || "User",
+  });
 
   return (
     <>
-      <PublicationForm userName={userName} />
+      {/* <PublicationForm userName={user.name} /> */}
+      <WelcomeScreen userName={user.name} />
     </>
   );
 }
