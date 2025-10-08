@@ -16,7 +16,7 @@ export default async function SubmissionPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white mt-6 mb-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white mx-6">
       <Card className="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-4xl shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <CardHeader className="text-center p-0 mb-6">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
@@ -33,7 +33,7 @@ export default async function SubmissionPage() {
             </Link>
 
             <Link href="/" className="w-full">
-              <Button className="w-full text-plum-500 text-sm md:text-base bg-transparent hover:bg-gray-100 border-2 border-plum-200 py-3 font-semibold rounded-lg shadow-sm">
+              <Button className="w-full text-plum-500 text-sm md:text-base bg-transparent hover:plum/85 border-2 border-plum-200 py-3 font-semibold rounded-lg shadow-sm">
                 Back to Home
               </Button>
             </Link>
