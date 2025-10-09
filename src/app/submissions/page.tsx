@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import SubmissionsLoading from "@/components/submissions/SubmissionsLoading";
 import SubmissionsList from "@/components/submissions/SubmissionsList";
+import { getSubmissionsByUser } from "./actions";
 
 export default async function SubmissionPage() {
   const session = await auth0.getSession();
@@ -14,8 +15,10 @@ export default async function SubmissionPage() {
     redirect("/auth/login");
   }
 
+  const submissionsData = getSubmissionsByUser(session.internal.sid);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-white my-10">
       <Card className="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-4xl shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <CardHeader className="text-center p-0 mb-6">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
@@ -25,7 +28,7 @@ export default async function SubmissionPage() {
             View your model submissions
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-3 mb-3">
-            <Link href="/new-model/step/1" className="w-full">
+            <Link href="/new-model" className="w-full">
               <Button className="w-full font-bold text-sm md:text-base bg-plum hover:bg-[#6f3b73] text-white px-6 py-3 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
                 Add New Model
               </Button>
@@ -41,10 +44,10 @@ export default async function SubmissionPage() {
 
         <CardContent className="p-0">
           <Suspense fallback={<SubmissionsLoading />}>
-            <SubmissionsList sid={session.internal.sid} />
+            <SubmissionsList data={submissionsData} />
           </Suspense>
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 }
