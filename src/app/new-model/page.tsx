@@ -6,15 +6,18 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PublicationInput from "@/components/new-model/PublicationInput";
 import FileDrop from "@/components/new-model/FileDrop";
+import { useRouter } from "next/navigation";
 
-export default function Page() {
+export default function NewModelPage() {
   const [publication, setPublication] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Submitting:", { publication, file });
-  };
+    router.push("new-model/processing");
+    };
 
   const handleDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) setFile(acceptedFiles[0]);
