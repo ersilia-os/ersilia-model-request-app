@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PublicationInput from "@/components/new-model/PublicationInput";
@@ -56,14 +52,16 @@ export default function Page() {
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
               <Button
                 asChild
-                className="w-full sm:flex-1 font-semibold text-sm md:text-base text-plum bg-transparent hover:bg-gray-100 border-2 border-plum/20 py-3 rounded-lg shadow-sm transition-all duration-200"
+                variant={"transparent"}
+                className="w-full sm:flex-1"
               >
                 <Link href="/">Back to Home</Link>
               </Button>
 
               <Button
                 type="submit"
-                className="w-full sm:flex-1 font-bold text-sm md:text-base bg-plum hover:bg-plum-hover text-white px-6 py-4 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+                variant={"plum"}
+                className="w-full sm:flex-1"
               >
                 Submit
               </Button>

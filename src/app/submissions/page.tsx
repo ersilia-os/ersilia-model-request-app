@@ -25,15 +25,15 @@ export default async function SubmissionPage() {
             View your model submissions
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-3 mb-3">
-            <Link href="/new-model/step/1" className="w-full">
-              <Button className="w-full font-bold text-sm md:text-base bg-plum hover:bg-[#6f3b73] text-white px-6 py-3 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
-                Add New Model
+            <Link href="/" className="w-full">
+              <Button variant={"transparent"} className="w-full">
+                Back to Home
               </Button>
             </Link>
 
-            <Link href="/" className="w-full">
-              <Button className="w-full text-plum-500 text-sm md:text-base bg-transparent hover:bg-gray-100 border-2 border-plum/20 py-3 font-semibold rounded-lg shadow-sm">
-                Back to Home
+            <Link href="/new-model" className="w-full">
+              <Button variant={"plum"} className="w-full">
+                Add New Model
               </Button>
             </Link>
           </div>
