@@ -12,7 +12,7 @@ import PublicationInput from "@/components/new-model/PublicationInput";
 import FileDrop from "@/components/new-model/FileDrop";
 import { useRouter } from "next/navigation";
 
-export default function Page() {
+export default function NewModelPage() {
   const [publication, setPublication] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const router = useRouter();
