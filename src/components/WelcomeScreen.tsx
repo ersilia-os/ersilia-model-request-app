@@ -9,7 +9,7 @@ interface Props {
 export default function WelcomeScreen({ userName }: Props) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-      <Card className="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
+      <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <CardHeader className="text-center p-0 mb-4">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
             Welcome to Ersilia!

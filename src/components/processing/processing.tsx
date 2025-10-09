@@ -13,8 +13,8 @@ import { Spinner } from "@/components/ui/spinner";
 
 export function SpinnerEmpty() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-      <Empty className="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl shadow-xl border-2 border-solid border-plum rounded-2xl p-6 md:p-8 lg:p-10">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white w-full">
+      <Empty className="w-full shadow-xl border-2 border-solid border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <div className="text-center p-0 mb-4">
           <EmptyHeader>
             <div className="flex justify-center mb-6">
@@ -22,7 +22,7 @@ export function SpinnerEmpty() {
                 <Spinner />
               </EmptyMedia>
             </div>
-            
+
             <EmptyTitle className="text-2xl md:text-3xl lg:text-4xl font-bold text-plum mb-3 md:mb-4">
               Processing your request
             </EmptyTitle>
