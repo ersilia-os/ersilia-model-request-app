@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import SubmissionsLoading from "@/components/submissions/SubmissionsLoading";
 import SubmissionsList from "@/components/submissions/SubmissionsList";
+import { getSubmissionsByUser } from "./actions";
 
 export default async function SubmissionPage() {
   const session = await auth0.getSession();
@@ -13,6 +14,8 @@ export default async function SubmissionPage() {
   if (!session) {
     redirect("/auth/login");
   }
+
+  const submissionsData = getSubmissionsByUser(session.internal.sid);
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-white my-10">
@@ -41,7 +44,7 @@ export default async function SubmissionPage() {
 
         <CardContent className="p-0">
           <Suspense fallback={<SubmissionsLoading />}>
-            <SubmissionsList sid={session.internal.sid} />
+            <SubmissionsList data={submissionsData} />
           </Suspense>
         </CardContent>
       </Card>
