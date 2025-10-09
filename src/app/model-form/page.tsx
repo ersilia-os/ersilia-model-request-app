@@ -1,4 +1,4 @@
-import ModelMetadataForm from "@/components/Model Form/modelform";
+import ModelMetadataForm from "@/components/model-form/modelform";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 export default function Page() {

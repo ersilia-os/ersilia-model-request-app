@@ -103,7 +103,12 @@ const exampleModel = {
   slug: "chemfh",
   description:
     "Random forest classifier designed to identify promiscuous compounds that show activity across multiple unrelated assays. Trained on 450,000 screening results from PubChem BioAssay with balanced positive and negative examples. Model demonstrates 88% precision and 85% recall in detecting frequent hitters, helping prioritize genuine drug candidates over non-specific binders in early drug discovery.",
-  tags: ["Drug-likeness", "Bioactivity profile", "Target identification", "ADME"],
+  tags: [
+    "Drug-likeness",
+    "Bioactivity profile",
+    "Target identification",
+    "ADME",
+  ],
   publication: "https://doi.org/10.1021/acs.jcim.4c00156",
   sourceCode: "https://github.com/rodriguez-lab/chemfh-detector",
   license: "Apache-2.0",
@@ -191,7 +196,6 @@ export default function ModelMetadataForm({
     }
 
     setSubmitError("");
-
   };
 
   return (
@@ -256,8 +260,6 @@ export default function ModelMetadataForm({
                       onClick={() => handleTagSelect(tag)}
                       disabled={disabled}
                       className="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-plum/10 disabled:cursor-not-allowed disabled:text-gray-400"
-                      role="option"
-                      aria-disabled={disabled}
                     >
                       {tag}
                       {disabled && <span className="text-xs">Added</span>}
