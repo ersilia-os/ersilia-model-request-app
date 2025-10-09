@@ -1,23 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PublicationInput from "@/components/new-model/PublicationInput";
 import FileDrop from "@/components/new-model/FileDrop";
+import { useRouter } from "next/navigation";
 
-export default function Page() {
+export default function NewModelPage() {
   const [publication, setPublication] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Submitting:", { publication, file });
+    router.push("new-model/processing");
   };
 
   const handleDrop = (acceptedFiles: File[]) => {
@@ -27,8 +26,8 @@ export default function Page() {
   const removeFile = () => setFile(null);
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
-      <Card className="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-4xl shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
+      <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <CardHeader className="text-center p-0 mb-6">
           <h1 className="text-2xl font-semibold text-center text-gray-800">
             Hello {"<UserName>"}
@@ -71,6 +70,6 @@ export default function Page() {
           </CardContent>
         </form>
       </Card>
-    </main>
+    </div>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import Header from "@/components/header";
+import Container from "@/components/ui/container";
 
 export const metadata: Metadata = {
   title: "Ersilia - Model Submission Platform",
@@ -17,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <Header />
-        {children}
+        <Container>{children}</Container>
       </body>
     </html>
   );

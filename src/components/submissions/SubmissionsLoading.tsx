@@ -1,10 +1,10 @@
 export default function SubmissionsLoading() {
   return (
     <div className="space-y-3 mb-6">
-      {[1, 2, 3].map((i) => (
+      {[1, 2, 3, 4, 5].map((i) => (
         <div
           key={i}
-          className="border-2 border-plum-200 rounded-lg p-4 animate-pulse"
+          className="border-2 border-plum/20 rounded-lg p-4 animate-pulse"
         >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
             <div className="flex-1">
