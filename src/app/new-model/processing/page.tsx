@@ -9,7 +9,7 @@ export default function ProcessingPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/new-model");
+      router.push("/new-model/model-form");
     }, 2000);
 
     return () => clearTimeout(timer);
