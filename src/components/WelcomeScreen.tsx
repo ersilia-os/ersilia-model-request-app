@@ -22,14 +22,14 @@ export default function WelcomeScreen({ userName }: Props) {
         </CardHeader>
 
         <CardContent className="space-y-3 p-0 flex flex-col items-center">
-          <Link href="/new-model">
-            <Button className="font-bold md:py-4 lg:py-5 text-sm md:text-base lg:text-lg bg-plum hover:bg-plum-hover text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer mb-2">
+          <Link href="/new-model" className="w-2/3">
+            <Button variant={"plum"} className="w-full">
               Add New Model
             </Button>
           </Link>
 
-          <Link href="/submissions">
-            <Button className="text-plum-500 md:py-4 lg:py-5 text-sm md:text-base lg:text-lg bg-transparent hover:bg-gray-100 border-2 border-plum/20 py-3 font-semibold rounded-lg shadow-sm cursor-pointer mb-4">
+          <Link href="/submissions" className="w-2/3">
+            <Button variant={"transparent"} className="w-full">
               View Previous Submissions
             </Button>
           </Link>

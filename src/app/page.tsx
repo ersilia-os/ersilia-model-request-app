@@ -16,7 +16,6 @@ export default async function Home() {
 
   return (
     <>
-      {/* <PublicationForm userName={user.name} /> */}
       <WelcomeScreen userName={user.name} />
     </>
   );
