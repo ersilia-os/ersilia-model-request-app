@@ -42,9 +42,9 @@ export default function FileDrop({
               e.stopPropagation();
               onRemoveFile();
             }}
-            className="p-1 h-auto"
+            className="p-1 h-auto hover:text-plum cursor-pointer"
           >
-            <X className="w-4 h-4 text-gray-500 hover:text-red-500" />
+            <X className="w-4 h-4" />
           </Button>
         </div>
       ) : (

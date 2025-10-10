@@ -35,11 +35,7 @@ export function SpinnerEmpty() {
         </div>
 
         <EmptyContent className="flex justify-center mt-4">
-          <Button
-            variant="outline"
-            size="lg"
-            className="text-plum border-2 border-plum/20 hover:bg-gray-100 text-sm md:text-base font-semibold rounded-lg shadow-sm transition-all duration-200"
-          >
+          <Button variant="transparent" size="lg">
             Cancel
           </Button>
         </EmptyContent>
