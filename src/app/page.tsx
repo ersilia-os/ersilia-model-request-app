@@ -10,13 +10,13 @@ export default async function Home() {
     redirect("/auth/login");
   }
 
-  const user = await getOrCreateUser(session.internal.sid, {
+  await getOrCreateUser(session.internal.sid, {
     name: session.user.name || "User",
   });
 
   return (
     <>
-      <WelcomeScreen userName={user.name} />
+      <WelcomeScreen />
     </>
   );
 }

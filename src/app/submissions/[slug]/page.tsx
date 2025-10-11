@@ -15,12 +15,6 @@ export async function generateMetadata(props: { params: Params }) {
 }
 
 export default async function SubmissionDetailsPage(props: { params: Params }) {
-  const session = await auth0.getSession();
-
-  if (!session) {
-    redirect("/auth/login");
-  }
-
   const params = await props.params;
   const slug = params.slug;
 
