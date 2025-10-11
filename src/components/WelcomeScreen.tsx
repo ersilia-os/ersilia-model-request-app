@@ -2,11 +2,7 @@ import Link from "next/link";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-interface Props {
-  userName?: string;
-}
-
-export default function WelcomeScreen({ userName }: Props) {
+export default function WelcomeScreen() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
       <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
