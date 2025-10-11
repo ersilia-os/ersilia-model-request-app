@@ -3,8 +3,6 @@ import { getSubmissionBySlug } from "./actions";
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { auth0 } from "@/lib/auth0";
-import { redirect } from "next/navigation";
 
 type Params = Promise<{ slug: string }>;
 
