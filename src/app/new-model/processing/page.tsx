@@ -9,7 +9,13 @@ export default function ProcessingPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/new-model/model-form");
+      const report = sessionStorage.getItem("generatedReport");
+
+      if (report) {
+        router.push("/new-model/model-form");
+      } else {
+        router.push("/new-model");
+      }
     }, 2000);
 
     return () => clearTimeout(timer);
