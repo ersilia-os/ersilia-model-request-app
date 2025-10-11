@@ -3,8 +3,6 @@ import { getSubmissionBySlug } from "./actions";
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { auth0 } from "@/lib/auth0";
-import { redirect } from "next/navigation";
 
 type Params = Promise<{ slug: string }>;
 
@@ -15,12 +13,6 @@ export async function generateMetadata(props: { params: Params }) {
 }
 
 export default async function SubmissionDetailsPage(props: { params: Params }) {
-  const session = await auth0.getSession();
-
-  if (!session) {
-    redirect("/auth/login");
-  }
-
   const params = await props.params;
   const slug = params.slug;
 
