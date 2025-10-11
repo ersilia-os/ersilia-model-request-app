@@ -54,10 +54,10 @@ export default function NewModelPage() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
       <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <CardHeader className="text-center p-0 mb-6">
-          <h1 className="text-2xl font-semibold text-center text-gray-800">
-            Hello {"<UserName>"}
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
+            Add New Model to Ersilia
           </h1>
-          <p className="text-sm text-gray-400 text-center mt-2">
+          <p className="text-center text-gray-400 text-sm md:text-base lg:text-lg mb-2">
             Place link for your publication or attach your file below
           </p>
         </CardHeader>
