@@ -11,19 +11,44 @@ import { useRouter } from "next/navigation";
 export default function NewModelPage() {
   const [publication, setPublication] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function uploadPdf(file: File) {
+    const fd = new FormData();
+    fd.append("file", file);
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const data = await res.json();
+      console.log("Upload response:", res.status, data);
+
+      if (!res.ok) throw new Error(data.error || "Upload failed");
+
+      sessionStorage.setItem("generatedReport", data.report);
+
+      router.push("/new-model/processing");
+    } catch (err) {
+      console.error(err);
+      alert("⚠️ Error generating report. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitting:", { publication, file });
-    router.push("new-model/processing");
-  };
 
-  const handleDrop = (acceptedFiles: File[]) => {
-    if (acceptedFiles.length > 0) setFile(acceptedFiles[0]);
+    if (file) {
+      await uploadPdf(file);
+    } else if (publication) {
+      console.log("Handle publication link:", publication);
+    } else {
+      alert("Please upload a PDF or provide a publication link.");
+    }
   };
-
-  const removeFile = () => setFile(null);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
@@ -48,14 +73,14 @@ export default function NewModelPage() {
             <FileDrop
               file={file}
               publication={publication}
-              onDrop={handleDrop}
-              onRemoveFile={removeFile}
+              onDrop={(acceptedFiles) => setFile(acceptedFiles[0])}
+              onRemoveFile={() => setFile(null)}
             />
 
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
               <Button
                 asChild
-                variant={"transparent"}
+                variant="transparent"
                 className="w-full sm:flex-1"
               >
                 <Link href="/">Back to Home</Link>
@@ -63,10 +88,11 @@ export default function NewModelPage() {
 
               <Button
                 type="submit"
-                variant={"plum"}
+                variant="plum"
+                disabled={isLoading || (!file && !publication)}
                 className="w-full sm:flex-1"
               >
-                Submit
+                {isLoading ? "Uploading..." : "Submit"}
               </Button>
             </div>
           </CardContent>
