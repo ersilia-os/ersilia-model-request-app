@@ -118,18 +118,40 @@ const MAX_TAGS = 5;
 
 type ModelMetadataFormProps = {
   identifier?: string;
+  report?: string | null;
 };
 
 export default function ModelMetadataForm({
   identifier = String(exampleModel.id),
+  report = null,
 }: ModelMetadataFormProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>(exampleModel.tags);
   const [tagError, setTagError] = useState("");
   const [submitError, setSubmitError] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [prefill, setPrefill] = useState({
+    title: "",
+    slug: "",
+    description: "",
+  });
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const selectDisabled = selectedTags.length >= MAX_TAGS;
+
+  useEffect(() => {
+    if (report) {
+      const titleMatch = report.match(/- Title:\s*(.*)/i);
+      const descriptionMatch = report.match(/# Summary\s*\n([\s\S]*?)\n#/i);
+      const slugMatch = report.match(/- Suggested slug:\s*(.*)/i);
+
+      setPrefill({
+        title: titleMatch?.[1]?.trim() || "",
+        description: descriptionMatch?.[1]?.trim() || "",
+        slug: slugMatch?.[1]?.trim() || "",
+      });
+    }
+  }, [report]);
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -220,7 +242,7 @@ export default function ModelMetadataForm({
         <input
           id="slug"
           name="slug"
-          defaultValue={exampleModel.slug}
+          defaultValue={prefill.slug || exampleModel.slug}
           className="mt-1 w-full rounded border px-3 py-2"
         />
       </div>
@@ -305,7 +327,7 @@ export default function ModelMetadataForm({
         <input
           id="title"
           name="title"
-          defaultValue={exampleModel.title}
+          defaultValue={prefill.title || exampleModel.title}
           className="mt-1 w-full rounded border px-3 py-2"
         />
       </div>
@@ -317,7 +339,7 @@ export default function ModelMetadataForm({
         <textarea
           id="description"
           name="description"
-          defaultValue={exampleModel.description}
+          defaultValue={prefill.description || exampleModel.description}
           className="mt-1 h-32 w-full rounded border px-3 py-2"
         />
       </div>
