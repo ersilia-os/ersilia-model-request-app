@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   Field,
   FieldDescription,
@@ -24,11 +24,21 @@ export default function ModelForm2() {
     defaultValues: {
       title: "",
       slug: "",
+      description: "",
+      interpretation: "",
     },
   });
+
+  function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
+    console.log(data);
+  }
   return (
     <>
-      <form id="form-metadata" className="mb-6">
+      <form
+        id="form-metadata"
+        className="mb-6"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FieldGroup>
           {/* section 1 */}
           <FieldSet>
@@ -41,20 +51,48 @@ export default function ModelForm2() {
             </FieldDescription>
             <FieldGroup>
               <div className="grid grid-cols-2 gap-2">
-                <Field orientation="horizontal">
-                  <FieldLabel className="text-plum/85">Title</FieldLabel>
-                  <Input
-                    className="focus-visible:border-plum"
-                    placeholder="Enter a title"
-                  />
-                </Field>
-                <Field orientation="horizontal">
-                  <FieldLabel className="text-plum/85">Slug</FieldLabel>
-                  <Input
-                    placeholder="Enter a slug"
-                    className="focus-visible:border-plum"
-                  />
-                </Field>
+                <Controller
+                  name="title"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalide={fieldState.invalid}>
+                      <FieldLabel htmlFor={field.name} className="text-plum/85">
+                        Title
+                      </FieldLabel>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        aria-invalid={fieldState.invalid}
+                        className="focus-visible:border-plum"
+                        placeholder="Model title (minimum 70 characters)"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+                <Controller
+                  name="slug"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalide={fieldState.invalid}>
+                      <FieldLabel htmlFor={field.name} className="text-plum/85">
+                        Slug
+                      </FieldLabel>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        aria-invalid={fieldState.invalid}
+                        className="focus-visible:border-plum"
+                        placeholder="e.g. model-name-slug"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
               </div>
             </FieldGroup>
           </FieldSet>
@@ -70,14 +108,48 @@ export default function ModelForm2() {
               methodology, and how to interpret its predictions.
             </FieldDescription>
             <FieldGroup>
-              <Field>
-                <FieldLabel className="text-plum/85">Description</FieldLabel>
-                <Textarea />
-              </Field>
-              <Field>
-                <FieldLabel className="text-plum/85">Interpretation</FieldLabel>
-                <Textarea />
-              </Field>
+              <Controller
+                name="description"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalide={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name} className="text-plum/85">
+                      Description
+                    </FieldLabel>
+                    <Textarea
+                      {...field}
+                      id={field.name}
+                      aria-invalid={fieldState.invalid}
+                      className="focus-visible:border-plum"
+                      placeholder="Minimum information about model type, results and the training dataset."
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="interpretation"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalide={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name} className="text-plum/85">
+                      Interpretation
+                    </FieldLabel>
+                    <Textarea
+                      {...field}
+                      id={field.name}
+                      aria-invalid={fieldState.invalid}
+                      className="focus-visible:border-plum"
+                      placeholder="A brief description of how to interpret the model results"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
             </FieldGroup>
           </FieldSet>
           <FieldSeparator />
@@ -148,7 +220,7 @@ export default function ModelForm2() {
       </form>
       <Field orientation="horizontal">
         <Button variant="plum" type="submit" form="form-metadata">
-          Save Preferences
+          Save
         </Button>
         <Button type="button" variant="outline" onClick={() => form.reset()}>
           Reset

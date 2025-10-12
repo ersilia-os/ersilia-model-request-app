@@ -13,4 +13,15 @@ export const MetadataFormSchema = z.object({
       message:
         "Slug must be lowercase, alphanumeric, and hyphens only. It cannot start or end with a hyphen, or contain consecutive hyphens.",
     }),
+  description: z
+    .string()
+    .trim()
+    .min(200, "Please provide a description about the model"),
+  interpretation: z
+    .string()
+    .trim()
+    .min(
+      1,
+      "Please provide a description of how to interpret the model results."
+    ),
 });
