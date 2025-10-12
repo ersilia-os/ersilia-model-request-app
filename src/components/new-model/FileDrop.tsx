@@ -38,6 +38,7 @@ export default function FileDrop({
             type="button"
             variant="ghost"
             size="sm"
+            asChild
             onClick={(e) => {
               e.stopPropagation();
               onRemoveFile();
