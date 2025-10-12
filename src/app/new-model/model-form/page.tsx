@@ -1,4 +1,5 @@
 import ModelMetadataForm from "@/components/model-form/modelform";
+import ModelForm2 from "@/components/model-form/ModelForm2";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 export default function ModelFormPage() {
@@ -16,7 +17,8 @@ export default function ModelFormPage() {
         </CardHeader>
 
         <CardContent className="p-0">
-          <ModelMetadataForm />
+          {/* <ModelMetadataForm /> */}
+          <ModelForm2 />
         </CardContent>
       </Card>
     </main>
