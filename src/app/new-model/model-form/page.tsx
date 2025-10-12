@@ -18,6 +18,7 @@ export default function Page() {
   }, []);
 
   if (!report) return null;
+  console.log(report);
 
   return (
     <main className="flex min-h-screen items-center justify-center py-10">
@@ -33,7 +34,8 @@ export default function Page() {
         </CardHeader>
 
         <CardContent className="p-0">
-          <ModelMetadataForm report={report} />
+          {/* <ModelMetadataForm report={report} /> */}
+          <ModelForm2 />
         </CardContent>
       </Card>
     </main>
