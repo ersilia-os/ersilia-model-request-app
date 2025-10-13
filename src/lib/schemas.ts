@@ -32,6 +32,9 @@ export const MetadataFormSchema = z.object({
   input: z.string().min(1, {
     message: "Please select one input.",
   }),
+  status: z.string().min(1, {
+    message: "Please select one input.",
+  }),
   input_dimension: z
     .string()
     .min(1, { message: "Please enter the input dimension of the model." }),
@@ -56,7 +59,7 @@ export const MetadataFormSchema = z.object({
   }),
   publication_year: z
     .string()
-    .min(1, { message: "Please provide the year of the publication." })
+    .min(4, { message: "Please provide the year of the publication." })
     .refine(
       (val) => {
         const num = Number(val);
@@ -70,4 +73,19 @@ export const MetadataFormSchema = z.object({
   publication_type: z.string().min(1, {
     message: "Please select one publication type",
   }),
+  source_type: z.string().min(1, {
+    message: "Please select one source type",
+  }),
+  deployment: z.string().min(1, {
+    message: "Please select one source deployment type",
+  }),
+  license: z.string().min(1, {
+    message: "Please select one license",
+  }),
+  biomedical_area: z
+    .array(z.string())
+    .min(1, { message: "Please provide at least one area." }),
+  target_organism: z
+    .array(z.string())
+    .min(1, { message: "Please provide at least one target." }),
 });

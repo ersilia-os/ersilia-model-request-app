@@ -37,13 +37,14 @@ export default function ModelForm2() {
     defaultValues: {
       title: "",
       slug: "",
+      status: METADATA_FORM_CFG.status[0].value,
       description: "",
       interpretation: "",
       tags: [],
       task: "",
       subtask: "",
       input: METADATA_FORM_CFG.inputs[0].value,
-      input_dimension: "1",
+      input_dimension: METADATA_FORM_CFG.inputDimension,
       output: [],
       output_dimension: "",
       output_consistency: "",
@@ -51,6 +52,11 @@ export default function ModelForm2() {
       publication_year: "",
       publication_type: "",
       source_url: "",
+      source_type: "",
+      deployment: "",
+      biomedical_area: [],
+      target_organism: [],
+      license: "",
     },
   });
 
@@ -122,6 +128,47 @@ export default function ModelForm2() {
                   )}
                 />
               </div>
+            </FieldGroup>
+            <FieldGroup>
+              <Controller
+                name="status"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <FieldSet data-invalid={fieldState.invalid}>
+                    <FieldTitle className="text-plum/85">Status</FieldTitle>
+                    <RadioGroup
+                      name={field.name}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      aria-invalid={fieldState.invalid}
+                      disabled
+                    >
+                      {METADATA_FORM_CFG.status.map((item) => (
+                        <Field
+                          key={item.value}
+                          orientation="horizontal"
+                          data-invalid={fieldState.invalid}
+                        >
+                          <RadioGroupItem
+                            value={item.value}
+                            id={`form-metadata-radio-${item.value}`}
+                            aria-invalid={fieldState.invalid}
+                          />
+                          <FieldLabel
+                            htmlFor={`form-metadata-radio-${item.value}`}
+                            className="font-normal text-gray-700"
+                          >
+                            {item.label}
+                          </FieldLabel>
+                        </Field>
+                      ))}
+                    </RadioGroup>
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </FieldSet>
+                )}
+              />
             </FieldGroup>
           </FieldSet>
           <FieldSeparator />
@@ -501,7 +548,7 @@ export default function ModelForm2() {
               authorship information.
             </FieldDescription>
             <FieldGroup>
-              <div className="grid grid-cols-[50%_30%_20%] gap-4">
+              <div className="grid grid-cols-[50%_30%_auto] gap-1">
                 <Controller
                   name="publication_url"
                   control={form.control}
@@ -551,7 +598,7 @@ export default function ModelForm2() {
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
                       <FieldLabel
-                        htmlFor="form-metadata-select-pub"
+                        htmlFor="form-metadata-select-pubtype"
                         className="text-plum/85"
                       >
                         Publication type
@@ -562,11 +609,11 @@ export default function ModelForm2() {
                         onValueChange={field.onChange}
                       >
                         <SelectTrigger
-                          id="form-metadata-select-pub"
+                          id="form-metadata-select-pubtype"
                           aria-invalid={fieldState.invalid}
                           className="min-w-[120px]"
                         >
-                          <SelectValue placeholder="Select" />
+                          <SelectValue placeholder="Select a type" />
                         </SelectTrigger>
                         <SelectContent position="item-aligned">
                           {METADATA_FORM_CFG.publicationType.map((type) => (
@@ -585,20 +632,201 @@ export default function ModelForm2() {
               </div>
             </FieldGroup>
             <FieldGroup>
+              <div className="grid grid-cols-2 gap-4">
+                <Controller
+                  name="source_url"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor={field.name} className="text-plum/85">
+                        Source code URL
+                      </FieldLabel>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        aria-invalid={fieldState.invalid}
+                        className="focus-visible:border-plum"
+                        placeholder="Enter a link to the source code"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+                <Controller
+                  name="source_type"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel
+                        htmlFor="form-metadata-select-source"
+                        className="text-plum/85"
+                      >
+                        Source type
+                      </FieldLabel>
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger
+                          id="form-metadata-select-source"
+                          aria-invalid={fieldState.invalid}
+                          className="min-w-[120px]"
+                        >
+                          <SelectValue placeholder="Select a source type" />
+                        </SelectTrigger>
+                        <SelectContent position="item-aligned">
+                          {METADATA_FORM_CFG.sourceType.map((type) => (
+                            <SelectItem key={type.value} value={type.value}>
+                              {type.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+              </div>
+            </FieldGroup>
+            <FieldGroup>
+              <div className="grid grid-cols-2 gap-4">
+                <Controller
+                  name="license"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel
+                        htmlFor="form-metadata-select-lic"
+                        className="text-plum/85"
+                      >
+                        License
+                      </FieldLabel>
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger
+                          id="form-metadata-select-lic"
+                          aria-invalid={fieldState.invalid}
+                          className="min-w-[120px]"
+                        >
+                          <SelectValue placeholder="Select a license" />
+                        </SelectTrigger>
+                        <SelectContent position="item-aligned">
+                          {METADATA_FORM_CFG.licenses.map((type) => (
+                            <SelectItem key={type.value} value={type.value}>
+                              {type.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+                <Controller
+                  name="deployment"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel
+                        htmlFor="form-metadata-select-dep"
+                        className="text-plum/85"
+                      >
+                        Deployment
+                      </FieldLabel>
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger
+                          id="form-metadata-select-dep"
+                          aria-invalid={fieldState.invalid}
+                          className="min-w-[120px]"
+                        >
+                          <SelectValue placeholder="Select a deployment" />
+                        </SelectTrigger>
+                        <SelectContent position="item-aligned">
+                          {METADATA_FORM_CFG.deployment.map((type) => (
+                            <SelectItem key={type.value} value={type.value}>
+                              {type.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+              </div>
+            </FieldGroup>
+          </FieldSet>
+          <FieldSeparator />
+          {/* section 6 */}
+          <FieldSet>
+            <FieldLegend className="text-plum/90">Research Context</FieldLegend>
+            <FieldDescription className="text-gray-400">
+              Scientific domain and target organism information. Categorize the
+              biomedical research area and specify which organisms (pathogens,
+              hosts, or general applicability) the model relates to.
+            </FieldDescription>
+            <FieldGroup>
               <Controller
-                name="source_url"
+                name="biomedical_area"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel htmlFor={field.name} className="text-plum/85">
-                      Source code URL
+                      Biomedical area
                     </FieldLabel>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      aria-invalid={fieldState.invalid}
-                      className="focus-visible:border-plum"
-                      placeholder="Enter a link to the source code"
+                    <MultiSelect
+                      hideSelectAll
+                      maxCount={4}
+                      options={METADATA_FORM_CFG.biomedicalArea}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      placeholder="Select areas..."
+                      className={cn(
+                        fieldState.invalid &&
+                          "border-red-500 focus-visible:border-red-500"
+                      )}
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              <Controller
+                name="target_organism"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name} className="text-plum/85">
+                      Target organism
+                    </FieldLabel>
+                    <MultiSelect
+                      hideSelectAll
+                      maxCount={4}
+                      options={METADATA_FORM_CFG.biomedicalArea}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      placeholder="Select targets..."
+                      className={cn(
+                        fieldState.invalid &&
+                          "border-red-500 focus-visible:border-red-500"
+                      )}
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -607,30 +835,6 @@ export default function ModelForm2() {
                 )}
               />
             </FieldGroup>
-          </FieldSet>
-          <FieldSeparator />
-          {/* section 6 */}
-          <FieldSet>
-            <FieldLegend className="text-plum/90">
-              Deployment & Access
-            </FieldLegend>
-            <FieldDescription className="text-gray-400">
-              Specify how and where the model can be run. Indicate whether the
-              model executes locally on user machines, on Ersilia servers, or on
-              external third-party servers.
-            </FieldDescription>
-            <FieldGroup></FieldGroup>
-          </FieldSet>
-          <FieldSeparator />
-          {/* section 7 */}
-          <FieldSet>
-            <FieldLegend className="text-plum/90">Research Context</FieldLegend>
-            <FieldDescription className="text-gray-400">
-              Scientific domain and target organism information. Categorize the
-              biomedical research area and specify which organisms (pathogens,
-              hosts, or general applicability) the model relates to.
-            </FieldDescription>
-            <FieldGroup></FieldGroup>
           </FieldSet>
           <FieldSeparator />
         </FieldGroup>
