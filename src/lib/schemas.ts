@@ -26,4 +26,7 @@ export const MetadataFormSchema = z.object({
   task: z.string().min(1, {
     message: "Please select one task",
   }),
+  subtask: z.string().min(1, {
+    message: "Please select one task",
+  }),
 });
