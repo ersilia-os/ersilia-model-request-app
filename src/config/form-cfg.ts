@@ -148,10 +148,24 @@ export const METADATA_FORM_CFG = {
     { value: "Antifungal activity", label: "Antifungal activity" },
     { value: "Frequent hitter", label: "Frequent hitter" },
   ],
-  deployment: ["Local", "Online"],
-  publicationType: ["Peer reviewed", "Preprint", "Other"],
-  source: ["Local", "Online"],
-  sourceType: ["External", "Replicated", "Internal"],
+  deployment: [
+    { value: "Local", label: "Local" },
+    { value: "Online", label: "Online" },
+  ],
+  publicationType: [
+    { value: "Peer reviewed", label: "Peer reviewed" },
+    { value: "Preprint", label: "Preprint" },
+    { value: "Other", label: "Other" },
+  ],
+  source: [
+    { value: "Online", label: "Online" },
+    { value: "Local", label: "Local" },
+  ],
+  sourceType: [
+    { value: "External", label: "External" },
+    { value: "Replicated", label: "Replicated" },
+    { value: "Internal", label: "Internal" },
+  ],
   targetOrganism: [
     "Homo sapiens",
     "Mus musculus",

@@ -22,6 +22,14 @@ import { METADATA_FORM_CFG } from "@/config/form-cfg";
 import { MultiSelect } from "../multi-select";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
+import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export default function ModelForm2() {
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
@@ -38,6 +46,11 @@ export default function ModelForm2() {
       input_dimension: "1",
       output: [],
       output_dimension: "",
+      output_consistency: "",
+      publication_url: "",
+      publication_year: "",
+      publication_type: "",
+      source_url: "",
     },
   });
 
@@ -194,6 +207,10 @@ export default function ModelForm2() {
                       value={field.value}
                       onValueChange={field.onChange}
                       placeholder="Select tags..."
+                      className={cn(
+                        fieldState.invalid &&
+                          "border-red-500 focus-visible:border-red-500"
+                      )}
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -427,6 +444,47 @@ export default function ModelForm2() {
                       </Field>
                     )}
                   />
+
+                  <Controller
+                    name="output_consistency"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <FieldSet data-invalid={fieldState.invalid}>
+                        <FieldTitle className="text-plum/85">
+                          Output consistency
+                        </FieldTitle>
+                        <RadioGroup
+                          name={field.name}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          aria-invalid={fieldState.invalid}
+                        >
+                          {METADATA_FORM_CFG.outputConsistencys.map((item) => (
+                            <Field
+                              key={item.value}
+                              orientation="horizontal"
+                              data-invalid={fieldState.invalid}
+                            >
+                              <RadioGroupItem
+                                value={item.value}
+                                id={`form-metadata-radio-${item.value}`}
+                                aria-invalid={fieldState.invalid}
+                              />
+                              <FieldLabel
+                                htmlFor={`form-metadata-radio-${item.value}`}
+                                className="font-normal text-gray-700"
+                              >
+                                {item.label}
+                              </FieldLabel>
+                            </Field>
+                          ))}
+                        </RadioGroup>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </FieldSet>
+                    )}
+                  />
                 </FieldGroup>
               </div>
             </FieldGroup>
@@ -442,7 +500,113 @@ export default function ModelForm2() {
               publication and code repository, along with licensing details and
               authorship information.
             </FieldDescription>
-            <FieldGroup></FieldGroup>
+            <FieldGroup>
+              <div className="grid grid-cols-[50%_30%_20%] gap-4">
+                <Controller
+                  name="publication_url"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor={field.name} className="text-plum/85">
+                        Publication URL
+                      </FieldLabel>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        aria-invalid={fieldState.invalid}
+                        className="focus-visible:border-plum"
+                        placeholder="Enter the publication URL"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                <Controller
+                  name="publication_year"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor={field.name} className="text-plum/85">
+                        Publication year
+                      </FieldLabel>
+                      <Input
+                        {...field}
+                        id={field.name}
+                        aria-invalid={fieldState.invalid}
+                        className="focus-visible:border-plum"
+                        placeholder="Enter publication year"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+                <Controller
+                  name="publication_type"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel
+                        htmlFor="form-metadata-select-pub"
+                        className="text-plum/85"
+                      >
+                        Publication type
+                      </FieldLabel>
+                      <Select
+                        name={field.name}
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger
+                          id="form-metadata-select-pub"
+                          aria-invalid={fieldState.invalid}
+                          className="min-w-[120px]"
+                        >
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent position="item-aligned">
+                          {METADATA_FORM_CFG.publicationType.map((type) => (
+                            <SelectItem key={type.value} value={type.value}>
+                              {type.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+              </div>
+            </FieldGroup>
+            <FieldGroup>
+              <Controller
+                name="source_url"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name} className="text-plum/85">
+                      Source code URL
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      aria-invalid={fieldState.invalid}
+                      className="focus-visible:border-plum"
+                      placeholder="Enter a link to the source code"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            </FieldGroup>
           </FieldSet>
           <FieldSeparator />
           {/* section 6 */}
