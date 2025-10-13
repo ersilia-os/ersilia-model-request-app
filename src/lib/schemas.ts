@@ -30,6 +30,10 @@ export const MetadataFormSchema = z.object({
     message: "Please select one subtask",
   }),
   input: z.string().min(1, {
-    message: "Please select one subtask",
+    message: "Please select one input",
   }),
+  input_dimension: z.number(),
+  output: z.array(
+    z.string().min(1, { message: "Please select at least one output" })
+  ),
 });

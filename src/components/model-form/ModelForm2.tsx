@@ -23,6 +23,7 @@ import { METADATA_FORM_CFG } from "@/config/form-cfg";
 import { MultiSelect } from "../multi-select";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { cn } from "@/lib/utils";
+import { Checkbox } from "../ui/checkbox";
 
 export default function ModelForm2() {
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
@@ -36,6 +37,8 @@ export default function ModelForm2() {
       task: "",
       subtask: "",
       input: METADATA_FORM_CFG.inputs[0].value,
+      input_dimension: 1,
+      output: [],
     },
   });
 
@@ -220,7 +223,7 @@ export default function ModelForm2() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <FieldSet data-invalid={fieldState.invalid}>
-                        <FieldLabel className="text-plum/85">Tasks</FieldLabel>
+                        <FieldTitle className="text-plum/85">Task</FieldTitle>
                         <RadioGroup
                           name={field.name}
                           value={field.value}
@@ -258,9 +261,9 @@ export default function ModelForm2() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <FieldSet data-invalid={fieldState.invalid}>
-                        <FieldLabel className="text-plum/85">
-                          Subtasks
-                        </FieldLabel>
+                        <FieldTitle className="text-plum/85">
+                          Subtask
+                        </FieldTitle>
                         <RadioGroup
                           name={field.name}
                           value={field.value}
@@ -298,7 +301,7 @@ export default function ModelForm2() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <FieldSet data-invalid={fieldState.invalid}>
-                        <FieldLabel className="text-plum/85">Input</FieldLabel>
+                        <FieldTitle className="text-plum/85">Input</FieldTitle>
                         <RadioGroup
                           name={field.name}
                           value={field.value}
@@ -326,6 +329,75 @@ export default function ModelForm2() {
                             </Field>
                           ))}
                         </RadioGroup>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </FieldSet>
+                    )}
+                  />
+                  <Controller
+                    name="input_dimension"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel
+                          htmlFor={field.name}
+                          className="text-plum/85"
+                        >
+                          Input Dimension
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          id={field.name}
+                          aria-invalid={fieldState.invalid}
+                          className="focus-visible:border-plum"
+                          placeholder="Model title (minimum 70 characters)"
+                          disabled
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                </FieldGroup>
+                <FieldGroup>
+                  <Controller
+                    name="output"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <FieldSet>
+                        <FieldTitle className="text-plum/85">Output</FieldTitle>
+                        <FieldGroup data-slot="checkbox-group">
+                          {METADATA_FORM_CFG.outputs.map((output) => (
+                            <Field
+                              key={output.value}
+                              orientation="horizontal"
+                              data-invalid={fieldState.invalid}
+                            >
+                              <Checkbox
+                                id={`form-metadata-checkbox-${output.value}`}
+                                name={field.name}
+                                aria-invalid={fieldState.invalid}
+                                checked={field.value.includes(output.value)}
+                                onCheckedChange={(checked) => {
+                                  const newValue = checked
+                                    ? [...field.value, output.value]
+                                    : field.value.filter(
+                                        (value) => value !== output.value
+                                      );
+                                  field.onChange(newValue);
+                                }}
+                              />
+                              <FieldLabel
+                                htmlFor={`form-metadata-checkbox-${output.value}`}
+                                className="font-normal text-gray-700"
+                              >
+                                {output.label}
+                              </FieldLabel>
+                            </Field>
+                          ))}
+                        </FieldGroup>
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
