@@ -1,5 +1,9 @@
 export const METADATA_FORM_CFG = {
-  tasks: ["Representation", "Annotation", "Sampling"],
+  tasks: [
+    { value: "Representation", label: "Representation" },
+    { value: "Annotation", label: "Annotation" },
+    { value: "Sampling", label: "Sampling" },
+  ],
   biomedicalArea: [
     "Any",
     "ADMET",
@@ -19,18 +23,29 @@ export const METADATA_FORM_CFG = {
     "Leprosy",
   ],
   subTasks: [
-    "Featurization",
-    "Projection",
-    "Property calculation or prediction",
-    "Activity prediction",
-    "Similarity search",
-    "Generation",
+    { value: "Featurization", label: "Featurization" },
+    { value: "Projection", label: "Projection" },
+    {
+      value: "Property calculation or prediction",
+      label: "Property calculation or prediction",
+    },
+    { value: "Activity prediction", label: "Activity prediction" },
+    { value: "Similarity search", label: "Similarity search" },
+    { value: "Generation", label: "Generation" },
   ],
-  input: "Compound",
+  inputs: [{ value: "Compound", label: "Compound" }],
   inputDimension: 1,
-  output: ["Compound", "Score", "Value", "Text"],
-  outputConsistency: ["Fixed", "Variable"],
-  license: [
+  outputs: [
+    { value: "Compound", label: "Compound" },
+    { value: "Score", label: "Score" },
+    { value: "Value", label: "Value" },
+    { value: "Text", label: "Text" },
+  ],
+  outputConsistencys: [
+    { value: "Fixed", label: "Fixed" },
+    { value: "Variable", label: "Variable" },
+  ],
+  licenses: [
     "MIT",
     "GPL-3.0-only",
     "GPL-3.0-or-later",

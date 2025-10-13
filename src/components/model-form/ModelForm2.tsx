@@ -35,10 +35,13 @@ export default function ModelForm2() {
       tags: [],
       task: "",
       subtask: "",
+      input: METADATA_FORM_CFG.inputs[0].value,
     },
   });
 
   function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
+    console.log("hey");
+
     console.log(data);
   }
 
@@ -211,14 +214,13 @@ export default function ModelForm2() {
             </FieldDescription>
             <FieldGroup>
               <div className="grid grid-cols-2 gap-4">
-                <FieldSet>
+                <FieldGroup>
                   <Controller
                     name="task"
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <FieldSet data-invalid={fieldState.invalid}>
-                        <FieldLabel className="text-plum">Task</FieldLabel>
-
+                        <FieldLabel className="text-plum/85">Tasks</FieldLabel>
                         <RadioGroup
                           name={field.name}
                           value={field.value}
@@ -226,29 +228,23 @@ export default function ModelForm2() {
                           aria-invalid={fieldState.invalid}
                         >
                           {METADATA_FORM_CFG.tasks.map((task) => (
-                            <FieldLabel
-                              className={cn(
-                                "text-gray-700 transition-colors rounded-md",
-
-                                "has-[:checked]:!bg-plum/20 has-[:checked]:text-plum has-[:checked]:border-plum/80"
-                              )}
-                              key={task}
-                              htmlFor={`form-rhf-radiogroup-${task}`}
+                            <Field
+                              key={task.value}
+                              orientation="horizontal"
+                              data-invalid={fieldState.invalid}
                             >
-                              <Field
-                                orientation="horizontal"
-                                data-invalid={fieldState.invalid}
+                              <RadioGroupItem
+                                value={task.value}
+                                id={`form-metadata-radio-${task.value}`}
+                                aria-invalid={fieldState.invalid}
+                              />
+                              <FieldLabel
+                                htmlFor={`form-metadata-radio-${task.value}`}
+                                className="font-normal text-gray-700"
                               >
-                                <FieldContent>
-                                  <FieldTitle>{task}</FieldTitle>
-                                </FieldContent>
-                                <RadioGroupItem
-                                  value={task}
-                                  id={`metadata-form-radiogroup-${task}`}
-                                  aria-invalid={fieldState.invalid}
-                                />
-                              </Field>
-                            </FieldLabel>
+                                {task.label}
+                              </FieldLabel>
+                            </Field>
                           ))}
                         </RadioGroup>
                         {fieldState.invalid && (
@@ -262,8 +258,9 @@ export default function ModelForm2() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <FieldSet data-invalid={fieldState.invalid}>
-                        <FieldLabel className="text-plum">Subtask</FieldLabel>
-
+                        <FieldLabel className="text-plum/85">
+                          Subtasks
+                        </FieldLabel>
                         <RadioGroup
                           name={field.name}
                           value={field.value}
@@ -271,29 +268,23 @@ export default function ModelForm2() {
                           aria-invalid={fieldState.invalid}
                         >
                           {METADATA_FORM_CFG.subTasks.map((subTask) => (
-                            <FieldLabel
-                              className={cn(
-                                "text-gray-700 transition-colors rounded-md",
-
-                                "has-[:checked]:!bg-plum/20 has-[:checked]:text-plum has-[:checked]:border-plum/80"
-                              )}
-                              key={subTask}
-                              htmlFor={`form-rhf-radiogroup-${subTask}`}
+                            <Field
+                              key={subTask.value}
+                              orientation="horizontal"
+                              data-invalid={fieldState.invalid}
                             >
-                              <Field
-                                orientation="horizontal"
-                                data-invalid={fieldState.invalid}
+                              <RadioGroupItem
+                                value={subTask.value}
+                                id={`form-metadata-radio-${subTask.value}`}
+                                aria-invalid={fieldState.invalid}
+                              />
+                              <FieldLabel
+                                htmlFor={`form-metadata-radio-${subTask.value}`}
+                                className="font-normal text-gray-700"
                               >
-                                <FieldContent>
-                                  <FieldTitle>{subTask}</FieldTitle>
-                                </FieldContent>
-                                <RadioGroupItem
-                                  value={subTask}
-                                  id={`metadata-form-radiogroup-${subTask}`}
-                                  aria-invalid={fieldState.invalid}
-                                />
-                              </Field>
-                            </FieldLabel>
+                                {subTask.label}
+                              </FieldLabel>
+                            </Field>
                           ))}
                         </RadioGroup>
                         {fieldState.invalid && (
@@ -302,8 +293,46 @@ export default function ModelForm2() {
                       </FieldSet>
                     )}
                   />
-                </FieldSet>
-                <FieldSet></FieldSet>
+                  <Controller
+                    name="input"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <FieldSet data-invalid={fieldState.invalid}>
+                        <FieldLabel className="text-plum/85">Input</FieldLabel>
+                        <RadioGroup
+                          name={field.name}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          aria-invalid={fieldState.invalid}
+                        >
+                          {METADATA_FORM_CFG.inputs.map((input) => (
+                            <Field
+                              key={input.value}
+                              orientation="horizontal"
+                              data-invalid={fieldState.invalid}
+                            >
+                              <RadioGroupItem
+                                value={input.value}
+                                id={`form-metadata-radio-${input.value}`}
+                                aria-invalid={fieldState.invalid}
+                                disabled
+                              />
+                              <FieldLabel
+                                htmlFor={`form-metadata-radio-${input.value}`}
+                                className="font-normal text-gray-700"
+                              >
+                                {input.label}
+                              </FieldLabel>
+                            </Field>
+                          ))}
+                        </RadioGroup>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </FieldSet>
+                    )}
+                  />
+                </FieldGroup>
               </div>
             </FieldGroup>
           </FieldSet>

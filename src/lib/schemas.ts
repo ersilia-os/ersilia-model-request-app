@@ -21,12 +21,15 @@ export const MetadataFormSchema = z.object({
   }),
   tags: z
     .array(z.string())
-    .min(1, { message: "Please provide at least one tage" })
+    .min(1, { message: "Please provide at least one tag" })
     .max(5, { message: "Please select 5 tags maximum" }),
   task: z.string().min(1, {
     message: "Please select one task",
   }),
   subtask: z.string().min(1, {
-    message: "Please select one task",
+    message: "Please select one subtask",
+  }),
+  input: z.string().min(1, {
+    message: "Please select one subtask",
   }),
 });
