@@ -3,6 +3,7 @@
 import { Controller, useForm } from "react-hook-form";
 import {
   Field,
+  FieldContent,
   FieldDescription,
   FieldError,
   FieldGroup,
@@ -10,6 +11,7 @@ import {
   FieldLegend,
   FieldSeparator,
   FieldSet,
+  FieldTitle,
 } from "../ui/field";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
@@ -17,6 +19,10 @@ import z from "zod";
 import { MetadataFormSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
+import { METADATA_FORM_CFG } from "@/config/form-cfg";
+import { MultiSelect } from "../multi-select";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { cn } from "@/lib/utils";
 
 export default function ModelForm2() {
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
@@ -26,12 +32,16 @@ export default function ModelForm2() {
       slug: "",
       description: "",
       interpretation: "",
+      tags: [],
+      task: "",
+      subtask: "",
     },
   });
 
   function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
     console.log(data);
   }
+
   return (
     <>
       <form
@@ -55,7 +65,7 @@ export default function ModelForm2() {
                   name="title"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field data-invalide={fieldState.invalid}>
+                    <Field data-invalid={fieldState.invalid}>
                       <FieldLabel htmlFor={field.name} className="text-plum/85">
                         Title
                       </FieldLabel>
@@ -76,7 +86,7 @@ export default function ModelForm2() {
                   name="slug"
                   control={form.control}
                   render={({ field, fieldState }) => (
-                    <Field data-invalide={fieldState.invalid}>
+                    <Field data-invalid={fieldState.invalid}>
                       <FieldLabel htmlFor={field.name} className="text-plum/85">
                         Slug
                       </FieldLabel>
@@ -112,7 +122,7 @@ export default function ModelForm2() {
                 name="description"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalide={fieldState.invalid}>
+                  <Field data-invalid={fieldState.invalid}>
                     <FieldLabel htmlFor={field.name} className="text-plum/85">
                       Description
                     </FieldLabel>
@@ -133,7 +143,7 @@ export default function ModelForm2() {
                 name="interpretation"
                 control={form.control}
                 render={({ field, fieldState }) => (
-                  <Field data-invalide={fieldState.invalid}>
+                  <Field data-invalid={fieldState.invalid}>
                     <FieldLabel htmlFor={field.name} className="text-plum/85">
                       Interpretation
                     </FieldLabel>
@@ -163,7 +173,30 @@ export default function ModelForm2() {
               from predefined categories to help users discover this model when
               searching by disease, organism, application, or other criteria.
             </FieldDescription>
-            <FieldGroup></FieldGroup>
+            <FieldGroup>
+              <Controller
+                name="tags"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name} className="text-plum/85">
+                      Tags
+                    </FieldLabel>
+                    <MultiSelect
+                      hideSelectAll
+                      maxCount={5}
+                      options={METADATA_FORM_CFG.tags}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      placeholder="Select tags..."
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            </FieldGroup>
           </FieldSet>
           <FieldSeparator />
           {/* section 4 */}
@@ -176,7 +209,103 @@ export default function ModelForm2() {
               task type. This section describes the technical characteristics of
               how the model processes data.
             </FieldDescription>
-            <FieldGroup></FieldGroup>
+            <FieldGroup>
+              <div className="grid grid-cols-2 gap-4">
+                <FieldSet>
+                  <Controller
+                    name="task"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <FieldSet data-invalid={fieldState.invalid}>
+                        <FieldLabel className="text-plum">Task</FieldLabel>
+
+                        <RadioGroup
+                          name={field.name}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          aria-invalid={fieldState.invalid}
+                        >
+                          {METADATA_FORM_CFG.tasks.map((task) => (
+                            <FieldLabel
+                              className={cn(
+                                "text-gray-700 transition-colors rounded-md",
+
+                                "has-[:checked]:!bg-plum/20 has-[:checked]:text-plum has-[:checked]:border-plum/80"
+                              )}
+                              key={task}
+                              htmlFor={`form-rhf-radiogroup-${task}`}
+                            >
+                              <Field
+                                orientation="horizontal"
+                                data-invalid={fieldState.invalid}
+                              >
+                                <FieldContent>
+                                  <FieldTitle>{task}</FieldTitle>
+                                </FieldContent>
+                                <RadioGroupItem
+                                  value={task}
+                                  id={`metadata-form-radiogroup-${task}`}
+                                  aria-invalid={fieldState.invalid}
+                                />
+                              </Field>
+                            </FieldLabel>
+                          ))}
+                        </RadioGroup>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </FieldSet>
+                    )}
+                  />
+                  <Controller
+                    name="subtask"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <FieldSet data-invalid={fieldState.invalid}>
+                        <FieldLabel className="text-plum">Subtask</FieldLabel>
+
+                        <RadioGroup
+                          name={field.name}
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          aria-invalid={fieldState.invalid}
+                        >
+                          {METADATA_FORM_CFG.subTasks.map((subTask) => (
+                            <FieldLabel
+                              className={cn(
+                                "text-gray-700 transition-colors rounded-md",
+
+                                "has-[:checked]:!bg-plum/20 has-[:checked]:text-plum has-[:checked]:border-plum/80"
+                              )}
+                              key={subTask}
+                              htmlFor={`form-rhf-radiogroup-${subTask}`}
+                            >
+                              <Field
+                                orientation="horizontal"
+                                data-invalid={fieldState.invalid}
+                              >
+                                <FieldContent>
+                                  <FieldTitle>{subTask}</FieldTitle>
+                                </FieldContent>
+                                <RadioGroupItem
+                                  value={subTask}
+                                  id={`metadata-form-radiogroup-${subTask}`}
+                                  aria-invalid={fieldState.invalid}
+                                />
+                              </Field>
+                            </FieldLabel>
+                          ))}
+                        </RadioGroup>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </FieldSet>
+                    )}
+                  />
+                </FieldSet>
+                <FieldSet></FieldSet>
+              </div>
+            </FieldGroup>
           </FieldSet>
           <FieldSeparator />
           {/* section 5 */}
