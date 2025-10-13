@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ModelMetadataForm from "@/components/model-form/modelform";
-import ModelForm2 from "@/components/model-form/ModelForm2";
+
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import ModelMetadataForm from "@/components/metadata/ModelMetadataForm";
 
 export default function Page() {
   const [report, setReport] = useState<string | null>(null);
@@ -34,8 +34,7 @@ export default function Page() {
         </CardHeader>
 
         <CardContent className="p-0">
-          {/* <ModelMetadataForm report={report} /> */}
-          <ModelForm2 />
+          <ModelMetadataForm />
         </CardContent>
       </Card>
     </main>

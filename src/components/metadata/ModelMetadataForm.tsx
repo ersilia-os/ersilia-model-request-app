@@ -31,7 +31,7 @@ import {
   SelectValue,
 } from "../ui/select";
 
-export default function ModelForm2() {
+export default function ModelMetadataForm() {
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
     resolver: zodResolver(MetadataFormSchema),
     defaultValues: {

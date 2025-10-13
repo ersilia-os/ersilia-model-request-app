@@ -12,7 +12,7 @@ export default function ProcessingPage() {
       const report = sessionStorage.getItem("generatedReport");
 
       if (report) {
-        router.push("/new-model/model-form");
+        router.push("/new-model/metadata");
       } else {
         router.push("/new-model");
       }
