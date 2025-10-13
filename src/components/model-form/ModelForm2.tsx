@@ -3,7 +3,6 @@
 import { Controller, useForm } from "react-hook-form";
 import {
   Field,
-  FieldContent,
   FieldDescription,
   FieldError,
   FieldGroup,
@@ -22,7 +21,6 @@ import { Button } from "../ui/button";
 import { METADATA_FORM_CFG } from "@/config/form-cfg";
 import { MultiSelect } from "../multi-select";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { cn } from "@/lib/utils";
 import { Checkbox } from "../ui/checkbox";
 
 export default function ModelForm2() {
@@ -37,8 +35,9 @@ export default function ModelForm2() {
       task: "",
       subtask: "",
       input: METADATA_FORM_CFG.inputs[0].value,
-      input_dimension: 1,
+      input_dimension: "1",
       output: [],
+      output_dimension: "",
     },
   });
 
@@ -351,7 +350,7 @@ export default function ModelForm2() {
                           id={field.name}
                           aria-invalid={fieldState.invalid}
                           className="focus-visible:border-plum"
-                          placeholder="Model title (minimum 70 characters)"
+                          placeholder="Input dimension"
                           disabled
                         />
                         {fieldState.invalid && (
@@ -402,6 +401,30 @@ export default function ModelForm2() {
                           <FieldError errors={[fieldState.error]} />
                         )}
                       </FieldSet>
+                    )}
+                  />
+                  <Controller
+                    name="output_dimension"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel
+                          htmlFor={field.name}
+                          className="text-plum/85"
+                        >
+                          Output Dimension
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          id={field.name}
+                          aria-invalid={fieldState.invalid}
+                          className="focus-visible:border-plum"
+                          placeholder="Output dimension"
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
                     )}
                   />
                 </FieldGroup>

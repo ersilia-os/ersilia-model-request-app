@@ -32,8 +32,20 @@ export const MetadataFormSchema = z.object({
   input: z.string().min(1, {
     message: "Please select one input",
   }),
-  input_dimension: z.number(),
+  input_dimension: z
+    .string()
+    .min(1, { message: "Pleanse enter the input dimension of the model" }),
   output: z.array(
     z.string().min(1, { message: "Please select at least one output" })
   ),
+  output_dimension: z
+    .string()
+    .min(1, { message: "Pleanse enter the input dimension of the model" })
+    .refine(
+      (val) => {
+        const num = Number(val);
+        return !isNaN(num) && Number.isInteger(num) && num > 0;
+      },
+      { message: "Must be a positive integer" }
+    ),
 });
