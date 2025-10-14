@@ -9,51 +9,6 @@ import FileDrop from "@/components/new-model/FileDrop";
 import { useModelSubmission } from "@/hooks/useModelSubmission";
 
 export default function NewModelPage() {
-  // const [publication, setPublication] = useState("");
-  // const [file, setFile] = useState<File | null>(null);
-  // const [isLoading, setIsLoading] = useState(false);
-
-  // const router = useRouter();
-
-  // async function pdfAnalysis(file: File) {
-  //   const fd = new FormData();
-  //   fd.append("file", file);
-  //   setIsLoading(true);
-
-  //   try {
-  //     const res = await fetch("/api/analysis", {
-  //       method: "POST",
-  //       body: fd,
-  //     });
-  //     const data = await res.json();
-  //     console.log("Upload response:", res.status, data);
-
-  //     if (!res.ok) throw new Error(data.error || "Upload failed");
-
-  //     sessionStorage.setItem("generatedReport", data.report);
-
-  //     router.push("/new-model/processing");
-  //   } catch (err) {
-  //     console.error(err);
-  //     alert("Error generating report. Please try again.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // }
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   if (file) {
-  //     await pdfAnalysis(file);
-  //   } else if (publication) {
-  //     const downloadedPublication = await api.downloadPdfFromUrl(publication);
-  //     if (!downloadedPublication) return;
-  //     await pdfAnalysis(downloadedPublication);
-  //   } else {
-  //     alert("Please upload a PDF or provide a publication link.");
-  //   }
-  // };
   const {
     publication,
     setPublication,
