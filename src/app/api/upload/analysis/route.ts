@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { ModelMetadataSchema } from "@/lib/schemas";
-import { z, ZodError } from "zod";
+import { ZodError } from "zod";
 
 interface PDFParseResult {
   text: string;
