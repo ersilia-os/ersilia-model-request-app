@@ -9,7 +9,8 @@ export default function ProcessingPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const report = sessionStorage.getItem("generatedReport");
+      const report = sessionStorage.getItem("modelMetadata");
+      console.log(report);
 
       if (report) {
         router.push("/new-model/metadata");

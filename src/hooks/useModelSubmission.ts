@@ -38,6 +38,7 @@ export function useModelSubmission() {
       const metadata: ModelMetadata = await api.analyzePdf(pdfFile);
 
       sessionStorage.setItem("modelMetadata", JSON.stringify(metadata));
+
       router.push("/new-model/processing");
     } catch (err) {
       console.error(err);
