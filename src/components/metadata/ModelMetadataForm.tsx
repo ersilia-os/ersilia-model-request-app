@@ -61,9 +61,7 @@ export default function ModelMetadataForm() {
   });
 
   function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-    console.log("hey");
-
-    console.log(data);
+    console.log("🟥 form data", data);
   }
 
   return (

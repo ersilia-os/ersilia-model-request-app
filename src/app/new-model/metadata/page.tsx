@@ -1,25 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import ModelMetadataForm from "@/components/metadata/ModelMetadataForm";
 
-export default function Page() {
-  const [report, setReport] = useState<string | null>(null);
-
-  useEffect(() => {
-    const savedReport = sessionStorage.getItem("generatedReport");
-    if (savedReport) {
-      setReport(savedReport);
-    } else {
-      window.location.href = "/new-model";
-    }
-  }, []);
-
-  if (!report) return null;
-  console.log(report);
-
+export default function ModelMetadataFormPage() {
   return (
     <main className="flex min-h-screen items-center justify-center py-10">
       <Card className="w-full border-2 border-plum rounded-2xl shadow-xl p-6 md:p-10">

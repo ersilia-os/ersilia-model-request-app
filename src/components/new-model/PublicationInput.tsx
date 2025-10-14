@@ -17,7 +17,7 @@ export default function PublicationInput({
       placeholder={
         disabled
           ? "Disabled — remove the file to insert a link"
-          : "Insert link here"
+          : "Enter publication URL (PDF or article link)"
       }
       value={publication}
       onChange={(e) => setPublication(e.target.value)}
