@@ -175,3 +175,4 @@ export const ModelMetadataSchema = z.object({
     .default(["Not specified"])
     .transform((arr) => (arr.length === 0 ? ["Not specified"] : arr)),
 });
+export type ModelMetadata = z.infer<typeof ModelMetadataSchema>;
