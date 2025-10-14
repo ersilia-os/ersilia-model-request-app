@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function WelcomeScreen() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
       <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <CardHeader className="text-center p-0 mb-4">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
