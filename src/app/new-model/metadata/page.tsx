@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ModelMetadataForm from "@/components/model-form/modelform";
+
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import ModelMetadataForm from "@/components/metadata/ModelMetadataForm";
 
 export default function Page() {
   const [report, setReport] = useState<string | null>(null);
@@ -17,21 +18,23 @@ export default function Page() {
   }, []);
 
   if (!report) return null;
+  console.log(report);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-white py-10">
-      <Card className="w-full max-w-4xl border-2 border-plum rounded-2xl shadow-xl p-6 md:p-10">
+    <main className="flex min-h-screen items-center justify-center py-10">
+      <Card className="w-full border-2 border-plum rounded-2xl shadow-xl p-6 md:p-10">
         <CardHeader className="p-0 mb-6 text-center">
-          <h1 className="text-2xl font-semibold text-gray-800">
-            Model Metadata
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
+            New Model Metadata
           </h1>
-          <p className="text-gray-500 text-sm mt-1">
-            Prefilled based on the extracted report
+          <p className="text-center text-gray-400 text-sm md:text-base lg:text-lg mb-2">
+            Carefully review the pre-filled metadata. This information is
+            crucial for successful Ersilia Hub integration.
           </p>
         </CardHeader>
 
         <CardContent className="p-0">
-          <ModelMetadataForm report={report} />
+          <ModelMetadataForm />
         </CardContent>
       </Card>
     </main>
