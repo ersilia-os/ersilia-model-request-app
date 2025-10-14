@@ -26,7 +26,7 @@ export default function NewModelPage() {
             Add New Model to Ersilia
           </h1>
           <p className="text-center text-gray-400 text-sm md:text-base lg:text-lg mb-2">
-            Place link for your publication or attach your file below
+            Provide a publication to extract model metadata
           </p>
         </CardHeader>
 
@@ -71,31 +71,3 @@ export default function NewModelPage() {
 }
 
 // https://www.nature.com/articles/s41467-025-62717-7.pdf
-
-// path
-// :
-// "./eos2hbd.pdf"
-// relativePath
-// :
-// "./eos2hbd.pdf"
-// lastModified
-// :
-// 1760282372738
-// lastModifiedDate
-// :
-// Sun Oct 12 2025 17:19:32 GMT+0200 (Central European Summer Time) {}
-// name
-// :
-// "eos2hbd.pdf"
-// size
-// :
-// 3429954
-// type
-// :
-// "application/pdf"
-// webkitRelativePath
-// :
-// ""
-// [[Prototype]]
-// :
-// File
