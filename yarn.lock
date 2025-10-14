@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@ai-sdk/anthropic@^2.0.27":
+  version "2.0.27"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/anthropic/-/anthropic-2.0.27.tgz#925083f32dd548dba0b6bf329e65fed2a97bbd20"
+  integrity sha512-tGXdWNs+dMZLsn6yVroz9PqPZbCY6kqwGl/xxFVxJWDrTPGj3+1t1vE7pzTZ3vDOiG05iVC7wzlXwV2Or650YA==
+  dependencies:
+    "@ai-sdk/provider" "2.0.0"
+    "@ai-sdk/provider-utils" "3.0.12"
+
 "@ai-sdk/gateway@1.0.39":
   version "1.0.39"
   resolved "https://registry.yarnpkg.com/@ai-sdk/gateway/-/gateway-1.0.39.tgz#1f259fda75c7a72bf99a958194ae6275fa3f7d5a"
@@ -15,6 +23,14 @@
   version "2.0.24"
   resolved "https://registry.yarnpkg.com/@ai-sdk/groq/-/groq-2.0.24.tgz#d3803277775e75ab361fd1bf10a83cc428c26c9e"
   integrity sha512-PCtNwFsakxR6B/o+l3gtxlPIwN8lawK3vvOjRdC759Y8WtNxCv5RUs0JsxIKyAZxO+RBEy0AoL8xTQUy8fn3gw==
+  dependencies:
+    "@ai-sdk/provider" "2.0.0"
+    "@ai-sdk/provider-utils" "3.0.12"
+
+"@ai-sdk/openai@^2.0.51":
+  version "2.0.51"
+  resolved "https://registry.yarnpkg.com/@ai-sdk/openai/-/openai-2.0.51.tgz#36ec57114e10f6207110bcef8e61ffb9fe8911f1"
+  integrity sha512-/Zi4Vbd0diykX57OlUY9Q5yLKombp4D1YLKBTWdV9+eI7gLEeMRxo7fuoqMoKWC8TapWPeej/IP7n1vtC/u3hA==
   dependencies:
     "@ai-sdk/provider" "2.0.0"
     "@ai-sdk/provider-utils" "3.0.12"
