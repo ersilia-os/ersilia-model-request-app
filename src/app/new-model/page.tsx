@@ -21,7 +21,7 @@ export default function NewModelPage() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const res = await fetch("/api/upload/analysis", { method: "POST", body: fd });
       const data = await res.json();
       console.log("Upload response:", res.status, data);
 
@@ -32,7 +32,7 @@ export default function NewModelPage() {
       router.push("/new-model/processing");
     } catch (err) {
       console.error(err);
-      alert("⚠️ Error generating report. Please try again.");
+      alert("Error generating report. Please try again.");
     } finally {
       setIsLoading(false);
     }
