@@ -10,7 +10,9 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.27",
     "@ai-sdk/groq": "^2.0.24",
+    "@ai-sdk/openai": "^2.0.51",
     "@auth0/nextjs-auth0": "^4.10.0",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "6.17.0",
