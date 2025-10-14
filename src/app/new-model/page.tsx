@@ -13,11 +13,41 @@ export default function NewModelPage() {
   const [file, setFile] = useState<File | null>(null);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Submitting:", { publication, file });
-    router.push("new-model/processing");
-  };
+  const handleSubmit = async (event: React.FormEvent) => {
+  event.preventDefault();
+
+  if (!publication && !file) {
+    alert("Please provide a link or upload a file.");
+    return;
+  }
+
+  if (publication) {
+    try {
+      console.log("Uploading from link:", publication);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ link: publication }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Upload successful:", result);
+        router.push("new-model/processing");
+      } else {
+        console.error("Upload error:", result.error);
+        alert("Upload failed: " + result.error);
+      }
+    } catch (error) {
+      console.error("Something went wrong:", error);
+      alert("Something went wrong while uploading.");
+    }
+  } else {
+    console.log("File upload not yet implemented.");
+  }
+};
 
   const handleDrop = (acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) setFile(acceptedFiles[0]);
