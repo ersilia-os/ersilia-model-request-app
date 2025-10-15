@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   Field,
@@ -60,9 +61,25 @@ export default function ModelMetadataForm() {
     },
   });
 
+  const [isLocked, setIsLocked] = useState(false);
+
   function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
     console.log("🟥 form data", data);
+    setIsLocked(true);
   }
+
+  const handleSaveClick = () => {
+    setIsLocked(true);
+  };
+
+  const handleEditClick = () => {
+    setIsLocked(false);
+  };
+
+  const handleResetClick = () => {
+    form.reset();
+    setIsLocked(false);
+  };
 
   return (
     <>
@@ -71,9 +88,10 @@ export default function ModelMetadataForm() {
         className="mb-6"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FieldGroup>
-          {/* section 1 */}
-          <FieldSet>
+        <fieldset disabled={isLocked} className="flex flex-col gap-7">
+          <FieldGroup>
+            {/* section 1 */}
+            <FieldSet>
             <FieldLegend className="text-plum/90">
               Basic Identification
             </FieldLegend>
@@ -836,12 +854,28 @@ export default function ModelMetadataForm() {
           </FieldSet>
           <FieldSeparator />
         </FieldGroup>
+
+        </fieldset>
       </form>
       <Field orientation="horizontal">
-        <Button variant="plum" type="submit" form="form-metadata">
+        <Button
+          variant="plum"
+          type="submit"
+          form="form-metadata"
+          onClick={handleSaveClick}
+          disabled={isLocked}
+        >
           Save
         </Button>
-        <Button type="button" variant="outline" onClick={() => form.reset()}>
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={handleEditClick}
+          disabled={!isLocked}
+        >
+          Edit
+        </Button>
+        <Button type="button" variant="outline" onClick={handleResetClick}>
           Reset
         </Button>
       </Field>
