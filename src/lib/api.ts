@@ -1,4 +1,4 @@
-import { AiAnalysisModelMetadataSchema, ModelMetadata } from "@/lib/schemas";
+import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
 
 const api = {
   async downloadPdfFromUrl(url: string): Promise<File | undefined> {

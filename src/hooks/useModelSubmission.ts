@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
-import { AiAnalysisModelMetadataSchema, ModelMetadata } from "@/lib/schemas";
+import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
 
 export function useModelSubmission() {
   const [publication, setPublication] = useState("");
@@ -39,7 +39,7 @@ export function useModelSubmission() {
         pdfFile
       );
 
-      sessionStorage.setItem("modelMetadata", JSON.stringify(metadata));
+      sessionStorage.setItem("aiAnalysis", JSON.stringify(metadata));
 
       router.push("/new-model/processing");
     } catch (err) {

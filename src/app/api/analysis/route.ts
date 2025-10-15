@@ -1,18 +1,13 @@
-export const runtime = "nodejs";
-
 import { NextRequest, NextResponse } from "next/server";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
-import {
-  AiAnalysisModelMetadataSchema,
-  ModelMetadataSchema,
-} from "@/lib/schemas";
+import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
 import { ZodError } from "zod";
+import { filterAiResults } from "@/lib/filter-ai-results";
 
 export async function POST(req: NextRequest) {
   try {
-    console.log("🟥 new analysis");
-
+    console.log("🟥 start ");
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
 
@@ -24,14 +19,10 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
 
-    const prompt = `
-You are a biomedical model extraction assistant. 
+    const prompt = `You are a biomedical model extraction assistant. 
 Analyze the scientific publication PDF and extract structured metadata according to the provided schema.
-Extract all relevant information about the biomedical model described in this publication.
-    `.trim();
-
-    // Use generateObject with PDF as a file attachment
-    const { object } = await generateObject({
+Extract all relevant information about the biomedical model described in this publication.`;
+    const result = await generateObject({
       model: openai("gpt-5-nano"),
       schema: AiAnalysisModelMetadataSchema,
       messages: [
@@ -49,9 +40,12 @@ Extract all relevant information about the biomedical model described in this pu
       ],
     });
 
-    console.log("🟥 object", object);
+    console.log("🟥 finishReason", result.finishReason);
 
-    return NextResponse.json(object);
+    const filtered = filterAiResults(result.object);
+    return NextResponse.json(filtered);
+
+    return NextResponse.json(result.object);
   } catch (error: unknown) {
     console.error("Upload error:", error);
 
@@ -68,6 +62,7 @@ Extract all relevant information about the biomedical model described in this pu
 
     const message =
       error instanceof Error ? error.message : "Failed to process the file.";
+
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

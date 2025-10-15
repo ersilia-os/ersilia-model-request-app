@@ -15,11 +15,14 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import z from "zod";
-import { MetadataFormSchema } from "@/lib/schemas";
+import {
+  AiAnalysisModelMetadataSchema,
+  MetadataFormSchema,
+} from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { METADATA_FORM_CFG } from "@/config/form-cfg";
-import { MultiSelect } from "../multi-select";
+
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
 import { cn } from "@/lib/utils";
@@ -30,38 +33,45 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import MultiSelect from "../multi-select";
 
-export default function ModelMetadataForm() {
+interface ModelMetadataFormProps {
+  aiResults: AiAnalysisModelMetadataSchema;
+}
+
+export default function ModelMetadataForm({
+  aiResults,
+}: ModelMetadataFormProps) {
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
     resolver: zodResolver(MetadataFormSchema),
     defaultValues: {
-      title: "",
-      slug: "",
+      title: aiResults.title || "",
+      slug: aiResults.slug || "",
       status: METADATA_FORM_CFG.status[0].value,
-      description: "",
-      interpretation: "",
-      tags: [],
-      task: "",
-      subtask: "",
-      input: METADATA_FORM_CFG.inputs[0].value,
-      input_dimension: METADATA_FORM_CFG.inputDimension,
-      output: [],
-      output_dimension: "",
-      output_consistency: "",
-      publication_url: "",
-      publication_year: "",
-      publication_type: "",
-      source_url: "",
-      source_type: "",
-      deployment: "",
-      biomedical_area: [],
-      target_organism: [],
-      license: "",
+      description: aiResults.description || "",
+      interpretation: aiResults.interpretation || "",
+      tags: aiResults.tags || [],
+      task: aiResults.task || "",
+      subtask: aiResults.subtask || "",
+      input: aiResults.input,
+      input_dimension: aiResults.input_dimension,
+      output: aiResults.output || [],
+      output_dimension: aiResults.output_dimension || "",
+      output_consistency: aiResults.output_consistency || "",
+      publication_url: aiResults.publication_url || "",
+      publication_year: aiResults.publication_year || "",
+      publication_type: aiResults.publication_type || "",
+      source_url: aiResults.source_url || "",
+      source_type: aiResults.source_type || "",
+      deployment: aiResults.deployment || "",
+      biomedical_area: aiResults.biomedical_area || [],
+      target_organism: aiResults.target_organism || [],
+      license: aiResults.license || "",
     },
   });
 
   function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-    console.log("🟥 form data", data);
+    console.log("🟥 form data to save or submit", data);
   }
 
   return (
@@ -82,52 +92,50 @@ export default function ModelMetadataForm() {
               users will find and reference this model in the system.
             </FieldDescription>
             <FieldGroup>
-              <div className="grid grid-cols-2 gap-2">
-                <Controller
-                  name="title"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Title
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id={field.name}
-                        aria-invalid={fieldState.invalid}
-                        className="focus-visible:border-plum"
-                        placeholder="Model title (minimum 70 characters)"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
-                <Controller
-                  name="slug"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Slug
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id={field.name}
-                        aria-invalid={fieldState.invalid}
-                        className="focus-visible:border-plum"
-                        placeholder="e.g. model-name-slug"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
-              </div>
+              <Controller
+                name="title"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name} className="text-plum/85">
+                      Title
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      aria-invalid={fieldState.invalid}
+                      className="focus-visible:border-plum"
+                      placeholder="Model title (minimum 70 characters)"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
             </FieldGroup>
             <FieldGroup>
+              <Controller
+                name="slug"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor={field.name} className="text-plum/85">
+                      Slug
+                    </FieldLabel>
+                    <Input
+                      {...field}
+                      id={field.name}
+                      aria-invalid={fieldState.invalid}
+                      className="focus-visible:border-plum"
+                      placeholder="e.g. model-name-slug"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
               <Controller
                 name="status"
                 control={form.control}
@@ -246,11 +254,9 @@ export default function ModelMetadataForm() {
                       Tags
                     </FieldLabel>
                     <MultiSelect
-                      hideSelectAll
-                      maxCount={5}
                       options={METADATA_FORM_CFG.tags}
-                      value={field.value}
-                      onValueChange={field.onChange}
+                      value={field.value || []}
+                      onChange={field.onChange}
                       placeholder="Select tags..."
                       className={cn(
                         fieldState.invalid &&
@@ -789,11 +795,9 @@ export default function ModelMetadataForm() {
                       Biomedical area
                     </FieldLabel>
                     <MultiSelect
-                      hideSelectAll
-                      maxCount={4}
                       options={METADATA_FORM_CFG.biomedicalArea}
-                      value={field.value}
-                      onValueChange={field.onChange}
+                      value={field.value || []}
+                      onChange={field.onChange}
                       placeholder="Select areas..."
                       className={cn(
                         fieldState.invalid &&
@@ -815,11 +819,9 @@ export default function ModelMetadataForm() {
                       Target organism
                     </FieldLabel>
                     <MultiSelect
-                      hideSelectAll
-                      maxCount={4}
-                      options={METADATA_FORM_CFG.biomedicalArea}
-                      value={field.value}
-                      onValueChange={field.onChange}
+                      options={METADATA_FORM_CFG.targetOrganism}
+                      value={field.value || []}
+                      onChange={field.onChange}
                       placeholder="Select targets..."
                       className={cn(
                         fieldState.invalid &&

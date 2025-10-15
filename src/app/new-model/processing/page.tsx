@@ -9,8 +9,7 @@ export default function ProcessingPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const report = sessionStorage.getItem("modelMetadata");
-      console.log(report);
+      const report = sessionStorage.getItem("aiAnalysis");
 
       if (report) {
         router.push("/new-model/metadata");

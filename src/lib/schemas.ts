@@ -8,7 +8,8 @@ export const MetadataFormSchema = z.object({
   slug: z
     .string()
     .trim()
-    .min(1, "Slug cannot be empty.")
+    .min(1, { message: "Please provide a slug" })
+    .max(60, { message: "Maxiumum 60 characters" })
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
       message:
         "Slug must be lowercase, alphanumeric, and hyphens only. It cannot start or end with a hyphen, or contain consecutive hyphens.",
@@ -91,90 +92,92 @@ export const MetadataFormSchema = z.object({
     .min(1, { message: "Please provide at least one target." }),
 });
 
-export const ModelMetadataSchema = z.object({
-  title: z.string().trim().min(20, {
-    message: "Please provide a title with at least 20 characters.",
-  }),
+// export const ModelMetadataSchema = z.object({
+//   title: z.string().trim().min(20, {
+//     message: "Please provide a title with at least 20 characters.",
+//   }),
 
-  slug: z
-    .string()
-    .trim()
-    .min(1, "Slug cannot be empty.")
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
-      message:
-        "Slug must be lowercase, alphanumeric, and hyphens only. It cannot start or end with a hyphen, or contain consecutive hyphens.",
-    }),
+//   slug: z
+//     .string()
+//     .trim()
+//     .min(1, "Slug cannot be empty.")
+//     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
+//       message:
+//         "Slug must be lowercase, alphanumeric, and hyphens only. It cannot start or end with a hyphen, or contain consecutive hyphens.",
+//     }),
 
-  description: z.string().trim().min(100, {
-    message: "Please provide a description of at least 100 characters.",
-  }),
+//   description: z.string().trim().min(100, {
+//     message: "Please provide a description of at least 100 characters.",
+//   }),
 
-  interpretation: z.string().trim().min(1),
+//   interpretation: z.string().trim().min(1),
 
-  tags: z.array(z.string()).min(1).max(5),
+//   tags: z.array(z.string()).min(1).max(5),
 
-  task: z.string(),
-  subtask: z.string(),
-  input: z.string(),
-  status: z.string(),
+//   task: z.string(),
+//   subtask: z.string(),
+//   input: z.string(),
+//   status: z.string(),
 
-  input_dimension: z
-    .union([z.string(), z.number()])
-    .transform((val) => Number(val))
-    .refine((num) => Number.isInteger(num) && num > 0, {
-      message: "Please enter a valid input dimension (positive integer).",
-    }),
+//   input_dimension: z
+//     .union([z.string(), z.number()])
+//     .transform((val) => Number(val))
+//     .refine((num) => Number.isInteger(num) && num > 0, {
+//       message: "Please enter a valid input dimension (positive integer).",
+//     }),
 
-  output: z.array(z.string()).min(1),
+//   output: z.array(z.string()).min(1),
 
-  output_dimension: z
-    .union([z.string(), z.number()])
-    .transform((val) => Number(val))
-    .refine((num) => Number.isInteger(num) && num > 0, {
-      message: "Please enter a valid output dimension (positive integer).",
-    }),
+//   output_dimension: z
+//     .union([z.string(), z.number()])
+//     .transform((val) => Number(val))
+//     .refine((num) => Number.isInteger(num) && num > 0, {
+//       message: "Please enter a valid output dimension (positive integer).",
+//     }),
 
-  output_consistency: z.string(),
+//   output_consistency: z.string(),
 
-  publication_url: z
-    .string()
-    .or(z.string().optional())
-    .or(z.literal(""))
-    .optional()
-    .default("Not specified"),
+//   publication_url: z
+//     .string()
+//     .or(z.string().optional())
+//     .or(z.literal(""))
+//     .optional()
+//     .default("Not specified"),
 
-  source_url: z
-    .string()
-    .or(z.string().optional())
-    .or(z.literal(""))
-    .optional()
-    .default("Not specified"),
+//   source_url: z
+//     .string()
+//     .or(z.string().optional())
+//     .or(z.literal(""))
+//     .optional()
+//     .default("Not specified"),
 
-  license: z.string().min(1),
+//   license: z.string().min(1),
 
-  deployment: z.union([
-    z.string(),
-    z.array(z.string()).transform((arr) => arr.join(", ")),
-  ]),
+//   deployment: z.union([
+//     z.string(),
+//     z.array(z.string()).transform((arr) => arr.join(", ")),
+//   ]),
 
-  source_type: z.string(),
-  publication_type: z.string(),
+//   source_type: z.string(),
+//   publication_type: z.string(),
 
-  publication_year: z
-    .union([z.string().transform((v) => Number(v)), z.number()])
-    .refine(
-      (num) =>
-        Number.isInteger(num) && num >= 1900 && num <= new Date().getFullYear(),
-      { message: "Please provide a valid year." }
-    ),
+//   publication_year: z
+//     .union([z.string().transform((v) => Number(v)), z.number()])
+//     .refine(
+//       (num) =>
+//         Number.isInteger(num) && num >= 1900 && num <= new Date().getFullYear(),
+//       { message: "Please provide a valid year." }
+//     ),
 
-  biomedical_area: z.array(z.string()).min(1),
-  target_organism: z
-    .array(z.string())
-    .default(["Not specified"])
-    .transform((arr) => (arr.length === 0 ? ["Not specified"] : arr)),
-});
-export type ModelMetadata = z.infer<typeof ModelMetadataSchema>;
+//   biomedical_area: z.array(z.string()).min(1),
+//   target_organism: z
+//     .array(z.string())
+//     .default(["Not specified"])
+//     .transform((arr) => (arr.length === 0 ? ["Not specified"] : arr)),
+// });
+// export type ModelMetadata = z.infer<typeof ModelMetadataSchema>;
+
+const ALLOWED_TAGS = METADATA_FORM_CFG.tags.map((t) => t.value);
 const ALLOWED_TASKS = METADATA_FORM_CFG.tasks.map((t) => t.value);
 const ALLOWED_SUBTASKS = METADATA_FORM_CFG.subTasks.map((t) => t.value);
 const ALLOWED_OUTPUTS = METADATA_FORM_CFG.outputs.map((t) => t.value);
@@ -187,7 +190,7 @@ const ALLOWED_PUBLICATION_TYPES = METADATA_FORM_CFG.publicationType.map(
 const ALLOWED_BIOMEDICAL_AREAS = METADATA_FORM_CFG.biomedicalArea.map(
   (t) => t.value
 );
-const ALLOWED_TARGET_ORGANISMS = METADATA_FORM_CFG.ttargetOrganism.map(
+const ALLOWED_TARGET_ORGANISMS = METADATA_FORM_CFG.targetOrganism.map(
   (t) => t.value
 );
 
@@ -195,35 +198,36 @@ export const AiAnalysisModelMetadataSchema = z.object({
   slug: z
     .string()
     .trim()
-    .min(1)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
     .describe(
-      "A one-word or multi-word (linked by hyphens) human-readable identifier. Use lowercase, alphanumeric characters and hyphens only. Derive from the model title or paper title."
+      "A short version of the title, with hyphens instead of spaces. For example, 'deep-learning-for-malaria'. The slug should be all lowercase. It cannot be longer than 50 characters and should not contain more than 5 hyphens. If there is a name for the method, for example, chemprop, try to use it in the slug. Do not add dates or names of authors. If possible, do not include words such as ml (for machine learning) or ai (for artificial intelligence)."
     ),
 
   title: z
     .string()
-    .trim()
-    .min(70)
     .describe(
-      "A self-descriptive model title. Must be at least 70 characters."
+      "Suggest a title for the computational tool. This should be a concise and informative title. It should be coherent with the title of the publication, and it can be inspired by the title in the raw metadata."
     ),
 
   description: z
     .string()
-    .trim()
-    .min(200)
     .describe(
-      "Minimum information about model type, results and the training dataset. Must be at least 200 characters. Include: what the model does, what type of ML approach is used, what data it was trained on, and key performance metrics if available."
+      "Write a short summary of the computational tool. This should be a high-level overview of the tool based on the publication summary provided. The description should have at least 200 characters. Strictly one paragraph."
     ),
 
   interpretation: z
     .string()
-    .trim()
-    .min(1)
     .describe(
-      "Brief description of how to interpret the model results. For classification models, include experimental settings (time of incubation, strain, cell line, etc.) and the cut-off used. For regression models, explain the units and scale. For generative models, explain what the outputs represent."
+      "Provide a oneliner explaining how to interpret the output of the model. Is it a probability? Is it a regression value for a particular experimental assay? etc. No more than 150 characters."
     ),
+  // todo
+  tags: z
+    .array(z.enum(ALLOWED_TAGS as [string, ...string[]]))
+    .min(0)
+    .max(5)
+    .describe(
+      "Select 1-5 relevant tags to facilitate model search. Categories include: diseases (AIDS, Alzheimer, Cancer, COVID19, Malaria, Tuberculosis, etc.), organisms (P.falciparum, M.tuberculosis, E.coli, Human, Mouse, Sars-CoV-2, etc.), molecular targets (HDAC1, BACE, CYP450, GPCR, hERG), properties (IC50, LogP, LogS, Solubility, Toxicity, Permeability, etc.), applications (ADME, Antimicrobial activity, Drug-likeness, etc.), databases (ChEMBL, DrugBank, MoleculeNet, ZINC, etc.), and model types (Descriptor, Embedding, Fingerprint, Chemical graph model, etc.). Choose tags that best represent the model's domain, purpose, training data, and outputs. If uncertain, leave empty."
+    ),
+
   publication_url: z
     .string()
     .describe(
@@ -245,22 +249,22 @@ export const AiAnalysisModelMetadataSchema = z.object({
 
   deployment: z
     .string()
-    .min(1)
     .describe(
       "Model availability for inference. Valid options: 'Local' (runs on user's computer), 'Online' (available via Ersilia servers). Use 'Local' as default if unclear."
     ),
 
   source_type: z
     .string()
-    .min(1)
     .describe(
       "Origin of the model. Valid options: 'External' (third-party model from published research), 'Internal' (developed by Ersilia team), 'Replicated' (re-trained using original author's guides). Most models are 'External'."
     ),
+  // todo
   task: z
     .enum(ALLOWED_TASKS as [string, ...string[]])
     .describe(
       "The ML task performed by the model. Choose from: Annotation (predicting properties or activities), Representation (generating features or embeddings), or Sampling (generating or finding similar compounds). Select the most relevant one based on the model's primary purpose."
     ),
+  // todo
   subtask: z
     .union([z.enum(ALLOWED_SUBTASKS as [string, ...string[]]), z.literal("")])
     .describe(
@@ -272,7 +276,7 @@ export const AiAnalysisModelMetadataSchema = z.object({
   status: z.string().min(1).describe("This is always 'In Progress' "),
 
   input_dimension: z.string().describe("This is always '1'"),
-
+  // todo
   output: z
     .array(z.enum(ALLOWED_OUTPUTS as [string, ...string[]]))
     .min(0) // Allow empty array
@@ -285,7 +289,7 @@ export const AiAnalysisModelMetadataSchema = z.object({
     .describe(
       "Length of the output per each input compound. For single predictions use '1'. For binary classification use '1' or '2' (depending on output format). For multi-class classification, count the number of classes. For multiple descriptors, count the number of output values. Extract from the paper's methods or results section. If uncertain, leave empty."
     ),
-
+  // todo
   output_consistency: z
     .union([
       z.enum(ALLOWED_OUTPUT_CONSISTENCY as [string, ...string[]]),
@@ -294,7 +298,7 @@ export const AiAnalysisModelMetadataSchema = z.object({
     .describe(
       "Whether the model produces the same prediction given the same input. Choose from: Fixed (deterministic, same input = same output, typical for QSAR models), Variable (stochastic, may vary between runs, typical for generative models). Use 'Fixed' for most predictive models. If uncertain, leave empty."
     ),
-
+  // todo
   publication_type: z
     .union([
       z.enum(ALLOWED_PUBLICATION_TYPES as [string, ...string[]]),
@@ -309,17 +313,17 @@ export const AiAnalysisModelMetadataSchema = z.object({
     .describe(
       "Year of publication of the original model. Extract from the publication date. Format: 4-digit year (e.g., '2023'). If not found, leave empty."
     ),
-
+  // todo
   biomedical_area: z
     .array(z.enum(ALLOWED_BIOMEDICAL_AREAS as [string, ...string[]]))
-    .min(0) // Allow empty array
+    .min(0)
     .describe(
       "The pertinent area of research or disease targeted. Choose from: Any (general tool applicable to all fields, e.g., featurizers), ADMET, Antimicrobial resistance, Malaria, Tuberculosis, COVID-19, Gonorrhea, Cancer, Mycetoma, AIDS, Schistosomiasis, Hepatitis, Alzheimer, Chagas, Cryptosporidiosis, Leprosy. Can select multiple if relevant (e.g., both ADMET and Malaria). Use 'Any' for general-purpose models. If uncertain, leave empty."
     ),
-
+  // todo
   target_organism: z
     .array(z.enum(ALLOWED_TARGET_ORGANISMS as [string, ...string[]]))
-    .min(0) // Allow empty array
+    .min(0)
     .describe(
       "The pathogen or organism the model is related to. Choose from the predefined list including: Any (not organism-specific), Homo sapiens, Mus musculus, Rattus norvegicus, Plasmodium falciparum, Mycobacterium tuberculosis, SARS-CoV-2, HIV, ESKAPE pathogens, gut microbiome species, and others. Can select multiple organisms. Use 'Any' if the model is unrelated to any specific organism. If uncertain, leave empty."
     ),
