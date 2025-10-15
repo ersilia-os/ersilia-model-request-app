@@ -58,12 +58,12 @@ export async function POST(request: NextRequest) {
       fileName: response.data.name,
       webViewLink: response.data.webViewLink,
     });
-  } catch (error: any) {
-    console.error("❌ Error uploading to Google Drive:", error.message);
+  } catch (error: unknown) {
+    console.error("❌ Error uploading to Google Drive:", error);
     return NextResponse.json(
       {
         error: "Failed to upload file to Google Drive",
-        details: error.message,
+        details: error,
       },
       { status: 500 }
     );
