@@ -623,11 +623,13 @@ export default function ModelMetadataForm() {
                         name={field.name}
                         value={field.value}
                         onValueChange={field.onChange}
+                        disabled={isLocked}
                       >
                         <SelectTrigger
                           id="form-metadata-select-pubtype"
                           aria-invalid={fieldState.invalid}
                           className="min-w-[120px]"
+                          disabled={isLocked}
                         >
                           <SelectValue placeholder="Select a type" />
                         </SelectTrigger>
@@ -685,11 +687,13 @@ export default function ModelMetadataForm() {
                         name={field.name}
                         value={field.value}
                         onValueChange={field.onChange}
+                        disabled={isLocked}
                       >
                         <SelectTrigger
                           id="form-metadata-select-source"
                           aria-invalid={fieldState.invalid}
                           className="min-w-[120px]"
+                          disabled={isLocked}
                         >
                           <SelectValue placeholder="Select a source type" />
                         </SelectTrigger>
@@ -726,11 +730,13 @@ export default function ModelMetadataForm() {
                         name={field.name}
                         value={field.value}
                         onValueChange={field.onChange}
+                        disabled={isLocked}
                       >
                         <SelectTrigger
                           id="form-metadata-select-lic"
                           aria-invalid={fieldState.invalid}
                           className="min-w-[120px]"
+                          disabled={isLocked}
                         >
                           <SelectValue placeholder="Select a license" />
                         </SelectTrigger>
@@ -763,11 +769,13 @@ export default function ModelMetadataForm() {
                         name={field.name}
                         value={field.value}
                         onValueChange={field.onChange}
+                        disabled={isLocked}
                       >
                         <SelectTrigger
                           id="form-metadata-select-dep"
                           aria-invalid={fieldState.invalid}
                           className="min-w-[120px]"
+                          disabled={isLocked}
                         >
                           <SelectValue placeholder="Select a deployment" />
                         </SelectTrigger>
