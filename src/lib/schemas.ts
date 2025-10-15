@@ -92,91 +92,6 @@ export const MetadataFormSchema = z.object({
     .min(1, { message: "Please provide at least one target." }),
 });
 
-// export const ModelMetadataSchema = z.object({
-//   title: z.string().trim().min(20, {
-//     message: "Please provide a title with at least 20 characters.",
-//   }),
-
-//   slug: z
-//     .string()
-//     .trim()
-//     .min(1, "Slug cannot be empty.")
-//     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
-//       message:
-//         "Slug must be lowercase, alphanumeric, and hyphens only. It cannot start or end with a hyphen, or contain consecutive hyphens.",
-//     }),
-
-//   description: z.string().trim().min(100, {
-//     message: "Please provide a description of at least 100 characters.",
-//   }),
-
-//   interpretation: z.string().trim().min(1),
-
-//   tags: z.array(z.string()).min(1).max(5),
-
-//   task: z.string(),
-//   subtask: z.string(),
-//   input: z.string(),
-//   status: z.string(),
-
-//   input_dimension: z
-//     .union([z.string(), z.number()])
-//     .transform((val) => Number(val))
-//     .refine((num) => Number.isInteger(num) && num > 0, {
-//       message: "Please enter a valid input dimension (positive integer).",
-//     }),
-
-//   output: z.array(z.string()).min(1),
-
-//   output_dimension: z
-//     .union([z.string(), z.number()])
-//     .transform((val) => Number(val))
-//     .refine((num) => Number.isInteger(num) && num > 0, {
-//       message: "Please enter a valid output dimension (positive integer).",
-//     }),
-
-//   output_consistency: z.string(),
-
-//   publication_url: z
-//     .string()
-//     .or(z.string().optional())
-//     .or(z.literal(""))
-//     .optional()
-//     .default("Not specified"),
-
-//   source_url: z
-//     .string()
-//     .or(z.string().optional())
-//     .or(z.literal(""))
-//     .optional()
-//     .default("Not specified"),
-
-//   license: z.string().min(1),
-
-//   deployment: z.union([
-//     z.string(),
-//     z.array(z.string()).transform((arr) => arr.join(", ")),
-//   ]),
-
-//   source_type: z.string(),
-//   publication_type: z.string(),
-
-//   publication_year: z
-//     .union([z.string().transform((v) => Number(v)), z.number()])
-//     .refine(
-//       (num) =>
-//         Number.isInteger(num) && num >= 1900 && num <= new Date().getFullYear(),
-//       { message: "Please provide a valid year." }
-//     ),
-
-//   biomedical_area: z.array(z.string()).min(1),
-//   target_organism: z
-//     .array(z.string())
-//     .default(["Not specified"])
-//     .transform((arr) => (arr.length === 0 ? ["Not specified"] : arr)),
-// });
-// export type ModelMetadata = z.infer<typeof ModelMetadataSchema>;
-
 const ALLOWED_TAGS = METADATA_FORM_CFG.tags.map((t) => t.value);
 const ALLOWED_TASKS = METADATA_FORM_CFG.tasks.map((t) => t.value);
 const ALLOWED_SUBTASKS = METADATA_FORM_CFG.subTasks.map((t) => t.value);
@@ -219,13 +134,15 @@ export const AiAnalysisModelMetadataSchema = z.object({
     .describe(
       "Provide a oneliner explaining how to interpret the output of the model. Is it a probability? Is it a regression value for a particular experimental assay? etc. No more than 150 characters."
     ),
-  // todo
+
   tags: z
-    .array(z.enum(ALLOWED_TAGS as [string, ...string[]]))
+    .array(z.string())
     .min(0)
     .max(5)
     .describe(
-      "Select 1-5 relevant tags to facilitate model search. Categories include: diseases (AIDS, Alzheimer, Cancer, COVID19, Malaria, Tuberculosis, etc.), organisms (P.falciparum, M.tuberculosis, E.coli, Human, Mouse, Sars-CoV-2, etc.), molecular targets (HDAC1, BACE, CYP450, GPCR, hERG), properties (IC50, LogP, LogS, Solubility, Toxicity, Permeability, etc.), applications (ADME, Antimicrobial activity, Drug-likeness, etc.), databases (ChEMBL, DrugBank, MoleculeNet, ZINC, etc.), and model types (Descriptor, Embedding, Fingerprint, Chemical graph model, etc.). Choose tags that best represent the model's domain, purpose, training data, and outputs. If uncertain, leave empty."
+      "Select 1-5 relevant tags from this list ONLY: " +
+        ALLOWED_TAGS.join(", ") +
+        ". Use EXACT matches. Do not create new tags. If uncertain, leave empty."
     ),
 
   publication_url: z
@@ -258,17 +175,21 @@ export const AiAnalysisModelMetadataSchema = z.object({
     .describe(
       "Origin of the model. Valid options: 'External' (third-party model from published research), 'Internal' (developed by Ersilia team), 'Replicated' (re-trained using original author's guides). Most models are 'External'."
     ),
-  // todo
+
   task: z
-    .enum(ALLOWED_TASKS as [string, ...string[]])
+    .string()
     .describe(
-      "The ML task performed by the model. Choose from: Annotation (predicting properties or activities), Representation (generating features or embeddings), or Sampling (generating or finding similar compounds). Select the most relevant one based on the model's primary purpose."
+      "The ML task performed by the model. Choose ONLY from: " +
+        ALLOWED_TASKS.join(", ") +
+        ". Select the most relevant one based on the model's primary purpose. Use exact matches only."
     ),
-  // todo
+
   subtask: z
-    .union([z.enum(ALLOWED_SUBTASKS as [string, ...string[]]), z.literal("")])
+    .string()
     .describe(
-      "More granular task description. For Representation: choose Featurization or Projection. For Annotation: choose Property calculation or prediction, or Activity prediction. For Sampling: choose Similarity search or Generation. Match to the main task selected. If uncertain, leave empty."
+      "More granular task description. Choose ONLY from: " +
+        ALLOWED_SUBTASKS.join(", ") +
+        ". Match to the main task selected. Use exact matches only. If uncertain, leave empty."
     ),
 
   input: z.string().min(1).describe("This is always 'Compound'"),
@@ -276,12 +197,14 @@ export const AiAnalysisModelMetadataSchema = z.object({
   status: z.string().min(1).describe("This is always 'In Progress' "),
 
   input_dimension: z.string().describe("This is always '1'"),
-  // todo
+
   output: z
-    .array(z.enum(ALLOWED_OUTPUTS as [string, ...string[]]))
-    .min(0) // Allow empty array
+    .array(z.string())
+    .min(0)
     .describe(
-      "Data type(s) outputted by the model. Choose from: Score (probability, confidence), Value (experimental value, molecular descriptor, calculated property), Compound (new chemical structure), Text (natural language description). Can select multiple if the model outputs different types. If uncertain, leave empty."
+      "Data type(s) outputted by the model. Choose ONLY from: " +
+        ALLOWED_OUTPUTS.join(", ") +
+        ". Can select multiple if the model outputs different types. Use exact matches only. If uncertain, leave empty."
     ),
 
   output_dimension: z
@@ -289,23 +212,21 @@ export const AiAnalysisModelMetadataSchema = z.object({
     .describe(
       "Length of the output per each input compound. For single predictions use '1'. For binary classification use '1' or '2' (depending on output format). For multi-class classification, count the number of classes. For multiple descriptors, count the number of output values. Extract from the paper's methods or results section. If uncertain, leave empty."
     ),
-  // todo
+
   output_consistency: z
-    .union([
-      z.enum(ALLOWED_OUTPUT_CONSISTENCY as [string, ...string[]]),
-      z.literal(""),
-    ])
+    .string()
     .describe(
-      "Whether the model produces the same prediction given the same input. Choose from: Fixed (deterministic, same input = same output, typical for QSAR models), Variable (stochastic, may vary between runs, typical for generative models). Use 'Fixed' for most predictive models. If uncertain, leave empty."
+      "Whether the model produces the same prediction given the same input. Choose ONLY from: " +
+        ALLOWED_OUTPUT_CONSISTENCY.join(", ") +
+        ". Use 'Fixed' for most predictive models. Use exact matches only. If uncertain, leave empty."
     ),
-  // todo
+
   publication_type: z
-    .union([
-      z.enum(ALLOWED_PUBLICATION_TYPES as [string, ...string[]]),
-      z.literal(""),
-    ])
+    .string()
     .describe(
-      "Type of publication. Choose from: Peer reviewed (published in scientific journal), Preprint (arXiv, bioRxiv, medRxiv, chemRxiv), Other (technical report, thesis, white paper). If uncertain, leave empty."
+      "Type of publication. Choose ONLY from: " +
+        ALLOWED_PUBLICATION_TYPES.join(", ") +
+        ". Use exact matches only. If uncertain, leave empty."
     ),
 
   publication_year: z
@@ -313,19 +234,22 @@ export const AiAnalysisModelMetadataSchema = z.object({
     .describe(
       "Year of publication of the original model. Extract from the publication date. Format: 4-digit year (e.g., '2023'). If not found, leave empty."
     ),
-  // todo
+
   biomedical_area: z
-    .array(z.enum(ALLOWED_BIOMEDICAL_AREAS as [string, ...string[]]))
+    .array(z.string())
     .min(0)
     .describe(
-      "The pertinent area of research or disease targeted. Choose from: Any (general tool applicable to all fields, e.g., featurizers), ADMET, Antimicrobial resistance, Malaria, Tuberculosis, COVID-19, Gonorrhea, Cancer, Mycetoma, AIDS, Schistosomiasis, Hepatitis, Alzheimer, Chagas, Cryptosporidiosis, Leprosy. Can select multiple if relevant (e.g., both ADMET and Malaria). Use 'Any' for general-purpose models. If uncertain, leave empty."
+      "The pertinent area of research or disease targeted. Choose ONLY from: " +
+        ALLOWED_BIOMEDICAL_AREAS.join(", ") +
+        ". Can select multiple if relevant (e.g., both ADMET and Malaria). Use 'Any' for general-purpose models. Use exact matches only. If uncertain, leave empty."
     ),
-  // todo
   target_organism: z
-    .array(z.enum(ALLOWED_TARGET_ORGANISMS as [string, ...string[]]))
+    .array(z.string())
     .min(0)
     .describe(
-      "The pathogen or organism the model is related to. Choose from the predefined list including: Any (not organism-specific), Homo sapiens, Mus musculus, Rattus norvegicus, Plasmodium falciparum, Mycobacterium tuberculosis, SARS-CoV-2, HIV, ESKAPE pathogens, gut microbiome species, and others. Can select multiple organisms. Use 'Any' if the model is unrelated to any specific organism. If uncertain, leave empty."
+      "The pathogen or organism the model is related to. Choose ONLY from: " +
+        ALLOWED_TARGET_ORGANISMS.join(", ") +
+        ". Can select multiple organisms. Use 'Any' if the model is unrelated to any specific organism. Use exact matches only. If uncertain, leave empty."
     ),
 });
 

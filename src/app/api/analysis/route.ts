@@ -7,7 +7,6 @@ import { filterAiResults } from "@/lib/filter-ai-results";
 
 export async function POST(req: NextRequest) {
   try {
-    console.log("🟥 start ");
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
 
@@ -15,7 +14,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file uploaded." }, { status: 400 });
     }
 
-    // Convert file to Uint8Array for the AI SDK
     const arrayBuffer = await file.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
 
@@ -39,8 +37,6 @@ Extract all relevant information about the biomedical model described in this pu
         },
       ],
     });
-
-    console.log("🟥 finishReason", result.finishReason);
 
     const filtered = filterAiResults(result.object);
     return NextResponse.json(filtered);

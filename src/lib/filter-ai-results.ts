@@ -3,6 +3,7 @@ import { AiAnalysisModelMetadataSchema } from "./schemas";
 
 const ALLOWED_TAGS = METADATA_FORM_CFG.tags.map((t) => t.value);
 const ALLOWED_TASKS = METADATA_FORM_CFG.tasks.map((t) => t.value);
+const ALLOWED_SUBTASKS = METADATA_FORM_CFG.subTasks.map((t) => t.value);
 const ALLOWED_OUTPUTS = METADATA_FORM_CFG.outputs.map((t) => t.value);
 const ALLOWED_LICENSES = METADATA_FORM_CFG.licenses.map((t) => t.value);
 const ALLOWED_DEPLOYMENTS = METADATA_FORM_CFG.deployment.map((t) => t.value);
@@ -47,6 +48,12 @@ export function filterAiResults(aiResults: AiAnalysisModelMetadataSchema) {
   if (filtered.task && !ALLOWED_TASKS.includes(filtered.task)) {
     filtered.task = "";
   }
+
+  if (filtered.subtask && !ALLOWED_SUBTASKS.includes(filtered.subtask)) {
+    console.warn("Invalid subtask:", filtered.subtask);
+    filtered.subtask = "";
+  }
+
   if (filtered.license && !ALLOWED_LICENSES.includes(filtered.license)) {
     filtered.license = "";
   }
