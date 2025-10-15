@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
-import { ModelMetadata } from "@/lib/schemas";
+import { AiAnalysisModelMetadataSchema, ModelMetadata } from "@/lib/schemas";
 
 export function useModelSubmission() {
   const [publication, setPublication] = useState("");
@@ -35,7 +35,9 @@ export function useModelSubmission() {
         throw new Error("No file available for analysis");
       }
 
-      const metadata: ModelMetadata = await api.analyzePdf(pdfFile);
+      const metadata: AiAnalysisModelMetadataSchema = await api.analyzePdf(
+        pdfFile
+      );
 
       sessionStorage.setItem("modelMetadata", JSON.stringify(metadata));
 
