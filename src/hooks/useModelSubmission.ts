@@ -35,7 +35,17 @@ export function useModelSubmission() {
         throw new Error("No file available for analysis");
       }
 
+      // Upload PDF to Google Drive
+      const driveFileId = await api.uploadToGoogleDrive(pdfFile);
+      console.log("Uploaded to Drive:", driveFileId);
+
       const metadata: ModelMetadata = await api.analyzePdf(pdfFile);
+
+      // Optionally add the Drive file ID to metadata
+      // const metadataWithDrive = {
+      //   ...metadata,
+      //   driveFileId,
+      // };
 
       sessionStorage.setItem("modelMetadata", JSON.stringify(metadata));
 

@@ -69,5 +69,3 @@ export default function NewModelPage() {
     </div>
   );
 }
-
-// https://www.nature.com/articles/s41467-025-62717-7.pdf
