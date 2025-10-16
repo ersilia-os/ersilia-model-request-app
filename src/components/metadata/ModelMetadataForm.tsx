@@ -1,9 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { saveMetadataAction } from "@/app/new-model/metadata/actions";
-import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
 import { Controller, useForm } from "react-hook-form";
 import {
   Field,
@@ -38,6 +35,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import MultiSelect from "../multi-select";
+import { saveMetadataAction } from "@/app/new-model/metadata/actions";
 
 interface ModelMetadataFormProps {
   aiResults: AiAnalysisModelMetadataSchema;
@@ -73,36 +71,33 @@ export default function ModelMetadataForm({
       license: aiResults.license || "",
     },
   });
-  const router = useRouter();
-  async function handleFormAction(
-    data: z.infer<typeof MetadataFormSchema>,
-    isFinalSubmit: boolean
-  ) {
-    const existingSlug = aiResults.slug || undefined;
-    const result = await saveMetadataAction(data, isFinalSubmit, existingSlug);
-
-    if (result.success) {
-      console.log(`🟢 Status: ${result.message}`);
-      setIsLocked(true);
-
-      if (isFinalSubmit && result.slug) {
-        router.push(`/models/${result.slug}`);
-      }
-    } else {
-      alert(result.message);
-      setIsLocked(false);
-    }
-  }
   const [isLocked, setIsLocked] = useState(false);
 
-  // function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-  //   console.log("🟥 form data", data);
-  //   setIsLocked(true);
-  // }
+  function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
+    console.log("🟥 form data", data);
 
-  // const handleSaveClick = () => {
-  //   setIsLocked(true);
-  // };
+    setIsLocked(true);
+  }
+
+  const handleSaveClick = async () => {
+    const titleResult = await form.trigger("title");
+    const slugResult = await form.trigger("slug");
+
+    if (!titleResult || !slugResult) {
+      setIsLocked(false);
+    } else {
+      const currentFormData = form.getValues();
+      console.log(currentFormData);
+      const action = await saveMetadataAction(currentFormData);
+
+      if (action.success === true) {
+        alert("Data saved");
+        setIsLocked(true);
+      } else {
+        alert("Something happen");
+      }
+    }
+  };
 
   const handleEditClick = () => {
     setIsLocked(false);
@@ -118,7 +113,7 @@ export default function ModelMetadataForm({
       <form
         id="form-metadata"
         className="mb-6"
-        // onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <fieldset disabled={isLocked} className="flex flex-col gap-7">
           <FieldGroup>
@@ -910,10 +905,10 @@ export default function ModelMetadataForm({
       <Field orientation="horizontal">
         <Button
           variant="plum"
-          type="button"
+          type="submit"
           form="form-metadata"
-          onClick={form.handleSubmit((data) => handleFormAction(data, false))} // isFinalSubmit = false
-          disabled={isLocked || form.formState.isSubmitting} // Disable if locked or submitting
+          onClick={handleSaveClick}
+          disabled={isLocked}
         >
           Save
         </Button>
@@ -921,7 +916,7 @@ export default function ModelMetadataForm({
           type="button"
           variant="secondary"
           onClick={handleEditClick}
-          disabled={!isLocked || form.formState.isSubmitting}
+          disabled={!isLocked}
         >
           Edit
         </Button>
@@ -929,7 +924,7 @@ export default function ModelMetadataForm({
           type="button"
           variant="outline"
           onClick={handleResetClick}
-          disabled={!isLocked || form.formState.isSubmitting}
+          disabled={!isLocked}
         >
           Reset
         </Button>
