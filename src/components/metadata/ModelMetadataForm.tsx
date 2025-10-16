@@ -91,6 +91,10 @@ export default function ModelMetadataForm({
     setIsLocked(false);
   };
 
+  const handlePreviewClick = () => {
+    console.log("push/preview");
+  };
+
   return (
     <>
       <form
@@ -885,26 +889,39 @@ export default function ModelMetadataForm({
           </FieldGroup>
         </fieldset>
       </form>
-      <Field orientation="horizontal">
-        <Button
-          variant="plum"
-          type="submit"
-          form="form-metadata"
-          onClick={handleSaveClick}
-          disabled={isLocked}
-        >
-          Save
-        </Button>
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={handleEditClick}
-          disabled={!isLocked}
-        >
-          Edit
-        </Button>
-        <Button type="button" variant="outline" onClick={handleResetClick}>
-          Reset
+      <Field
+        orientation="horizontal"
+        className="flex justify-between items-center"
+      >
+        <div className="flex gap-2">
+          <Button
+            variant="plum"
+            type="submit"
+            form="form-metadata"
+            onClick={handleSaveClick}
+            disabled={isLocked}
+          >
+            Save
+          </Button>
+          <Button
+            type="button"
+            variant="edit"
+            onClick={handleEditClick}
+            disabled={!isLocked}
+          >
+            Edit
+          </Button>
+          <Button
+            type="button"
+            variant="transparent"
+            onClick={handleResetClick}
+          >
+            Reset
+          </Button>
+        </div>
+
+        <Button type="button" variant="plum" onClick={handlePreviewClick}>
+          Preview
         </Button>
       </Field>
     </>
