@@ -40,8 +40,6 @@ Extract all relevant information about the biomedical model described in this pu
 
     const filtered = filterAiResults(result.object);
     return NextResponse.json(filtered);
-
-    return NextResponse.json(result.object);
   } catch (error: unknown) {
     console.error("Upload error:", error);
 
