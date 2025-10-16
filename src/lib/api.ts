@@ -1,4 +1,4 @@
-import { ModelMetadata } from "@/lib/schemas";
+import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
 
 const api = {
   async downloadPdfFromUrl(url: string): Promise<File | undefined> {
@@ -26,7 +26,7 @@ const api = {
     }
   },
 
-  async analyzePdf(file: File): Promise<ModelMetadata> {
+  async analyzePdf(file: File): Promise<AiAnalysisModelMetadataSchema> {
     const fd = new FormData();
     fd.append("file", file);
 
@@ -36,13 +36,12 @@ const api = {
     });
 
     const data = await res.json();
-    console.log("Analysis response:", res.status, data);
 
     if (!res.ok) {
       throw new Error(data.error || "Analysis failed");
     }
 
-    return data as ModelMetadata;
+    return data;
   },
 };
 
