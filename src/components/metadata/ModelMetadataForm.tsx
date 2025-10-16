@@ -35,6 +35,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import MultiSelect from "../multi-select";
+import { saveMetadataAction } from "@/app/new-model/metadata/actions";
 
 interface ModelMetadataFormProps {
   aiResults: AiAnalysisModelMetadataSchema;
@@ -71,7 +72,6 @@ export default function ModelMetadataForm({
       license: aiResults.license || "",
     },
   });
-
   const [isLocked, setIsLocked] = useState(false);
   const [isValidated, setValidated] = useState("");
 
@@ -80,8 +80,24 @@ export default function ModelMetadataForm({
     setIsLocked(true);
   }
 
-  const handleSaveClick = () => {
-    setIsLocked(true);
+  const handleSaveClick = async () => {
+    const titleResult = await form.trigger("title");
+    const slugResult = await form.trigger("slug");
+
+    if (!titleResult || !slugResult) {
+      setIsLocked(false);
+    } else {
+      const currentFormData = form.getValues();
+      console.log(currentFormData);
+      const action = await saveMetadataAction(currentFormData);
+
+      if (action.success === true) {
+        alert("Data saved");
+        setIsLocked(true);
+      } else {
+        alert("Something happen");
+      }
+    }
   };
 
   const handleEditClick = () => {
