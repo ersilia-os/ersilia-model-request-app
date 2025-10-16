@@ -20,8 +20,9 @@ enum FormStatus {
 }
 
 model User {
-  sid  String @id
+  sub  String @id
   name String?
+  email String? @unique
   metadataRecords ModelMetadata[]
 }
 
@@ -35,7 +36,7 @@ model ModelMetadata {
   slug                    String      @unique
 
   createdBy               String      // The user's Auth0 'sub' ID
-  author                  User        @relation(fields: [createdBy], references: [sid])
+  author                  User        @relation(fields: [createdBy], references: [sub])
 
   description             String?     
   interpretation          String?

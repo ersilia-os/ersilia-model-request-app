@@ -3,13 +3,12 @@
 import prisma from "@/lib/prisma";
 
 export async function getOrCreateUser(
-  sid: string,
-  userData: {
-    name: string;
-  }
+  sub: string,
+  email?: string,
+  name?: string
 ) {
   const existingUser = await prisma.user.findUnique({
-    where: { sid },
+    where: { sub },
   });
 
   if (existingUser) {
@@ -18,8 +17,9 @@ export async function getOrCreateUser(
 
   return await prisma.user.create({
     data: {
-      sid,
-      name: userData.name,
+      sub,
+      name,
+      email,
     },
   });
 }
