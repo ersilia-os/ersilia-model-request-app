@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const MetadataFormSchema = z.object({
   title: z.string().trim().min(70, {
-    message: "Please provide at least a title with at least 70 characters.",
+    message: "Please provide a title with at least 70 characters.",
   }),
   slug: z
     .string()

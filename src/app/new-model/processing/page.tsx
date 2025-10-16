@@ -35,7 +35,7 @@ export default function ProcessingPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center my-6">
       <SpinnerEmpty />
     </div>
   );
