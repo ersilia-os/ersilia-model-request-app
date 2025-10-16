@@ -91,8 +91,16 @@ export default function ModelMetadataForm({
     setIsLocked(false);
   };
 
-  const handlePreviewClick = () => {
-    console.log("push/preview");
+  const handlePreviewClick = async () => {
+    const values = form.getValues();
+    const isValid = await form.trigger();
+
+    if (!isValid) {
+      console.log("Form is invalid.");
+      return;
+    }
+
+    console.log("form is valid:", values);
   };
 
   return (
