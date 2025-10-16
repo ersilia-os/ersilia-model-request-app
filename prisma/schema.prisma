@@ -14,7 +14,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum FormStatus {
+  DRAFT
+  SUBMITTED
+}
+
 model User {
-  sid  String @unique
-  name String
+  sid  String @id
+  name String?
+  metadataRecords ModelMetadata[]
+}
+
+model ModelMetadata {
+  id                      String      @id @default(uuid())
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+
+  status                  FormStatus  @default(DRAFT) 
+  title                   String      @unique         
+  slug                    String      @unique
+
+  createdBy               String      // The user's Auth0 'sub' ID
+  author                  User        @relation(fields: [createdBy], references: [sid])
+
+  description             String?     
+  interpretation          String?
+  tags                    String[]
+
+  task                    String?
+  subtask                 String?
+  input                   String?
+  inputDimension          Int?        @map("input_dimension") 
+  output                  String[]
+  outputDimension         Int?        @map("output_dimension")
+  outputConsistency       String?     @map("output_consistency")
+
+  publicationUrl          String?     @map("publication_url")
+  publicationYear         Int?        @map("publication_year")
+  publicationType         String?     @map("publication_type")
+  sourceUrl               String?     @map("source_url")
+  sourceType              String?     @map("source_type")
+  deployment              String?
+  license                 String?
+
+  biomedicalArea          String[]  @map("biomedical_area")
+  targetOrganism          String[]  @map("target_organism")
+  
+  @@map("model_metadata") 
 }
