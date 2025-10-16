@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   Field,
@@ -45,6 +45,7 @@ export default function ModelMetadataForm({
 }: ModelMetadataFormProps) {
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
     resolver: zodResolver(MetadataFormSchema),
+    mode: "onChange",
     defaultValues: {
       title: aiResults.title || "",
       slug: aiResults.slug || "",
@@ -72,9 +73,10 @@ export default function ModelMetadataForm({
   });
 
   const [isLocked, setIsLocked] = useState(false);
+  const [isValidated, setValidated] = useState("");
 
   function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-    console.log("🟥 form data", data);
+    console.log("form data", data);
     setIsLocked(true);
   }
 
@@ -86,22 +88,33 @@ export default function ModelMetadataForm({
     setIsLocked(false);
   };
 
-  const handleResetClick = () => {
-    form.reset();
-    setIsLocked(false);
-  };
-
   const handlePreviewClick = async () => {
     const values = form.getValues();
     const isValid = await form.trigger();
 
     if (!isValid) {
       console.log("Form is invalid.");
+      setValidated("*Please fix the highlighted errors first.");
       return;
     }
 
+    setValidated("");
+
     console.log("form is valid:", values);
   };
+
+  const watchedValues = form.watch();
+
+  useEffect(() => {
+    const checkValidation = async () => {
+      const isValid = await form.trigger();
+      if (isValid) {
+        setValidated("");
+      }
+    };
+
+    checkValidation();
+  }, [watchedValues, form]);
 
   return (
     <>
@@ -899,9 +912,9 @@ export default function ModelMetadataForm({
       </form>
       <Field
         orientation="horizontal"
-        className="flex justify-between items-center"
+        className="flex justify-between items-center mb-1"
       >
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <Button
             variant="plum"
             type="submit"
@@ -919,18 +932,18 @@ export default function ModelMetadataForm({
           >
             Edit
           </Button>
-          <Button
-            type="button"
-            variant="transparent"
-            onClick={handleResetClick}
-          >
-            Reset
-          </Button>
         </div>
 
-        <Button type="button" variant="plum" onClick={handlePreviewClick}>
-          Preview
-        </Button>
+        <div className="relative">
+          <Button type="button" variant="plum" onClick={handlePreviewClick}>
+            Preview
+          </Button>
+          {isValidated && (
+            <p className="absolute right-0 mt-2 text-destructive font-medium text-xs whitespace-nowrap">
+              {isValidated}
+            </p>
+          )}
+        </div>
       </Field>
     </>
   );
