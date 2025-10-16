@@ -60,7 +60,7 @@ export default function NewModelPage() {
                 disabled={isLoading || (!file && !publication)}
                 className="w-full sm:flex-1"
               >
-                {isLoading ? "Uploading..." : "Submit"}
+                {isLoading ? "Uploading..." : "Analyse"}
               </Button>
             </div>
           </CardContent>
