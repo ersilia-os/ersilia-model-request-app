@@ -2,25 +2,20 @@
 
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import ModelMetadataForm from "@/components/metadata/ModelMetadataForm";
-
-import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
-import { useRouter } from "next/navigation";
+import { useAiAnalysisResults } from "@/hooks/useAiAnalysisResult";
+import { SpinnerEmpty } from "@/components/processing/processing";
 
 export default function ModelMetadataFormPage() {
-  const router = useRouter();
+  const { aiResults, isLoading } = useAiAnalysisResults();
 
-  const aiResultsJSON =
-    typeof window !== "undefined" ? sessionStorage.getItem("aiAnalysis") : null;
-
-  if (!aiResultsJSON) {
-    if (typeof window !== "undefined") {
-      router.push("/new-model");
-    }
-    return null;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+        <SpinnerEmpty />
+        <p className="text-gray-600 text-center">Loading metadata...</p>
+      </div>
+    );
   }
-
-  const aiResults: AiAnalysisModelMetadataSchema = JSON.parse(aiResultsJSON);
-
   return (
     <main className="flex min-h-screen items-center justify-center py-10">
       <Card className="w-full border-2 border-plum rounded-2xl shadow-xl p-6 md:p-10">

@@ -8,17 +8,30 @@ export default function ProcessingPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const report = sessionStorage.getItem("aiAnalysis");
+    const checkInterval = setInterval(() => {
+      const result = sessionStorage.getItem("aiAnalysis");
 
-      if (report) {
+      if (result) {
+        clearInterval(checkInterval);
         router.push("/new-model/metadata");
-      } else {
-        router.push("/new-model");
       }
-    }, 2000);
+    }, 500); // Check every 500ms
 
-    return () => clearTimeout(timer);
+    // Timeout after 2 minutes
+    // const timeout = setTimeout(() => {
+    //   clearInterval(checkInterval);
+    //   const result = sessionStorage.getItem("aiAnalysis");
+
+    //   if (!result) {
+    //     alert("Analysis is taking longer than expected. Please try again.");
+    //     router.push("/new-model");
+    //   }
+    // }, 120000);
+
+    return () => {
+      clearInterval(checkInterval);
+      // clearTimeout(timeout);
+    };
   }, [router]);
 
   return (

@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
-import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
 
-export function useModelSubmission() {
+export function useAiPublicationAnalysis() {
+  const router = useRouter();
   const [publication, setPublication] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,36 +15,27 @@ export function useModelSubmission() {
       return;
     }
 
-    setIsLoading(true);
+    sessionStorage.removeItem("aiAnalysis");
+    router.push("/new-model/processing");
 
     try {
       let pdfFile: File | null = file;
 
       if (!pdfFile && publication) {
-        const downloadedFile = await api.downloadPdfFromUrl(publication);
-        if (!downloadedFile) {
-          setIsLoading(false);
-          return;
-        }
-        pdfFile = downloadedFile;
+        pdfFile = (await api.downloadPdfFromUrl(publication)) || null;
       }
 
       if (!pdfFile) {
         throw new Error("No file available for analysis");
       }
 
-      const metadata: AiAnalysisModelMetadataSchema = await api.analyzePdf(
-        pdfFile
-      );
-
+      const metadata = await api.analyzePdf(pdfFile);
       sessionStorage.setItem("aiAnalysis", JSON.stringify(metadata));
-
-      router.push("/new-model/processing");
     } catch (err) {
       console.error(err);
+
+      router.push("/new-model");
       alert("Error generating report. Please try again.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -55,7 +44,6 @@ export function useModelSubmission() {
     setPublication,
     file,
     setFile,
-    isLoading,
     handleSubmit,
   };
 }
