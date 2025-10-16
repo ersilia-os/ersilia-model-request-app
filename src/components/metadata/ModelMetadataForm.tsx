@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   Field,
@@ -45,6 +45,7 @@ export default function ModelMetadataForm({
 }: ModelMetadataFormProps) {
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
     resolver: zodResolver(MetadataFormSchema),
+    mode: "onChange",
     defaultValues: {
       title: aiResults.title || "",
       slug: aiResults.slug || "",
@@ -72,9 +73,10 @@ export default function ModelMetadataForm({
   });
 
   const [isLocked, setIsLocked] = useState(false);
+  const [isValidated, setValidated] = useState("");
 
   function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-    console.log("🟥 form data", data);
+    console.log("form data", data);
     setIsLocked(true);
   }
 
@@ -86,9 +88,18 @@ export default function ModelMetadataForm({
     setIsLocked(false);
   };
 
-  const handleResetClick = () => {
-    form.reset();
-    setIsLocked(false);
+  const watchedValues = form.watch();
+
+  useEffect(() => {
+    const checkValidation = async () => {
+      const isValid = await form.trigger();
+      if (isValid) setValidated("");
+    };
+    checkValidation();
+  }, [watchedValues, form]);
+
+  const onInvalid = () => {
+    setValidated("*Please fix the highlighted errors first.");
   };
 
   return (
@@ -96,7 +107,7 @@ export default function ModelMetadataForm({
       <form
         id="form-metadata"
         className="mb-6"
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit, onInvalid)}
       >
         <fieldset disabled={isLocked} className="flex flex-col gap-7">
           <FieldGroup>
@@ -885,27 +896,41 @@ export default function ModelMetadataForm({
           </FieldGroup>
         </fieldset>
       </form>
-      <Field orientation="horizontal">
-        <Button
-          variant="plum"
-          type="submit"
-          form="form-metadata"
-          onClick={handleSaveClick}
-          disabled={isLocked}
-        >
-          Save
-        </Button>
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={handleEditClick}
-          disabled={!isLocked}
-        >
-          Edit
-        </Button>
-        <Button type="button" variant="outline" onClick={handleResetClick}>
-          Reset
-        </Button>
+      <Field
+        orientation="horizontal"
+        className="flex justify-between items-center mb-1"
+      >
+        <div className="flex gap-2 items-center">
+          <Button
+            variant="plum"
+            type="submit"
+            form="form-metadata"
+            onClick={handleSaveClick}
+            disabled={isLocked}
+          >
+            Save
+          </Button>
+          <Button
+            type="button"
+            variant="edit"
+            onClick={handleEditClick}
+            disabled={!isLocked}
+          >
+            Edit
+          </Button>
+        </div>
+
+        <div className="relative">
+          <Button type="submit" form="form-metadata" variant="plum">
+            Preview
+          </Button>
+
+          {isValidated && (
+            <p className="absolute right-0 mt-2 text-destructive font-bold text-xs whitespace-nowrap">
+              {isValidated}
+            </p>
+          )}
+        </div>
       </Field>
     </>
   );
