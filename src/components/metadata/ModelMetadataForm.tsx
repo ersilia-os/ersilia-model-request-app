@@ -88,40 +88,26 @@ export default function ModelMetadataForm({
     setIsLocked(false);
   };
 
-  const handlePreviewClick = async () => {
-    const values = form.getValues();
-    const isValid = await form.trigger();
-
-    if (!isValid) {
-      console.log("Form is invalid.");
-      setValidated("*Please fix the highlighted errors first.");
-      return;
-    }
-
-    setValidated("");
-
-    console.log("form is valid:", values);
-  };
-
   const watchedValues = form.watch();
 
   useEffect(() => {
     const checkValidation = async () => {
       const isValid = await form.trigger();
-      if (isValid) {
-        setValidated("");
-      }
+      if (isValid) setValidated("");
     };
-
     checkValidation();
   }, [watchedValues, form]);
+
+  const onInvalid = () => {
+    setValidated("*Please fix the highlighted errors first.");
+  };
 
   return (
     <>
       <form
         id="form-metadata"
         className="mb-6"
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit, onInvalid)}
       >
         <fieldset disabled={isLocked} className="flex flex-col gap-7">
           <FieldGroup>
@@ -935,11 +921,12 @@ export default function ModelMetadataForm({
         </div>
 
         <div className="relative">
-          <Button type="button" variant="plum" onClick={handlePreviewClick}>
+          <Button type="submit" form="form-metadata" variant="plum">
             Preview
           </Button>
+
           {isValidated && (
-            <p className="absolute right-0 mt-2 text-destructive font-medium text-xs whitespace-nowrap">
+            <p className="absolute right-0 mt-2 text-destructive font-bold text-xs whitespace-nowrap">
               {isValidated}
             </p>
           )}
