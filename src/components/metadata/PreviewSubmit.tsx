@@ -1,43 +1,11 @@
 "use client";
-
-import z from "zod";
-
+import { ModelMetadata } from "../../../generated/prisma";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import { MetadataFormSchema } from "@/lib/schemas";
 import { Separator } from "../ui/separator";
 
-type MetadataPreview = z.infer<typeof MetadataFormSchema>;
-
-type PreviewSubmitProps = {
-  data?: MetadataPreview | null;
-};
-
-const previewData: MetadataPreview = {
-  title: "Proposed Model Title",
-  slug: "proposed-model-title",
-  status: "Draft",
-  description:
-    "Short summary of the model purpose, training data, and expected behaviour. Replace this text with the real form values once the flow is wired.",
-  interpretation:
-    "Explain how to interpret the model predictions, what each value represents, and any known limitations.",
-  tags: ["Cheminformatics", "Drug Discovery", "AI"],
-  task: "Classification",
-  subtask: "Binary Classification",
-  input: "Molecules",
-  input_dimension: "2048",
-  output: ["Probability", "Class"],
-  output_dimension: "2",
-  output_consistency: "Deterministic",
-  publication_url: "https://example.com/publication",
-  publication_type: "Journal article",
-  publication_year: "2023",
-  source_url: "https://github.com/example/repo",
-  source_type: "GitHub",
-  deployment: "Docker",
-  license: "MIT License",
-  biomedical_area: ["Infectious Diseases"],
-  target_organism: ["Mycobacterium tuberculosis"],
-};
+interface PreviewSubmitProps {
+  data: ModelMetadata;
+}
 
 const statusStyles: Record<string, string> = {
   draft: "bg-yellow-300 text-black",
@@ -45,7 +13,7 @@ const statusStyles: Record<string, string> = {
 };
 
 export default function PreviewSubmit({ data }: PreviewSubmitProps) {
-  const finalData = data ?? previewData;
+  const finalData = data;
   const statusKey = finalData.status?.toLowerCase() ?? "";
   const statusVariant = statusStyles[statusKey] ?? "bg-gray-100 text-gray-700";
 
@@ -68,18 +36,16 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
             <h2 className="mb-3 text-lg font-semibold text-plum">
               Basic identification
             </h2>
-            <div className="grid gap-4 text-sm text-plum/90 md:grid-cols-2">
+            <div className="grid gap-4 text-plum/90 md:grid-cols-2">
               <div>
-                <p className="text-base text-plum/90">Title</p>
+                <p className="text-base font-semibold text-plum/90">Title</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.title ?? "—"}
+                  {finalData.title}
                 </p>
               </div>
               <div>
-                <p className="text-base text-plum/90">Slug</p>
-                <p className="mt-1 text-base text-gray-700">
-                  {finalData.slug ?? "—"}
-                </p>
+                <p className="text-base font-semibold text-plum/90">Slug</p>
+                <p className="mt-1 text-base text-gray-700">{finalData.slug}</p>
               </div>
             </div>
           </section>
@@ -87,13 +53,16 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
           <section>
             <h2 className="mb-2 text-lg font-semibold text-plum">
               Description & interpretation
+              <p className="text-base font-semibold text-plum/90">
+                Description
+              </p>
             </h2>
             <p className="leading-relaxed text-gray-700">
               {finalData.description}
             </p>
-            <h3 className="mt-4 text-sm font-semibold uppercase text-plum">
-              Interpretation
-            </h3>
+            <p className="text-base font-semibold text-plum/90">
+              Interpreation
+            </p>
             <p className="leading-relaxed text-gray-700">
               {finalData.interpretation}
             </p>
@@ -141,7 +110,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               <div>
                 <p className="text-base text-plum/90">Input dimension</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.input_dimension ?? "—"}
+                  {finalData.inputDimension ?? "—"}
                 </p>
               </div>
               <div>
@@ -153,13 +122,13 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               <div>
                 <p className="text-base text-plum/90">Output dimension</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.output_dimension ?? "—"}
+                  {finalData.outputDimension ?? "—"}
                 </p>
               </div>
               <div>
                 <p className="text-base text-plum/90">Output consistency</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.output_consistency ?? "—"}
+                  {finalData.outputConsistency ?? "—"}
                 </p>
               </div>
             </div>
@@ -185,31 +154,31 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               <div>
                 <p className="text-base text-plum/90">Publication URL</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.publication_url ?? "—"}
+                  {finalData.publicationUrl ?? "—"}
                 </p>
               </div>
               <div>
                 <p className="text-base text-plum/90">Publication type</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.publication_type ?? "—"}
+                  {finalData.publicationType ?? "—"}
                 </p>
               </div>
               <div>
                 <p className="text-base text-plum/90">Publication year</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.publication_year ?? "—"}
+                  {finalData.publicationYear ?? "—"}
                 </p>
               </div>
               <div>
                 <p className="text-base text-plum/90">Source URL</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.source_url ?? "—"}
+                  {finalData.sourceUrl ?? "—"}
                 </p>
               </div>
               <div>
                 <p className="text-base text-plum/90">Source type</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.source_type ?? "—"}
+                  {finalData.sourceType ?? "—"}
                 </p>
               </div>
             </div>
@@ -223,13 +192,13 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               <div>
                 <p className="text-base text-plum/90">Biomedical area</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.biomedical_area.join(", ")}
+                  {finalData.biomedicalArea.join(", ")}
                 </p>
               </div>
               <div>
                 <p className="text-base text-plum/90">Target organism</p>
                 <p className="mt-1 text-base text-gray-700">
-                  {finalData.target_organism.join(", ")}
+                  {finalData.targetOrganism.join(", ")}
                 </p>
               </div>
             </div>
