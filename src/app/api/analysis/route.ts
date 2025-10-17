@@ -39,6 +39,9 @@ Extract all relevant information about the biomedical model described in this pu
     });
 
     const filtered = filterAiResults(result.object);
+    if (!filtered.isBiomedicalModel) {
+      throw new Error("This appears to be not a scientific publication");
+    }
     return NextResponse.json(filtered);
   } catch (error: unknown) {
     console.error("Upload error:", error);

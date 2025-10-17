@@ -97,12 +97,19 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
             {data.input && (
               <div>
                 <h2 className="text-lg font-semibold text-plum mb-2">Input</h2>
-                <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
-                  {data.input}
-                </span>
+                <p className="text-gray-700 text-base mt-2">
+                  Type:
+                  <span className=" ml-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+                    {data.input}
+                  </span>
+                </p>
+
                 {data.inputDimension && (
-                  <p className="text-gray-500 text-xs mt-2">
-                    Dimension: {data.inputDimension}
+                  <p className="text-gray-700 text-base mt-2">
+                    Dimension:
+                    <span className=" ml-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+                      {data.inputDimension}
+                    </span>
                   </p>
                 )}
               </div>
@@ -111,10 +118,11 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
             {data.output.length > 0 && (
               <div>
                 <h2 className="text-lg font-semibold text-plum mb-2">Output</h2>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 items-center">
+                  <p className="text-gray-700 text-base">Type:</p>
                   {data.output.map((out, idx) => (
                     <span
-                      key={idx}
+                      key={out}
                       className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm"
                     >
                       {out}
@@ -122,13 +130,19 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
                   ))}
                 </div>
                 {data.outputDimension && (
-                  <p className="text-gray-500 text-xs mt-2">
-                    Dimension: {data.outputDimension}
+                  <p className="text-gray-700 text-base mt-2">
+                    Dimension:
+                    <span className=" ml-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+                      {data.outputDimension}
+                    </span>
                   </p>
                 )}
                 {data.outputConsistency && (
-                  <p className="text-gray-500 text-xs mt-1">
-                    Consistency: {data.outputConsistency}
+                  <p className="text-gray-700 text-base mt-2">
+                    Consistency:
+                    <span className=" ml-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+                      {data.outputConsistency}
+                    </span>
                   </p>
                 )}
               </div>

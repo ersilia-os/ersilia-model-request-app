@@ -35,7 +35,10 @@ import {
   SelectValue,
 } from "../ui/select";
 import MultiSelect from "../multi-select";
-import { saveMetadataAction } from "@/app/new-model/metadata/actions";
+import {
+  saveMetadataAction,
+  saveValidatedMetadataAction,
+} from "@/app/new-model/metadata/actions";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
@@ -80,7 +83,7 @@ export default function ModelMetadataForm({
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-    const action = await saveMetadataAction(data);
+    const action = await saveValidatedMetadataAction(data);
 
     if (action.success === true) {
       alert("Metadata saved");

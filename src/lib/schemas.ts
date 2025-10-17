@@ -110,6 +110,11 @@ const ALLOWED_TARGET_ORGANISMS = METADATA_FORM_CFG.targetOrganism.map(
 );
 
 export const AiAnalysisModelMetadataSchema = z.object({
+  isBiomedicalModel: z
+    .boolean()
+    .describe(
+      "Identify if this is a scientific publication that describes a biomedical model."
+    ),
   slug: z
     .string()
     .trim()
