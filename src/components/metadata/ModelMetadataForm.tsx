@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, FieldErrors, useForm } from "react-hook-form";
 import {
   Field,
@@ -37,6 +37,7 @@ import {
 import MultiSelect from "../multi-select";
 import { saveMetadataAction } from "@/app/new-model/metadata/actions";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 interface ModelMetadataFormProps {
   aiResults: AiAnalysisModelMetadataSchema;
@@ -76,6 +77,7 @@ export default function ModelMetadataForm({
   });
   const [isLocked, setIsLocked] = useState(false);
   const [isValidated, setValidated] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
     const action = await saveMetadataAction(data);
@@ -92,23 +94,43 @@ export default function ModelMetadataForm({
   }
 
   const handleSaveClick = async () => {
-    const titleResult = await form.trigger("title");
-    const slugResult = await form.trigger("slug");
+    setIsLoading(true);
 
-    if (!titleResult || !slugResult) {
-      setIsLocked(false);
-    } else {
+    try {
+      const titleResult = await form.trigger("title");
+      const slugResult = await form.trigger("slug");
+
+      if (!titleResult || !slugResult) {
+        setIsLocked(false);
+        return;
+      }
+
       const currentFormData = form.getValues();
       const action = await saveMetadataAction(currentFormData);
 
       if (action.success === true) {
-        alert("Metadata saved");
+        console.log("Metadata saved");
         setIsLocked(true);
       } else {
-        alert("Something wrong happen and data were not saved");
+        console.log("Something went wrong and data were not saved");
       }
+    } catch (err) {
+      console.error("Error while saving metadata:", err);
+      console.log("Unexpected error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const watchedValues = form.watch();
+
+  useEffect(() => {
+    const checkValidation = async () => {
+      const isValid = await form.trigger();
+      if (isValid) setValidated("");
+    };
+    checkValidation();
+  }, [watchedValues, form]);
 
   const handleEditClick = () => {
     setIsLocked(false);
@@ -939,9 +961,17 @@ export default function ModelMetadataForm({
             type="submit"
             form="form-metadata"
             onClick={handleSaveClick}
-            disabled={isLocked}
+            disabled={isLocked || isLoading}
+            className="flex items-center gap-2"
           >
-            Save
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              "Save"
+            )}
           </Button>
           <Button
             type="button"
