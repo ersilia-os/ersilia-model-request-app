@@ -29,7 +29,7 @@ export async function saveMetadataAction(data: formData) {
     publicationUrl: data.publication_url,
     publicationYear: data.publication_year,
     publicationType: data.publication_type,
-    sourceUrl: data.source_type,
+    sourceUrl: data.source_url,
     sourceType: data.source_type,
     deployment: data.deployment,
     biomedicalArea: data.biomedical_area,

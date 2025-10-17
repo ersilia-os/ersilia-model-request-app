@@ -21,7 +21,7 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
   if (!submissionDetails) return;
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-white my-10">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white my-10">
       <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <CardHeader className="text-center p-0 mb-6">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-plum mb-3 md:mb-4 text-balance">
@@ -128,6 +128,6 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
           </div>
         </CardContent>
       </Card>
-    </main>
+    </div>
   );
 }
