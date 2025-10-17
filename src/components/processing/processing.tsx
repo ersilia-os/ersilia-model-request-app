@@ -19,7 +19,7 @@ export function SpinnerEmpty() {
           <EmptyHeader>
             <div className="flex justify-center mb-6">
               <EmptyMedia variant="icon">
-                <Spinner />
+                <Spinner className="size-15 text-plum" />
               </EmptyMedia>
             </div>
 
