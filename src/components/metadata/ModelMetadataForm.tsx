@@ -118,9 +118,7 @@ export default function ModelMetadataForm({
       console.error("Error while saving metadata:", err);
       console.log("Unexpected error occurred");
     } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1500);
+      setIsLoading(false);
     }
   };
 
