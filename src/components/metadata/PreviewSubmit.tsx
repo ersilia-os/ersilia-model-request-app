@@ -43,7 +43,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </p>
             </div>
           )}
-
+          <Separator />
           {data.interpretation && (
             <div>
               <h2 className="text-lg font-semibold text-plum mb-2">
@@ -54,7 +54,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </p>
             </div>
           )}
-
+          <Separator />
           {data.tags.length > 0 && (
             <div>
               <h2 className="text-lg font-semibold text-plum mb-2">Tags</h2>
@@ -70,7 +70,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </div>
             </div>
           )}
-
+          <Separator />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {data.task && (
               <div>
@@ -120,7 +120,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
                 <h2 className="text-lg font-semibold text-plum mb-2">Output</h2>
                 <div className="flex flex-wrap gap-2 items-center">
                   <p className="text-gray-700 text-base">Type:</p>
-                  {data.output.map((out, idx) => (
+                  {data.output.map((out) => (
                     <span
                       key={out}
                       className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm"
@@ -148,7 +148,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </div>
             )}
           </div>
-
+          <Separator />
           {data.biomedicalArea.length > 0 && (
             <div>
               <h2 className="text-lg font-semibold text-plum mb-2">
@@ -166,7 +166,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </div>
             </div>
           )}
-
+          <Separator />
           {data.targetOrganism.length > 0 && (
             <div>
               <h2 className="text-lg font-semibold text-plum mb-2">
@@ -184,7 +184,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </div>
             </div>
           )}
-
+          <Separator />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {data.deployment && (
               <div>
@@ -196,7 +196,6 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
                 </p>
               </div>
             )}
-
             {data.license && (
               <div>
                 <h2 className="text-lg font-semibold text-plum mb-2">
@@ -219,7 +218,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </div>
             )}
           </div>
-
+          <Separator />
           {(data.publicationUrl || data.sourceUrl) && (
             <div className="space-y-3">
               <h2 className="text-lg font-semibold text-plum mb-2">
