@@ -83,7 +83,7 @@ export default function ModelMetadataForm({
     if (action.success === true) {
       alert("Metadata saved");
       setIsLocked(true);
-      router.push("/new-model/preview");
+      router.push("/new-model/submit-preview");
     } else {
       alert("Something wrong happen and data were not saved");
     }
