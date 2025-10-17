@@ -2,8 +2,8 @@ import { METADATA_FORM_CFG } from "@/config/form-cfg";
 import { z } from "zod";
 
 export const MetadataFormSchema = z.object({
-  title: z.string().trim().min(70, {
-    message: "Please provide a title with at least 70 characters.",
+  title: z.string().trim().min(50, {
+    message: "Please provide a title with at least 50 characters.",
   }),
   slug: z
     .string()

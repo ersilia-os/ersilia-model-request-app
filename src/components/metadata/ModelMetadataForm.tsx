@@ -36,6 +36,7 @@ import {
 } from "../ui/select";
 import MultiSelect from "../multi-select";
 import { saveMetadataAction } from "@/app/new-model/metadata/actions";
+import { useRouter } from "next/navigation";
 
 interface ModelMetadataFormProps {
   aiResults: AiAnalysisModelMetadataSchema;
@@ -44,6 +45,7 @@ interface ModelMetadataFormProps {
 export default function ModelMetadataForm({
   aiResults,
 }: ModelMetadataFormProps) {
+  const router = useRouter();
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
     resolver: zodResolver(MetadataFormSchema),
     mode: "onChange",
@@ -75,8 +77,17 @@ export default function ModelMetadataForm({
   const [isLocked, setIsLocked] = useState(false);
   const [isValidated, setValidated] = useState("");
 
-  function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-    console.log("form data", data);
+  async function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
+    const action = await saveMetadataAction(data);
+
+    if (action.success === true) {
+      alert("Metadata saved");
+      setIsLocked(true);
+      router.push("/new-model/preview");
+    } else {
+      alert("Something wrong happen and data were not saved");
+    }
+
     setIsLocked(true);
   }
 
