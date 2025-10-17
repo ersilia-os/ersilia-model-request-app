@@ -27,6 +27,7 @@ interface MultiSelectProps {
   className?: string;
   isLoading?: boolean;
   disabled?: boolean;
+  id?: string;
 }
 
 export default function MultiSelect({
@@ -37,6 +38,7 @@ export default function MultiSelect({
   className,
   isLoading = false,
   disabled = false,
+  id,
 }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -56,6 +58,7 @@ export default function MultiSelect({
     <div className={cn("w-full", className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger
+          id={id}
           className={cn(
             "flex h-12 w-full transition-all items-center justify-between rounded-md border border-input bg-background text-sm",
             "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
