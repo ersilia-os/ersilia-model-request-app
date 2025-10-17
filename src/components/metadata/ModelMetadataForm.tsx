@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FieldErrors, useForm } from "react-hook-form";
 import {
   Field,
   FieldDescription,
@@ -92,10 +92,10 @@ export default function ModelMetadataForm({
       const action = await saveMetadataAction(currentFormData);
 
       if (action.success === true) {
-        alert("Data saved");
+        alert("Metadata saved");
         setIsLocked(true);
       } else {
-        alert("Something happen");
+        alert("Something wrong happen and data were not saved");
       }
     }
   };
@@ -104,18 +104,22 @@ export default function ModelMetadataForm({
     setIsLocked(false);
   };
 
-  const watchedValues = form.watch();
-
-  useEffect(() => {
-    const checkValidation = async () => {
-      const isValid = await form.trigger();
-      if (isValid) setValidated("");
-    };
-    checkValidation();
-  }, [watchedValues, form]);
-
-  const onInvalid = () => {
+  const onInvalid = (
+    errors: FieldErrors<z.infer<typeof MetadataFormSchema>>
+  ) => {
     setValidated("*Please fix the highlighted errors first.");
+
+    const firstErrorField = Object.keys(errors)[0];
+
+    const element = document.querySelector(`[name="${firstErrorField}"]`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      const fieldSet = document.querySelector(`[data-invalid="true"]`);
+      if (fieldSet) {
+        fieldSet.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
   };
 
   return (
@@ -202,11 +206,11 @@ export default function ModelMetadataForm({
                           >
                             <RadioGroupItem
                               value={item.value}
-                              id={`form-metadata-radio-${item.value}`}
+                              id={`form-metadata-radio-status-${item.value}`}
                               aria-invalid={fieldState.invalid}
                             />
                             <FieldLabel
-                              htmlFor={`form-metadata-radio-${item.value}`}
+                              htmlFor={`form-metadata-radio-status-${item.value}`}
                               className="font-normal text-gray-700"
                             >
                               {item.label}
@@ -300,6 +304,7 @@ export default function ModelMetadataForm({
                         Tags
                       </FieldLabel>
                       <MultiSelect
+                        id={field.name}
                         options={METADATA_FORM_CFG.tags}
                         value={field.value || []}
                         onChange={field.onChange}
@@ -351,11 +356,11 @@ export default function ModelMetadataForm({
                               >
                                 <RadioGroupItem
                                   value={task.value}
-                                  id={`form-metadata-radio-${task.value}`}
+                                  id={`form-metadata-radio-task-${task.value}`}
                                   aria-invalid={fieldState.invalid}
                                 />
                                 <FieldLabel
-                                  htmlFor={`form-metadata-radio-${task.value}`}
+                                  htmlFor={`form-metadata-radio-task-${task.value}`}
                                   className="font-normal text-gray-700"
                                 >
                                   {task.label}
@@ -391,11 +396,11 @@ export default function ModelMetadataForm({
                               >
                                 <RadioGroupItem
                                   value={subTask.value}
-                                  id={`form-metadata-radio-${subTask.value}`}
+                                  id={`form-metadata-radio-subtask-${subTask.value}`}
                                   aria-invalid={fieldState.invalid}
                                 />
                                 <FieldLabel
-                                  htmlFor={`form-metadata-radio-${subTask.value}`}
+                                  htmlFor={`form-metadata-radio-subtask-${subTask.value}`}
                                   className="font-normal text-gray-700"
                                 >
                                   {subTask.label}
@@ -431,12 +436,12 @@ export default function ModelMetadataForm({
                               >
                                 <RadioGroupItem
                                   value={input.value}
-                                  id={`form-metadata-radio-${input.value}`}
+                                  id={`form-metadata-radio-input-${input.value}`}
                                   aria-invalid={fieldState.invalid}
                                   disabled
                                 />
                                 <FieldLabel
-                                  htmlFor={`form-metadata-radio-${input.value}`}
+                                  htmlFor={`form-metadata-radio-input-${input.value}`}
                                   className="font-normal text-gray-700"
                                 >
                                   {input.label}
@@ -569,11 +574,11 @@ export default function ModelMetadataForm({
                                 >
                                   <RadioGroupItem
                                     value={item.value}
-                                    id={`form-metadata-radio-${item.value}`}
+                                    id={`form-metadata-radio-outconst-${item.value}`}
                                     aria-invalid={fieldState.invalid}
                                   />
                                   <FieldLabel
-                                    htmlFor={`form-metadata-radio-${item.value}`}
+                                    htmlFor={`form-metadata-radio-outconst-${item.value}`}
                                     className="font-normal text-gray-700"
                                   >
                                     {item.label}
@@ -867,6 +872,7 @@ export default function ModelMetadataForm({
                         Biomedical area
                       </FieldLabel>
                       <MultiSelect
+                        id={field.name}
                         options={METADATA_FORM_CFG.biomedicalArea}
                         value={field.value || []}
                         onChange={field.onChange}
@@ -891,6 +897,7 @@ export default function ModelMetadataForm({
                         Target organism
                       </FieldLabel>
                       <MultiSelect
+                        id={field.name}
                         options={METADATA_FORM_CFG.targetOrganism}
                         value={field.value || []}
                         onChange={field.onChange}
