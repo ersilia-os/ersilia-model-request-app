@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller, FieldErrors, useForm } from "react-hook-form";
 import {
   Field,
@@ -88,7 +88,6 @@ export default function ModelMetadataForm({
       setIsLocked(false);
     } else {
       const currentFormData = form.getValues();
-      console.log(currentFormData);
       const action = await saveMetadataAction(currentFormData);
 
       if (action.success === true) {
