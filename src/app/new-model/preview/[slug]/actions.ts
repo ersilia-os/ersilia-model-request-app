@@ -2,6 +2,7 @@
 
 import { getOctokit } from "@/lib/github";
 import prisma from "@/lib/prisma";
+import formatMetadataBody from "@/lib/utils";
 
 export async function getSubmissionBySlug(slug: string) {
   try {
@@ -34,51 +35,79 @@ export async function getSubmissionBySlug(slug: string) {
   }
 }
 
-export async function createIssue(dataForIssue: {
-  title: string;
-  body: string;
-  owner: string;
-  repo: string;
-  labels?: string[];
-}) {
+interface SubmitToErsiliaResult {
+  success: boolean;
+  message: string;
+}
+
+export async function submitToErsilia(
+  submissionId: string,
+  githubConfig: {
+    owner: string;
+    repo: string;
+  }
+): Promise<SubmitToErsiliaResult> {
   try {
-    if (!dataForIssue.owner || !dataForIssue.owner || !dataForIssue.repo) {
+    const submission = await prisma.modelMetadata.findUnique({
+      where: { id: submissionId },
+    });
+
+    if (!submission) {
       return {
         success: false,
-        message: "Title, repository name and repository owner are require",
-        issue: null,
+        message: "Submission not found",
       };
     }
 
+    if (submission.status === "SUBMITTED") {
+      return {
+        success: false,
+        message: "This submission has already been sent to Ersilia",
+      };
+    }
+
+    const issueBody = formatMetadataBody(submission);
+
     const octokit = await getOctokit();
 
-    const { data } = await octokit.request(
+    const { data: issueData } = await octokit.request(
       "POST /repos/{owner}/{repo}/issues",
       {
-        owner: dataForIssue.owner,
-        repo: dataForIssue.repo,
-        title: dataForIssue.title,
-        body: dataForIssue.body || "",
-        labels: dataForIssue.labels || [],
+        owner: githubConfig.owner,
+        repo: githubConfig.repo,
+        title: `🦠 Model Request: ${submission.title}`,
+        body: issueBody,
+        labels: ["model-submission", "metadata"],
       }
     );
 
+    await prisma.$transaction(async (tx) => {
+      await tx.ersiliaIssue.create({
+        data: {
+          issueNumber: issueData.number,
+          issueUrl: issueData.html_url,
+          modelMetadataId: submissionId,
+        },
+      });
+
+      await tx.modelMetadata.update({
+        where: { id: submissionId },
+        data: {
+          status: "SUBMITTED",
+        },
+      });
+    });
+
     return {
       success: true,
-      message: "Issue created successfully",
-      issue: {
-        number: data.number,
-        url: data.html_url,
-        id: data.id,
-        title: data.title,
-      },
+      message: "Successfully submitted to Ersilia!",
     };
   } catch (error) {
-    console.error("Error creating issue:", error);
+    console.error("Error in submitToErsilia:", error);
+
     return {
       success: false,
-      message: "Issue created successfully",
-      issue: null,
+      message: "Failed to submit to Ersilia",
     };
   }
 }
