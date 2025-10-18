@@ -166,7 +166,7 @@ export const METADATA_FORM_CFG = {
     { value: "Replicated", label: "Replicated" },
     { value: "Internal", label: "Internal" },
   ],
-  ttargetOrganism: [
+  targetOrganism: [
     { value: "Homo sapiens", label: "Homo sapiens" },
     { value: "Mus musculus", label: "Mus musculus" },
     { value: "Rattus norvegicus", label: "Rattus norvegicus" },

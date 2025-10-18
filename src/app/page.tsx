@@ -10,9 +10,11 @@ export default async function Home() {
     redirect("/auth/login");
   }
 
-  await getOrCreateUser(session.internal.sid, {
-    name: session.user.name || "User",
-  });
+  await getOrCreateUser(
+    session.user.sub,
+    session.user.email,
+    session.user.name
+  );
 
   return (
     <>

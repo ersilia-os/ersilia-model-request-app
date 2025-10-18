@@ -6,17 +6,11 @@ import { Button } from "@/components/ui/button";
 import PublicationInput from "@/components/new-model/PublicationInput";
 import FileDrop from "@/components/new-model/FileDrop";
 
-import { useModelSubmission } from "@/hooks/useModelSubmission";
+import { useAiPublicationAnalysis } from "@/hooks/usePublicationAnalysis";
 
 export default function NewModelPage() {
-  const {
-    publication,
-    setPublication,
-    file,
-    setFile,
-    isLoading,
-    handleSubmit,
-  } = useModelSubmission();
+  const { publication, setPublication, file, setFile, handleSubmit } =
+    useAiPublicationAnalysis();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
@@ -57,10 +51,10 @@ export default function NewModelPage() {
               <Button
                 type="submit"
                 variant="plum"
-                disabled={isLoading || (!file && !publication)}
                 className="w-full sm:flex-1"
+                disabled={!file && !publication}
               >
-                {isLoading ? "Uploading..." : "Submit"}
+                Analyze
               </Button>
             </div>
           </CardContent>
@@ -69,5 +63,3 @@ export default function NewModelPage() {
     </div>
   );
 }
-
-// https://www.nature.com/articles/s41467-025-62717-7.pdf

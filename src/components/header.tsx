@@ -12,7 +12,6 @@ export default async function Header() {
           height={120}
           priority
           unoptimized
-          // className="h-auto w-auto"
         />
       </Link>
       <a
