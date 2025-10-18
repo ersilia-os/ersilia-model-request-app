@@ -3,6 +3,8 @@ import { FileText, Github } from "lucide-react";
 import { ModelMetadata } from "../../../generated/prisma";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Separator } from "../ui/separator";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 interface PreviewSubmitProps {
   data: ModelMetadata;
@@ -275,6 +277,17 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </div>
             </div>
           )}
+          <Separator />
+          <div className="flex items-center gap-3 pt-4">
+            <Button variant={"plum"} className="text-base">
+              Send Metadata to Ersilia
+            </Button>
+            <Link href="/new-model/metadata">
+              <Button variant={"transparent"} className="text-base">
+                Edit Metadata
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>
