@@ -24,7 +24,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { METADATA_FORM_CFG } from "@/config/form-cfg";
-
+import { Info } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
 import { cn } from "@/lib/utils";
@@ -188,8 +188,12 @@ export default function ModelMetadataForm({
                             type="button"
                             className="p-0 m-0 bg-transparent border-none"
                           >
-                            <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                               Title
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
                             </FieldLabel>
                           </button>
                         </PopoverTrigger>
@@ -234,8 +238,12 @@ export default function ModelMetadataForm({
                             type="button"
                             className="p-0 m-0 bg-transparent border-none"
                           >
-                            <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                               Slug
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
                             </FieldLabel>
                           </button>
                         </PopoverTrigger>
@@ -246,7 +254,7 @@ export default function ModelMetadataForm({
                           align="start"
                         >
                           The slug is a short, easy-to-read version of your
-                          model's name used in URLs, all lowercase with words
+                          model&apos;`s name used in URLs, all lowercase with words
                           separated by dashes, like “predictive-cancer-analysis”
                           for “Predictive Cancer Analysis.”
                         </PopoverContent>
@@ -330,8 +338,12 @@ export default function ModelMetadataForm({
                             type="button"
                             className="p-0 m-0 bg-transparent border-none"
                           >
-                            <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                               Description
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
                             </FieldLabel>
                           </button>
                         </PopoverTrigger>
@@ -373,8 +385,12 @@ export default function ModelMetadataForm({
                             type="button"
                             className="p-0 m-0 bg-transparent border-none"
                           >
-                            <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                               Interpretation
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
                             </FieldLabel>
                           </button>
                         </PopoverTrigger>
@@ -431,8 +447,12 @@ export default function ModelMetadataForm({
                             type="button"
                             className="p-0 m-0 bg-transparent border-none"
                           >
-                            <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                               Tags
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
                             </FieldLabel>
                           </button>
                         </PopoverTrigger>
@@ -492,8 +512,12 @@ export default function ModelMetadataForm({
                                 type="button"
                                 className="p-0 m-0 bg-transparent border-none"
                               >
-                                <FieldTitle className="text-plum/85 cursor-pointer select-none">
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                   Task
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
                                 </FieldTitle>
                               </button>
                             </PopoverTrigger>
@@ -554,8 +578,12 @@ export default function ModelMetadataForm({
                                 type="button"
                                 className="p-0 m-0 bg-transparent border-none"
                               >
-                                <FieldTitle className="text-plum/85 cursor-pointer select-none">
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                   Subtask
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
                                 </FieldTitle>
                               </button>
                             </PopoverTrigger>
@@ -614,8 +642,12 @@ export default function ModelMetadataForm({
                                 type="button"
                                 className="p-0 m-0 bg-transparent border-none"
                               >
-                                <FieldTitle className="text-plum/85 cursor-pointer select-none">
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                   Input
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
                                 </FieldTitle>
                               </button>
                             </PopoverTrigger>
@@ -678,8 +710,12 @@ export default function ModelMetadataForm({
                                 type="button"
                                 className="p-0 m-0 bg-transparent border-none"
                               >
-                                <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                                <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                   Input Dimension
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
                                 </FieldLabel>
                               </button>
                             </PopoverTrigger>
@@ -727,8 +763,12 @@ export default function ModelMetadataForm({
                                 type="button"
                                 className="p-0 m-0 bg-transparent border-none"
                               >
-                                <FieldTitle className="text-plum/85 cursor-pointer select-none">
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                   Output
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
                                 </FieldTitle>
                               </button>
                             </PopoverTrigger>
@@ -810,8 +850,12 @@ export default function ModelMetadataForm({
                                 type="button"
                                 className="p-0 m-0 bg-transparent border-none"
                               >
-                                <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                                <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                   Output Dimension
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
                                 </FieldLabel>
                               </button>
                             </PopoverTrigger>
@@ -853,8 +897,12 @@ export default function ModelMetadataForm({
                                 type="button"
                                 className="p-0 m-0 bg-transparent border-none"
                               >
-                                <FieldTitle className="text-plum/85 cursor-pointer select-none">
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                   Output consistency
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
                                 </FieldTitle>
                               </button>
                             </PopoverTrigger>
@@ -937,8 +985,12 @@ export default function ModelMetadataForm({
                               type="button"
                               className="p-0 m-0 bg-transparent border-none"
                             >
-                              <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                 Publication URL
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
                               </FieldLabel>
                             </button>
                           </PopoverTrigger>
@@ -983,8 +1035,12 @@ export default function ModelMetadataForm({
                               type="button"
                               className="p-0 m-0 bg-transparent border-none"
                             >
-                              <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                 Publication year
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
                               </FieldLabel>
                             </button>
                           </PopoverTrigger>
@@ -1027,8 +1083,12 @@ export default function ModelMetadataForm({
                               type="button"
                               className="p-0 m-0 bg-transparent border-none"
                             >
-                              <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                 Publication type
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
                               </FieldLabel>
                             </button>
                           </PopoverTrigger>
@@ -1092,8 +1152,12 @@ export default function ModelMetadataForm({
                               type="button"
                               className="p-0 m-0 bg-transparent border-none"
                             >
-                              <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                 Source code URL
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
                               </FieldLabel>
                             </button>
                           </PopoverTrigger>
@@ -1137,8 +1201,12 @@ export default function ModelMetadataForm({
                               type="button"
                               className="p-0 m-0 bg-transparent border-none"
                             >
-                              <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                 Source type
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
                               </FieldLabel>
                             </button>
                           </PopoverTrigger>
@@ -1213,8 +1281,12 @@ export default function ModelMetadataForm({
                               type="button"
                               className="p-0 m-0 bg-transparent border-none"
                             >
-                              <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                 License
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
                               </FieldLabel>
                             </button>
                           </PopoverTrigger>
@@ -1274,8 +1346,12 @@ export default function ModelMetadataForm({
                               type="button"
                               className="p-0 m-0 bg-transparent border-none"
                             >
-                              <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                                 Deployment
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
                               </FieldLabel>
                             </button>
                           </PopoverTrigger>
@@ -1346,8 +1422,12 @@ export default function ModelMetadataForm({
                             type="button"
                             className="p-0 m-0 bg-transparent border-none"
                           >
-                            <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                               Biomedical area
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
                             </FieldLabel>
                           </button>
                         </PopoverTrigger>
@@ -1393,8 +1473,12 @@ export default function ModelMetadataForm({
                             type="button"
                             className="p-0 m-0 bg-transparent border-none"
                           >
-                            <FieldLabel className="text-plum/85 cursor-pointer select-none">
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
                               Target organism
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
                             </FieldLabel>
                           </button>
                         </PopoverTrigger>
