@@ -25,6 +25,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
   //go to next page
   //change status
   //check status before
+  //error and success
 
   console.log(issueUrl);
 
@@ -300,7 +301,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               variant={"plum"}
               className="text-base"
               onClick={handleSend}
-              disabled={loading}
+              disabled={loading || data.status === "SUBMITTED"}
             >
               {loading ? (
                 <>

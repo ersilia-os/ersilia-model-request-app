@@ -56,7 +56,6 @@ export default function ModelMetadataForm({
     defaultValues: {
       title: aiResults.title || "",
       slug: aiResults.slug || "",
-      status: METADATA_FORM_CFG.status[0].value,
       description: aiResults.description || "",
       interpretation: aiResults.interpretation || "",
       tags: aiResults.tags || [],
@@ -218,45 +217,6 @@ export default function ModelMetadataForm({
                         <FieldError errors={[fieldState.error]} />
                       )}
                     </Field>
-                  )}
-                />
-                <Controller
-                  name="status"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <FieldSet data-invalid={fieldState.invalid}>
-                      <FieldTitle className="text-plum/85">Status</FieldTitle>
-                      <RadioGroup
-                        name={field.name}
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        aria-invalid={fieldState.invalid}
-                        disabled
-                      >
-                        {METADATA_FORM_CFG.status.map((item) => (
-                          <Field
-                            key={item.value}
-                            orientation="horizontal"
-                            data-invalid={fieldState.invalid}
-                          >
-                            <RadioGroupItem
-                              value={item.value}
-                              id={`form-metadata-radio-status-${item.value}`}
-                              aria-invalid={fieldState.invalid}
-                            />
-                            <FieldLabel
-                              htmlFor={`form-metadata-radio-status-${item.value}`}
-                              className="font-normal text-gray-700"
-                            >
-                              {item.label}
-                            </FieldLabel>
-                          </Field>
-                        ))}
-                      </RadioGroup>
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </FieldSet>
                   )}
                 />
               </FieldGroup>
