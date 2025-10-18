@@ -1,16 +1,33 @@
 "use client";
-import { FileText, Github } from "lucide-react";
+import { FileText, Github, Loader2 } from "lucide-react";
 import { ModelMetadata } from "../../../generated/prisma";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useSubmitMetadata } from "@/hooks/useSubmitToErsilia";
 
 interface PreviewSubmitProps {
   data: ModelMetadata;
 }
 
 export default function PreviewSubmit({ data }: PreviewSubmitProps) {
+  const { submitMetadata, loading, error, success, issueUrl } =
+    useSubmitMetadata({
+      owner: "arobri67",
+      repo: "testerbot",
+    });
+  function handleSend() {
+    submitMetadata(data);
+  }
+
+  //TODO:
+  //go to next page
+  //change status
+  //check status before
+
+  console.log(issueUrl);
+
   return (
     <div className="flex min-h-screen items-center justify-center py-10">
       <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
@@ -279,11 +296,23 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
           )}
           <Separator />
           <div className="flex items-center gap-3 pt-4">
-            <Button variant={"plum"} className="text-base">
-              Send Metadata to Ersilia
+            <Button
+              variant={"plum"}
+              className="text-base"
+              onClick={handleSend}
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                "Send to Ersilia"
+              )}
             </Button>
             <Link href="/new-model/metadata">
-              <Button variant={"transparent"} className="text-base">
+              <Button type="button" variant="transparent" className="text-base">
                 Edit Metadata
               </Button>
             </Link>

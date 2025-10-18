@@ -2,7 +2,6 @@
 
 import { getOctokit } from "@/lib/github";
 import prisma from "@/lib/prisma";
-import { success } from "zod";
 
 export async function getSubmissionBySlug(slug: string) {
   try {
