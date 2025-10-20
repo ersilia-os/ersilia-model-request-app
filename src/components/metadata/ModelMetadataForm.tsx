@@ -42,6 +42,7 @@ import {
 } from "@/app/new-model/metadata/actions";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { alertError, alertSuccess } from "@/lib/alerts";
 
 interface ModelMetadataFormProps {
   aiResults: AiAnalysisModelMetadataSchema;
@@ -86,11 +87,11 @@ export default function ModelMetadataForm({
     const action = await saveValidatedMetadataAction(data);
 
     if (action.success === true) {
-      alert("Metadata saved");
+      alertSuccess("Metadata saved");
       setIsLocked(true);
       router.push(`/new-model/preview/${data.slug}`);
     } else {
-      alert("Something wrong happen and data were not saved");
+      alertError("Something wrong happen and data were not saved");
     }
 
     setIsLocked(true);
@@ -112,14 +113,14 @@ export default function ModelMetadataForm({
       const action = await saveMetadataAction(currentFormData);
 
       if (action.success === true) {
-        console.log("Metadata saved");
+        alertSuccess("Metadata saved");
         setIsLocked(true);
       } else {
-        console.log("Something went wrong and data were not saved");
+        alertError("Something went wrong and data were not saved");
       }
     } catch (err) {
       console.error("Error while saving metadata:", err);
-      console.log("Unexpected error occurred");
+      alertError("Unexpected error occurred");
     } finally {
       setIsLoading(false);
     }

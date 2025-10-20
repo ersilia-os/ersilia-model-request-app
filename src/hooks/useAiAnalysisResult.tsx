@@ -25,8 +25,10 @@ export function useAiAnalysisResults(): AiAnalysisState {
       const data = JSON.parse(aiResultsJSON);
       setState({ isLoading: false, aiResults: data });
     } catch (err) {
-      console.error("Failed to parse AI results:", err);
+      console.error(err);
+
       router.push("/new-model");
+      alert("Error generating report. Please try again.");
     }
   }, [router]);
 
