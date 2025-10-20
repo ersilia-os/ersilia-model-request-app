@@ -83,18 +83,16 @@ export default function ModelMetadataForm({
   const [isLocked, setIsLocked] = useState(false);
   const [isValidated, setValidated] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
 
   const handleFieldResetToAi = (
     fieldName: keyof z.infer<typeof MetadataFormSchema>
   ) => {
     const aiValue = aiResults[fieldName];
-    form.setValue(fieldName, aiValue as any);
-    setIsEdited(false);
+    form.setValue(fieldName, aiValue as string);
   };
 
   // Funcion to compare field values (for arrays)
-  const areArraysEqual = (a?: any[], b?: any[]) => {
+  const areArraysEqual = (a?: string[], b?: string[]) => {
     if (!a || !b) return a === b;
     if (a.length !== b.length) return false;
     return [...a].sort().join() === [...b].sort().join();
@@ -1054,7 +1052,7 @@ export default function ModelMetadataForm({
                 and authorship information.
               </FieldDescription>
               <FieldGroup>
-                <div className="grid grid-cols-[50%_30%_auto] gap-1">
+                <div className="grid grid-cols-[50%_30%_auto] gap-1 ">
                   <Controller
                     name="publication_url"
                     control={form.control}
@@ -1064,7 +1062,7 @@ export default function ModelMetadataForm({
                       const isManuallyEdited = !isAiGenerated;
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          <div className="flex gap-2 items-center">
+                          <div className="flex flex-wrap gap-2">
                             <FieldLabel
                               htmlFor={field.name}
                               className="text-plum/85"
@@ -1124,7 +1122,7 @@ export default function ModelMetadataForm({
                       const isManuallyEdited = !isAiGenerated;
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          <div className="flex gap-2 items-center flex-wrap">
+                          <div className="flex flex-wrap gap-2">
                             <FieldLabel
                               htmlFor={field.name}
                               className="text-plum/85"
@@ -1145,7 +1143,7 @@ export default function ModelMetadataForm({
                                   className="gap-1 text-xs cursor-pointer"
                                 >
                                   <RotateCcw className="w-1 h-1" color="blue" />
-                                  Reset to AI
+                                  Reset to AI Suggestion
                                 </Badge>
                               </Button>
                             ) : (
@@ -1183,7 +1181,7 @@ export default function ModelMetadataForm({
                       const isManuallyEdited = !isAiGenerated;
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          <div className="flex gap-2 items-center flex-wrap">
+                          <div className="flex flex-wrap gap-2">
                             <FieldLabel
                               htmlFor="form-metadata-select-pubtype"
                               className="text-plum/85"
