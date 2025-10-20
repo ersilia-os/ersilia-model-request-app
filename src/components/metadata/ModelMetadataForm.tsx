@@ -88,7 +88,6 @@ export default function ModelMetadataForm({
     const action = await saveValidatedMetadataAction(data);
 
     if (action.success === true) {
-      alertSuccess("Metadata saved");
       setIsLocked(true);
       router.push(`/new-model/preview/${data.slug}`);
     } else {
