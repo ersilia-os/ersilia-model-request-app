@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 import Header from "@/components/header";
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className="antialiased">
         <Header />
         <Container>{children}</Container>
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

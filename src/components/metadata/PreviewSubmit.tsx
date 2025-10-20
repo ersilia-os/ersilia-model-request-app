@@ -17,8 +17,8 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
   const router = useRouter();
   const [confirmStep, setConfirmStep] = useState(false);
   const { submitMetadata, loading } = useSubmitToErsilia({
-    owner: "arobri67",
-    repo: "testerbot",
+    owner: "lukaskourilcz",
+    repo: "test-octo",
   });
 
   async function handleSend() {
