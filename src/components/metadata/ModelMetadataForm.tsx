@@ -42,6 +42,7 @@ import {
 } from "@/app/new-model/metadata/actions";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { HELP_CFG } from "@/config/help-popover-form";
 
 interface ModelMetadataFormProps {
   aiResults: AiAnalysisModelMetadataSchema;
@@ -172,8 +173,7 @@ export default function ModelMetadataForm({
                 Basic Identification
               </FieldLegend>
               <FieldDescription className="text-gray-400">
-                Essential identifiers for the model. The slug and title are how
-                users will find and reference this model in the system.
+                {HELP_CFG.basicIdentification.section}
               </FieldDescription>
               <FieldGroup>
                 <Controller
@@ -202,11 +202,7 @@ export default function ModelMetadataForm({
                           side="bottom"
                           align="start"
                         >
-                          Provide a clear and descriptive title for your model.
-                          The title should be at least 70 characters long and
-                          convey the main purpose or function of the model.
-                          Avoid overly generic names and make sure it reflects
-                          the type of predictions or results the model produces.
+                          {HELP_CFG.basicIdentification.title}
                         </PopoverContent>
                       </Popover>
 
@@ -252,11 +248,7 @@ export default function ModelMetadataForm({
                           side="bottom"
                           align="start"
                         >
-                          The slug is a short, easy-to-read version of your
-                          model&apos;`s name used in URLs, all lowercase with
-                          words separated by dashes, like
-                          “predictive-cancer-analysis” for “Predictive Cancer
-                          Analysis.”
+                          {HELP_CFG.basicIdentification.slug}
                         </PopoverContent>
                       </Popover>
 
@@ -283,9 +275,7 @@ export default function ModelMetadataForm({
                 Description & Interpretation
               </FieldLegend>
               <FieldDescription className="text-gray-400">
-                Detailed information about what the model does and how to
-                understand its results. Explain the model&apos;s purpose,
-                methodology, and how to interpret its predictions.
+                {HELP_CFG.descriptionInterpretation.section}
               </FieldDescription>
               <FieldGroup>
                 <Controller
@@ -314,10 +304,7 @@ export default function ModelMetadataForm({
                           side="bottom"
                           align="start"
                         >
-                          Provide a brief overview of what your model does, what
-                          results it produces, and what kind of data was used to
-                          train it, just enough for someone to understand its
-                          purpose at a glance.
+                          {HELP_CFG.descriptionInterpretation.description}
                         </PopoverContent>
                       </Popover>
 
@@ -361,10 +348,7 @@ export default function ModelMetadataForm({
                           side="bottom"
                           align="start"
                         >
-                          Explain in simple terms what the model’s output means
-                          and how someone should read or understand the results,
-                          for example, whether a higher score indicates stronger
-                          activity or greater likelihood.
+                          {HELP_CFG.descriptionInterpretation.interpretation}
                         </PopoverContent>
                       </Popover>
 
@@ -391,10 +375,7 @@ export default function ModelMetadataForm({
                 Classification & Tags
               </FieldLegend>
               <FieldDescription className="text-gray-400">
-                Searchable labels that categorize the model. Select relevant
-                tags from predefined categories to help users discover this
-                model when searching by disease, organism, application, or other
-                criteria.
+                {HELP_CFG.classificationTags.section}
               </FieldDescription>
               <FieldGroup>
                 <Controller
@@ -422,9 +403,7 @@ export default function ModelMetadataForm({
                           side="bottom"
                           align="start"
                         >
-                          Tags are keywords that describe the model&apos;s
-                          purpose, domain, or key features, helping users
-                          quickly find and categorize it.
+                          {HELP_CFG.classificationTags.tags}
                         </PopoverContent>
                       </Popover>
 
@@ -455,9 +434,7 @@ export default function ModelMetadataForm({
                 Technical Specifications
               </FieldLegend>
               <FieldDescription className="text-gray-400">
-                Define the model&apos;s input/output behavior and machine
-                learning task type. This section describes the technical
-                characteristics of how the model processes data.
+                {HELP_CFG.technicalSpecifications.section}
               </FieldDescription>
               <FieldGroup>
                 <div className="grid grid-cols-2 gap-4">
@@ -488,10 +465,7 @@ export default function ModelMetadataForm({
                               side="bottom"
                               align="start"
                             >
-                              Select the primary task that this model performs,
-                              such as classification, regression, or data
-                              generation. This helps categorize the model and
-                              guide users on its main purpose.
+                              {HELP_CFG.technicalSpecifications.task}
                             </PopoverContent>
                           </Popover>
 
@@ -554,8 +528,7 @@ export default function ModelMetadataForm({
                               side="bottom"
                               align="start"
                             >
-                              Choose the specific subtask or variant of the
-                              primary task that this model handles.
+                              {HELP_CFG.technicalSpecifications.subtask}
                             </PopoverContent>
                           </Popover>
 
@@ -618,10 +591,7 @@ export default function ModelMetadataForm({
                               side="bottom"
                               align="start"
                             >
-                              The input defines the type of data the model
-                              expects. Currently, all Ersilia models accept only{" "}
-                              <strong>Compound</strong> as input. This field is
-                              a string with only this single accepted value.
+                              {HELP_CFG.technicalSpecifications.input}
                             </PopoverContent>
                           </Popover>
 
@@ -686,13 +656,7 @@ export default function ModelMetadataForm({
                               side="bottom"
                               align="start"
                             >
-                              This defines the input format expected by the
-                              model. Currently, all Ersilia models accept only{" "}
-                              <strong>1</strong> (numeric) as the input
-                              dimension. You can pass a list of inputs, but the
-                              model makes predictions one input at a time, not
-                              combined. This field only accepts this single
-                              integer value.
+                              {HELP_CFG.technicalSpecifications.inputDimension}
                             </PopoverContent>
                           </Popover>
 
@@ -739,27 +703,7 @@ export default function ModelMetadataForm({
                               side="bottom"
                               align="start"
                             >
-                              The output defines the type of data produced by
-                              the model. Accepted output formats are:
-                              <ul className="list-disc ml-4 mt-1">
-                                <li>
-                                  <strong>Score:</strong> e.g., a probability
-                                </li>
-                                <li>
-                                  <strong>Value:</strong> experimental value,
-                                  molecular descriptor, or calculated property
-                                </li>
-                                <li>
-                                  <strong>Compound:</strong> a new compound
-                                  generated by the model
-                                </li>
-                                <li>
-                                  <strong>Text:</strong> natural language
-                                  output, e.g., a description
-                                </li>
-                              </ul>
-                              This field is a list, so multiple outputs can be
-                              selected.
+                              {HELP_CFG.technicalSpecifications.output}
                             </PopoverContent>
                           </Popover>
 
@@ -826,9 +770,7 @@ export default function ModelMetadataForm({
                               side="bottom"
                               align="start"
                             >
-                              Defines the length of the output for each input,
-                              similar to the input dimension. This field accepts
-                              only a single integer value.
+                              {HELP_CFG.technicalSpecifications.outputDimension}
                             </PopoverContent>
                           </Popover>
 
@@ -873,13 +815,10 @@ export default function ModelMetadataForm({
                               side="bottom"
                               align="start"
                             >
-                              Indicates whether the model produces the same
-                              prediction for the same input.{" "}
-                              <strong>Fixed</strong> means predictions are
-                              always the same (typical for QSAR models), while{" "}
-                              <strong>Variable</strong> indicates predictions
-                              may change (common in generative models). This
-                              field only accepts a single string value.
+                              {
+                                HELP_CFG.technicalSpecifications
+                                  .outputConsistency
+                              }
                             </PopoverContent>
                           </Popover>
 
@@ -929,9 +868,7 @@ export default function ModelMetadataForm({
                 Source & Licensing
               </FieldLegend>
               <FieldDescription className="text-gray-400">
-                Attribution and legal information. Provide links to the original
-                publication and code repository, along with licensing details
-                and authorship information.
+                {HELP_CFG.sourceLicensing.section}
               </FieldDescription>
               <FieldGroup>
                 <div className="grid grid-cols-[50%_30%_auto] gap-1">
@@ -961,12 +898,7 @@ export default function ModelMetadataForm({
                             side="bottom"
                             align="start"
                           >
-                            Provide the URL of the publication associated with
-                            this model. This could be a journal article,
-                            preprint, or conference paper that describes the
-                            methodology, datasets, and results. Including the
-                            publication helps users verify the model and
-                            understand its background.
+                            {HELP_CFG.sourceLicensing.publicationUrl}
                           </PopoverContent>
                         </Popover>
 
@@ -1011,11 +943,7 @@ export default function ModelMetadataForm({
                             side="bottom"
                             align="start"
                           >
-                            Enter the year in which the publication associated
-                            with this model was released. This helps users
-                            understand the timeline of the research and assess
-                            the relevance and recency of the model’s methodology
-                            and results.
+                            {HELP_CFG.sourceLicensing.publicationYear}
                           </PopoverContent>
                         </Popover>
 
@@ -1059,13 +987,7 @@ export default function ModelMetadataForm({
                             side="bottom"
                             align="start"
                           >
-                            Select the type of publication associated with this
-                            model. This could be a peer-reviewed journal
-                            article, conference paper, preprint, technical
-                            report, or any other format that documents the
-                            model’s methodology, results, and datasets.
-                            Providing this information helps users quickly
-                            identify the source and credibility of the model.
+                            {HELP_CFG.sourceLicensing.publicationType}
                           </PopoverContent>
                         </Popover>
 
@@ -1128,12 +1050,7 @@ export default function ModelMetadataForm({
                             side="bottom"
                             align="start"
                           >
-                            Provide the URL where the source code for this model
-                            is hosted. This could be a GitHub repository, GitLab
-                            project, or any other online code repository.
-                            Including the source code link helps users inspect
-                            the implementation, reproduce results, and
-                            understand the model’s inner workings.
+                            {HELP_CFG.sourceLicensing.sourceUrl}
                           </PopoverContent>
                         </Popover>
 
@@ -1177,24 +1094,7 @@ export default function ModelMetadataForm({
                             side="bottom"
                             align="start"
                           >
-                            Specify the type of source for this model.
-                            <ul className="list-disc pl-4 mt-1">
-                              <li>
-                                <strong>Internal:</strong> Data or code
-                                maintained within the organization.
-                              </li>
-                              <li>
-                                <strong>External:</strong> Publicly available
-                                data or code from outside sources.
-                              </li>
-                              <li>
-                                <strong>Replicated:</strong> Data or models
-                                copied or reproduced from another source.
-                              </li>
-                            </ul>
-                            Providing the correct source type helps users
-                            understand the origin and trustworthiness of the
-                            model.
+                            {HELP_CFG.sourceLicensing.sourceType}
                           </PopoverContent>
                         </Popover>
 
@@ -1257,12 +1157,7 @@ export default function ModelMetadataForm({
                             side="bottom"
                             align="start"
                           >
-                            Choose the license under which this model is shared.
-                            Common options include AGPL, GPL, LGPL, etc. This
-                            determines how others can use, modify, or distribute
-                            the model and its code. For example, GPL allows
-                            redistribution but requires derived works to use the
-                            same license.
+                            {HELP_CFG.sourceLicensing.license}
                           </PopoverContent>
                         </Popover>
 
@@ -1322,10 +1217,7 @@ export default function ModelMetadataForm({
                             side="bottom"
                             align="start"
                           >
-                            Specify how this model is deployed. It can be{" "}
-                            <strong>Local</strong>, meaning it runs on a user’s
-                            machine, or <strong>Online</strong>, meaning it is
-                            hosted on a server and accessed remotely.
+                            {HELP_CFG.sourceLicensing.deployment}
                           </PopoverContent>
                         </Popover>
 
@@ -1366,10 +1258,7 @@ export default function ModelMetadataForm({
                 Research Context
               </FieldLegend>
               <FieldDescription className="text-gray-400">
-                Scientific domain and target organism information. Categorize
-                the biomedical research area and specify which organisms
-                (pathogens, hosts, or general applicability) the model relates
-                to.
+                {HELP_CFG.researchContext.section}
               </FieldDescription>
               <FieldGroup>
                 <Controller
@@ -1398,9 +1287,7 @@ export default function ModelMetadataForm({
                           side="bottom"
                           align="start"
                         >
-                          Select the biomedical research areas relevant to this
-                          model. Examples include oncology, immunology,
-                          genomics, pharmacology, or neuroscience.
+                          {HELP_CFG.researchContext.biomedicalArea}
                         </PopoverContent>
                       </Popover>
 
@@ -1449,11 +1336,7 @@ export default function ModelMetadataForm({
                           side="bottom"
                           align="start"
                         >
-                          Select the organisms that this model is designed to
-                          study or affect. Examples could include human, mouse,
-                          bacterial strains, or other experimental organisms.
-                          Correctly specifying target organisms ensures
-                          appropriate use and interpretation of the model.
+                          {HELP_CFG.researchContext.targetOrganism}
                         </PopoverContent>
                       </Popover>
 
