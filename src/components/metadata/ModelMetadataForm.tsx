@@ -13,6 +13,8 @@ import {
   FieldSet,
   FieldTitle,
 } from "../ui/field";
+import { Sparkles } from "lucide-react";
+import { Badge } from "../ui/badge";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import z from "zod";
@@ -40,7 +42,7 @@ import {
   saveValidatedMetadataAction,
 } from "@/app/new-model/metadata/actions";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Loader2, RotateCcw } from "lucide-react";
 
 interface ModelMetadataFormProps {
   aiResults: AiAnalysisModelMetadataSchema;
@@ -81,6 +83,22 @@ export default function ModelMetadataForm({
   const [isLocked, setIsLocked] = useState(false);
   const [isValidated, setValidated] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+
+  const handleFieldResetToAi = (
+    fieldName: keyof z.infer<typeof MetadataFormSchema>
+  ) => {
+    const aiValue = aiResults[fieldName];
+    form.setValue(fieldName, aiValue as any);
+    setIsEdited(false);
+  };
+
+  // Funcion to compare field values (for arrays)
+  const areArraysEqual = (a?: any[], b?: any[]) => {
+    if (!a || !b) return a === b;
+    if (a.length !== b.length) return false;
+    return [...a].sort().join() === [...b].sort().join();
+  };
 
   async function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
     const action = await saveValidatedMetadataAction(data);
@@ -179,46 +197,116 @@ export default function ModelMetadataForm({
                 <Controller
                   name="title"
                   control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Title
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id={field.name}
-                        aria-invalid={fieldState.invalid}
-                        className="focus-visible:border-plum"
-                        placeholder="Model title (minimum 70 characters)"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
+                  render={({ field, fieldState }) => {
+                    const isAiGenerated = aiResults.title === field.value;
+                    const isManuallyEdited = !isAiGenerated;
+                    return (
+                      <Field data-invalid={fieldState.invalid}>
+                        <div className="flex gap-2 items-center">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-plum/85"
+                          >
+                            Title
+                          </FieldLabel>{" "}
+                          {isManuallyEdited ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 px-0 text-xs gap-1"
+                              onClick={() => handleFieldResetToAi("title")}
+                            >
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs cursor-pointer"
+                              >
+                                <RotateCcw className="w-1 h-1" color="blue" />
+                                Reset to AI Suggestion
+                              </Badge>
+                            </Button>
+                          ) : (
+                            aiResults.title && (
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs "
+                              >
+                                <Sparkles className="w-3 h-3" color="blue" />
+                                AI
+                              </Badge>
+                            )
+                          )}
+                        </div>
+                        <Input
+                          {...field}
+                          id={field.name}
+                          aria-invalid={fieldState.invalid}
+                          className="focus-visible:border-plum"
+                          placeholder="Model title (minimum 70 characters)"
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    );
+                  }}
                 />
               </FieldGroup>
               <FieldGroup>
                 <Controller
                   name="slug"
                   control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Slug
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id={field.name}
-                        aria-invalid={fieldState.invalid}
-                        className="focus-visible:border-plum"
-                        placeholder="e.g. model-name-slug"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
+                  render={({ field, fieldState }) => {
+                    const isAiGenerated = aiResults.slug === field.value;
+                    const isManuallyEdited = !isAiGenerated;
+                    return (
+                      <Field data-invalid={fieldState.invalid}>
+                        <div className="flex gap-2 items-center">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-plum/85"
+                          >
+                            Slug
+                          </FieldLabel>
+                          {isManuallyEdited ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 px-0 text-xs gap-1"
+                              onClick={() => handleFieldResetToAi("slug")}
+                            >
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs cursor-pointer"
+                              >
+                                <RotateCcw className="w-1 h-1" color="blue" />
+                                Reset to AI Suggestion
+                              </Badge>
+                            </Button>
+                          ) : (
+                            aiResults.title && (
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs "
+                              >
+                                <Sparkles className="w-3 h-3" color="blue" />
+                                AI
+                              </Badge>
+                            )
+                          )}
+                        </div>
+                        <Input
+                          {...field}
+                          id={field.name}
+                          aria-invalid={fieldState.invalid}
+                          className="focus-visible:border-plum"
+                          placeholder="e.g. model-name-slug"
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    );
+                  }}
                 />
                 <Controller
                   name="status"
@@ -276,44 +364,119 @@ export default function ModelMetadataForm({
                 <Controller
                   name="description"
                   control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Description
-                      </FieldLabel>
-                      <Textarea
-                        {...field}
-                        id={field.name}
-                        aria-invalid={fieldState.invalid}
-                        className="focus-visible:border-plum"
-                        placeholder="Minimum information about model type, results and the training dataset."
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
+                  render={({ field, fieldState }) => {
+                    const isAiGenerated = aiResults.description === field.value;
+                    const isManuallyEdited = !isAiGenerated;
+                    return (
+                      <Field data-invalid={fieldState.invalid}>
+                        <div className="flex gap-2 items-center">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-plum/85"
+                          >
+                            Description
+                          </FieldLabel>
+                          {isManuallyEdited ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 px-0 text-xs gap-1"
+                              onClick={() =>
+                                handleFieldResetToAi("description")
+                              }
+                            >
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs cursor-pointer"
+                              >
+                                <RotateCcw className="w-1 h-1" color="blue" />
+                                Reset to AI Suggestion
+                              </Badge>
+                            </Button>
+                          ) : (
+                            aiResults.title && (
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs "
+                              >
+                                <Sparkles className="w-3 h-3" color="blue" />
+                                AI
+                              </Badge>
+                            )
+                          )}
+                        </div>
+                        <Textarea
+                          {...field}
+                          id={field.name}
+                          aria-invalid={fieldState.invalid}
+                          className="focus-visible:border-plum"
+                          placeholder="Minimum information about model type, results and the training dataset."
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    );
+                  }}
                 />
                 <Controller
                   name="interpretation"
                   control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Interpretation
-                      </FieldLabel>
-                      <Textarea
-                        {...field}
-                        id={field.name}
-                        aria-invalid={fieldState.invalid}
-                        className="focus-visible:border-plum"
-                        placeholder="A brief description of how to interpret the model results"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
+                  render={({ field, fieldState }) => {
+                    const isAiGenerated =
+                      aiResults.interpretation === field.value;
+                    const isManuallyEdited = !isAiGenerated;
+                    return (
+                      <Field data-invalid={fieldState.invalid}>
+                        <div className="flex gap-2 items-center">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-plum/85"
+                          >
+                            Interpretation
+                          </FieldLabel>
+                          {isManuallyEdited ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 px-0 text-xs gap-1"
+                              onClick={() =>
+                                handleFieldResetToAi("interpretation")
+                              }
+                            >
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs cursor-pointer"
+                              >
+                                <RotateCcw className="w-1 h-1" color="blue" />
+                                Reset to AI Suggestion
+                              </Badge>
+                            </Button>
+                          ) : (
+                            aiResults.title && (
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs "
+                              >
+                                <Sparkles className="w-3 h-3" color="blue" />
+                                AI
+                              </Badge>
+                            )
+                          )}
+                        </div>
+                        <Textarea
+                          {...field}
+                          id={field.name}
+                          aria-invalid={fieldState.invalid}
+                          className="focus-visible:border-plum"
+                          placeholder="A brief description of how to interpret the model results"
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    );
+                  }}
                 />
               </FieldGroup>
             </FieldSet>
@@ -333,27 +496,68 @@ export default function ModelMetadataForm({
                 <Controller
                   name="tags"
                   control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Tags
-                      </FieldLabel>
-                      <MultiSelect
-                        id={field.name}
-                        options={METADATA_FORM_CFG.tags}
-                        value={field.value || []}
-                        onChange={field.onChange}
-                        placeholder="Select tags..."
-                        className={cn(
-                          fieldState.invalid &&
-                            "border-red-500 focus-visible:border-red-500"
+                  render={({ field, fieldState }) => {
+                    const currentTags = field.value || [];
+                    const originalTags = aiResults.tags || [];
+
+                    const isAiGenerated = areArraysEqual(
+                      currentTags,
+                      originalTags
+                    );
+                    const isManuallyEdited = !isAiGenerated;
+                    return (
+                      <Field data-invalid={fieldState.invalid}>
+                        <div className="flex gap-2 items-center">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-plum/85"
+                          >
+                            Tags
+                          </FieldLabel>
+                          {isManuallyEdited ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 px-0 text-xs gap-1"
+                              onClick={() => handleFieldResetToAi("tags")}
+                            >
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs cursor-pointer"
+                              >
+                                <RotateCcw className="w-1 h-1" color="blue" />
+                                Reset to AI Suggestion
+                              </Badge>
+                            </Button>
+                          ) : (
+                            aiResults.title && (
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs "
+                              >
+                                <Sparkles className="w-3 h-3" color="blue" />
+                                AI
+                              </Badge>
+                            )
+                          )}
+                        </div>
+                        <MultiSelect
+                          id={field.name}
+                          options={METADATA_FORM_CFG.tags}
+                          value={field.value || []}
+                          onChange={field.onChange}
+                          placeholder="Select tags..."
+                          className={cn(
+                            fieldState.invalid &&
+                              "border-red-500 focus-visible:border-red-500"
+                          )}
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
                         )}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
+                      </Field>
+                    );
+                  }}
                 />
               </FieldGroup>
             </FieldSet>
@@ -374,80 +578,160 @@ export default function ModelMetadataForm({
                     <Controller
                       name="task"
                       control={form.control}
-                      render={({ field, fieldState }) => (
-                        <FieldSet data-invalid={fieldState.invalid}>
-                          <FieldTitle className="text-plum/85">Task</FieldTitle>
-                          <RadioGroup
-                            name={field.name}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                            aria-invalid={fieldState.invalid}
-                          >
-                            {METADATA_FORM_CFG.tasks.map((task) => (
-                              <Field
-                                key={task.value}
-                                orientation="horizontal"
-                                data-invalid={fieldState.invalid}
-                              >
-                                <RadioGroupItem
-                                  value={task.value}
-                                  id={`form-metadata-radio-task-${task.value}`}
-                                  aria-invalid={fieldState.invalid}
-                                />
-                                <FieldLabel
-                                  htmlFor={`form-metadata-radio-task-${task.value}`}
-                                  className="font-normal text-gray-700"
+                      render={({ field, fieldState }) => {
+                        const isAiGenerated = aiResults.task === field.value;
+                        const isManuallyEdited = !isAiGenerated;
+                        return (
+                          <FieldSet data-invalid={fieldState.invalid}>
+                            <div className="flex gap-2 items-center">
+                              <FieldTitle className="text-plum/85">
+                                Task
+                              </FieldTitle>
+                              {isManuallyEdited ? (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-4 px-0 text-xs gap-1"
+                                  onClick={() => handleFieldResetToAi("task")}
                                 >
-                                  {task.label}
-                                </FieldLabel>
-                              </Field>
-                            ))}
-                          </RadioGroup>
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </FieldSet>
-                      )}
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs cursor-pointer"
+                                  >
+                                    <RotateCcw
+                                      className="w-1 h-1"
+                                      color="blue"
+                                    />
+                                    Reset to AI Suggestion
+                                  </Badge>
+                                </Button>
+                              ) : (
+                                aiResults.title && (
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs "
+                                  >
+                                    <Sparkles
+                                      className="w-3 h-3"
+                                      color="blue"
+                                    />
+                                    AI
+                                  </Badge>
+                                )
+                              )}
+                            </div>
+                            <RadioGroup
+                              name={field.name}
+                              value={field.value}
+                              onValueChange={field.onChange}
+                              aria-invalid={fieldState.invalid}
+                            >
+                              {METADATA_FORM_CFG.tasks.map((task) => (
+                                <Field
+                                  key={task.value}
+                                  orientation="horizontal"
+                                  data-invalid={fieldState.invalid}
+                                >
+                                  <RadioGroupItem
+                                    value={task.value}
+                                    id={`form-metadata-radio-task-${task.value}`}
+                                    aria-invalid={fieldState.invalid}
+                                  />
+                                  <FieldLabel
+                                    htmlFor={`form-metadata-radio-task-${task.value}`}
+                                    className="font-normal text-gray-700"
+                                  >
+                                    {task.label}
+                                  </FieldLabel>
+                                </Field>
+                              ))}
+                            </RadioGroup>
+                            {fieldState.invalid && (
+                              <FieldError errors={[fieldState.error]} />
+                            )}
+                          </FieldSet>
+                        );
+                      }}
                     />
                     <Controller
                       name="subtask"
                       control={form.control}
-                      render={({ field, fieldState }) => (
-                        <FieldSet data-invalid={fieldState.invalid}>
-                          <FieldTitle className="text-plum/85">
-                            Subtask
-                          </FieldTitle>
-                          <RadioGroup
-                            name={field.name}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                            aria-invalid={fieldState.invalid}
-                          >
-                            {METADATA_FORM_CFG.subTasks.map((subTask) => (
-                              <Field
-                                key={subTask.value}
-                                orientation="horizontal"
-                                data-invalid={fieldState.invalid}
-                              >
-                                <RadioGroupItem
-                                  value={subTask.value}
-                                  id={`form-metadata-radio-subtask-${subTask.value}`}
-                                  aria-invalid={fieldState.invalid}
-                                />
-                                <FieldLabel
-                                  htmlFor={`form-metadata-radio-subtask-${subTask.value}`}
-                                  className="font-normal text-gray-700"
+                      render={({ field, fieldState }) => {
+                        const isAiGenerated = aiResults.subtask === field.value;
+                        const isManuallyEdited = !isAiGenerated;
+                        return (
+                          <FieldSet data-invalid={fieldState.invalid}>
+                            <div className="flex gap-2 items-center">
+                              <FieldTitle className="text-plum/85">
+                                Subtask
+                              </FieldTitle>
+                              {isManuallyEdited ? (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-4 px-0 text-xs gap-1"
+                                  onClick={() =>
+                                    handleFieldResetToAi("subtask")
+                                  }
                                 >
-                                  {subTask.label}
-                                </FieldLabel>
-                              </Field>
-                            ))}
-                          </RadioGroup>
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </FieldSet>
-                      )}
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs cursor-pointer"
+                                  >
+                                    <RotateCcw
+                                      className="w-1 h-1"
+                                      color="blue"
+                                    />
+                                    Reset to AI Suggestion
+                                  </Badge>
+                                </Button>
+                              ) : (
+                                aiResults.title && (
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs "
+                                  >
+                                    <Sparkles
+                                      className="w-3 h-3"
+                                      color="blue"
+                                    />
+                                    AI
+                                  </Badge>
+                                )
+                              )}
+                            </div>
+                            <RadioGroup
+                              name={field.name}
+                              value={field.value}
+                              onValueChange={field.onChange}
+                              aria-invalid={fieldState.invalid}
+                            >
+                              {METADATA_FORM_CFG.subTasks.map((subTask) => (
+                                <Field
+                                  key={subTask.value}
+                                  orientation="horizontal"
+                                  data-invalid={fieldState.invalid}
+                                >
+                                  <RadioGroupItem
+                                    value={subTask.value}
+                                    id={`form-metadata-radio-subtask-${subTask.value}`}
+                                    aria-invalid={fieldState.invalid}
+                                  />
+                                  <FieldLabel
+                                    htmlFor={`form-metadata-radio-subtask-${subTask.value}`}
+                                    className="font-normal text-gray-700"
+                                  >
+                                    {subTask.label}
+                                  </FieldLabel>
+                                </Field>
+                              ))}
+                            </RadioGroup>
+                            {fieldState.invalid && (
+                              <FieldError errors={[fieldState.error]} />
+                            )}
+                          </FieldSet>
+                        );
+                      }}
                     />
                     <Controller
                       name="input"
@@ -520,113 +804,239 @@ export default function ModelMetadataForm({
                     <Controller
                       name="output"
                       control={form.control}
-                      render={({ field, fieldState }) => (
-                        <FieldSet>
-                          <FieldTitle className="text-plum/85">
-                            Output
-                          </FieldTitle>
-                          <FieldGroup data-slot="checkbox-group">
-                            {METADATA_FORM_CFG.outputs.map((output) => (
-                              <Field
-                                key={output.value}
-                                orientation="horizontal"
-                                data-invalid={fieldState.invalid}
-                              >
-                                <Checkbox
-                                  id={`form-metadata-checkbox-${output.value}`}
-                                  name={field.name}
-                                  aria-invalid={fieldState.invalid}
-                                  checked={field.value.includes(output.value)}
-                                  onCheckedChange={(checked) => {
-                                    const newValue = checked
-                                      ? [...field.value, output.value]
-                                      : field.value.filter(
-                                          (value) => value !== output.value
-                                        );
-                                    field.onChange(newValue);
-                                  }}
-                                />
-                                <FieldLabel
-                                  htmlFor={`form-metadata-checkbox-${output.value}`}
-                                  className="font-normal text-gray-700"
+                      render={({ field, fieldState }) => {
+                        const currentOutput = field.value || [];
+                        const originalOutput = aiResults.output || [];
+
+                        const isAiGenerated = areArraysEqual(
+                          currentOutput,
+                          originalOutput
+                        );
+                        const isManuallyEdited = !isAiGenerated;
+                        return (
+                          <FieldSet>
+                            <div className="flex gap-2 items-center">
+                              <FieldTitle className="text-plum/85">
+                                Output
+                              </FieldTitle>
+                              {isManuallyEdited ? (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-4 px-0 text-xs gap-1"
+                                  onClick={() => handleFieldResetToAi("output")}
                                 >
-                                  {output.label}
-                                </FieldLabel>
-                              </Field>
-                            ))}
-                          </FieldGroup>
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </FieldSet>
-                      )}
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs cursor-pointer"
+                                  >
+                                    <RotateCcw
+                                      className="w-1 h-1"
+                                      color="blue"
+                                    />
+                                    Reset to AI Suggestion
+                                  </Badge>
+                                </Button>
+                              ) : (
+                                aiResults.title && (
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs "
+                                  >
+                                    <Sparkles
+                                      className="w-3 h-3"
+                                      color="blue"
+                                    />
+                                    AI
+                                  </Badge>
+                                )
+                              )}
+                            </div>
+                            <FieldGroup data-slot="checkbox-group">
+                              {METADATA_FORM_CFG.outputs.map((output) => (
+                                <Field
+                                  key={output.value}
+                                  orientation="horizontal"
+                                  data-invalid={fieldState.invalid}
+                                >
+                                  <Checkbox
+                                    id={`form-metadata-checkbox-${output.value}`}
+                                    name={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    checked={field.value.includes(output.value)}
+                                    onCheckedChange={(checked) => {
+                                      const newValue = checked
+                                        ? [...field.value, output.value]
+                                        : field.value.filter(
+                                            (value) => value !== output.value
+                                          );
+                                      field.onChange(newValue);
+                                    }}
+                                  />
+                                  <FieldLabel
+                                    htmlFor={`form-metadata-checkbox-${output.value}`}
+                                    className="font-normal text-gray-700"
+                                  >
+                                    {output.label}
+                                  </FieldLabel>
+                                </Field>
+                              ))}
+                            </FieldGroup>
+                            {fieldState.invalid && (
+                              <FieldError errors={[fieldState.error]} />
+                            )}
+                          </FieldSet>
+                        );
+                      }}
                     />
                     <Controller
                       name="output_dimension"
                       control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel
-                            htmlFor={field.name}
-                            className="text-plum/85"
-                          >
-                            Output Dimension
-                          </FieldLabel>
-                          <Input
-                            {...field}
-                            id={field.name}
-                            aria-invalid={fieldState.invalid}
-                            className="focus-visible:border-plum"
-                            placeholder="Output dimension"
-                          />
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
+                      render={({ field, fieldState }) => {
+                        const isAiGenerated =
+                          aiResults.output_dimension === field.value;
+                        const isManuallyEdited = !isAiGenerated;
+                        return (
+                          <Field data-invalid={fieldState.invalid}>
+                            <div className="flex gap-2 items-center">
+                              <FieldLabel
+                                htmlFor={field.name}
+                                className="text-plum/85"
+                              >
+                                Output Dimension
+                              </FieldLabel>
+                              {isManuallyEdited ? (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-4 px-0 text-xs gap-1"
+                                  onClick={() =>
+                                    handleFieldResetToAi("output_dimension")
+                                  }
+                                >
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs cursor-pointer"
+                                  >
+                                    <RotateCcw
+                                      className="w-1 h-1"
+                                      color="blue"
+                                    />
+                                    Reset to AI Suggestion
+                                  </Badge>
+                                </Button>
+                              ) : (
+                                aiResults.title && (
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs "
+                                  >
+                                    <Sparkles
+                                      className="w-3 h-3"
+                                      color="blue"
+                                    />
+                                    AI
+                                  </Badge>
+                                )
+                              )}
+                            </div>
+                            <Input
+                              {...field}
+                              id={field.name}
+                              aria-invalid={fieldState.invalid}
+                              className="focus-visible:border-plum"
+                              placeholder="Output dimension"
+                            />
+                            {fieldState.invalid && (
+                              <FieldError errors={[fieldState.error]} />
+                            )}
+                          </Field>
+                        );
+                      }}
                     />
 
                     <Controller
                       name="output_consistency"
                       control={form.control}
-                      render={({ field, fieldState }) => (
-                        <FieldSet data-invalid={fieldState.invalid}>
-                          <FieldTitle className="text-plum/85">
-                            Output consistency
-                          </FieldTitle>
-                          <RadioGroup
-                            name={field.name}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                            aria-invalid={fieldState.invalid}
-                          >
-                            {METADATA_FORM_CFG.outputConsistencys.map(
-                              (item) => (
-                                <Field
-                                  key={item.value}
-                                  orientation="horizontal"
-                                  data-invalid={fieldState.invalid}
+                      render={({ field, fieldState }) => {
+                        const isAiGenerated =
+                          aiResults.output_consistency === field.value;
+                        const isManuallyEdited = !isAiGenerated;
+                        return (
+                          <FieldSet data-invalid={fieldState.invalid}>
+                            <div className="flex gap-2 items-center">
+                              <FieldTitle className="text-plum/85">
+                                Output consistency
+                              </FieldTitle>
+                              {isManuallyEdited ? (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-4 px-0 text-xs gap-1"
+                                  onClick={() =>
+                                    handleFieldResetToAi("output_consistency")
+                                  }
                                 >
-                                  <RadioGroupItem
-                                    value={item.value}
-                                    id={`form-metadata-radio-outconst-${item.value}`}
-                                    aria-invalid={fieldState.invalid}
-                                  />
-                                  <FieldLabel
-                                    htmlFor={`form-metadata-radio-outconst-${item.value}`}
-                                    className="font-normal text-gray-700"
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs cursor-pointer"
                                   >
-                                    {item.label}
-                                  </FieldLabel>
-                                </Field>
-                              )
+                                    <RotateCcw
+                                      className="w-1 h-1"
+                                      color="blue"
+                                    />
+                                    Reset to AI Suggestion
+                                  </Badge>
+                                </Button>
+                              ) : (
+                                aiResults.title && (
+                                  <Badge
+                                    variant="secondary"
+                                    className="gap-1 text-xs "
+                                  >
+                                    <Sparkles
+                                      className="w-3 h-3"
+                                      color="blue"
+                                    />
+                                    AI
+                                  </Badge>
+                                )
+                              )}
+                            </div>
+                            <RadioGroup
+                              name={field.name}
+                              value={field.value}
+                              onValueChange={field.onChange}
+                              aria-invalid={fieldState.invalid}
+                            >
+                              {METADATA_FORM_CFG.outputConsistencys.map(
+                                (item) => (
+                                  <Field
+                                    key={item.value}
+                                    orientation="horizontal"
+                                    data-invalid={fieldState.invalid}
+                                  >
+                                    <RadioGroupItem
+                                      value={item.value}
+                                      id={`form-metadata-radio-outconst-${item.value}`}
+                                      aria-invalid={fieldState.invalid}
+                                    />
+                                    <FieldLabel
+                                      htmlFor={`form-metadata-radio-outconst-${item.value}`}
+                                      className="font-normal text-gray-700"
+                                    >
+                                      {item.label}
+                                    </FieldLabel>
+                                  </Field>
+                                )
+                              )}
+                            </RadioGroup>
+                            {fieldState.invalid && (
+                              <FieldError errors={[fieldState.error]} />
                             )}
-                          </RadioGroup>
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </FieldSet>
-                      )}
+                          </FieldSet>
+                        );
+                      }}
                     />
                   </FieldGroup>
                 </div>
@@ -648,90 +1058,195 @@ export default function ModelMetadataForm({
                   <Controller
                     name="publication_url"
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor={field.name}
-                          className="text-plum/85"
-                        >
-                          Publication URL
-                        </FieldLabel>
-                        <Input
-                          {...field}
-                          id={field.name}
-                          aria-invalid={fieldState.invalid}
-                          className="focus-visible:border-plum"
-                          placeholder="Enter the publication URL"
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
+                    render={({ field, fieldState }) => {
+                      const isAiGenerated =
+                        aiResults.publication_url === field.value;
+                      const isManuallyEdited = !isAiGenerated;
+                      return (
+                        <Field data-invalid={fieldState.invalid}>
+                          <div className="flex gap-2 items-center">
+                            <FieldLabel
+                              htmlFor={field.name}
+                              className="text-plum/85"
+                            >
+                              Publication URL
+                            </FieldLabel>
+                            {isManuallyEdited ? (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-4 px-0 text-xs gap-1"
+                                onClick={() =>
+                                  handleFieldResetToAi("publication_url")
+                                }
+                              >
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs cursor-pointer"
+                                >
+                                  <RotateCcw className="w-1 h-1" color="blue" />
+                                  Reset to AI Suggestion
+                                </Badge>
+                              </Button>
+                            ) : (
+                              aiResults.title && (
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs "
+                                >
+                                  <Sparkles className="w-3 h-3" color="blue" />
+                                  AI
+                                </Badge>
+                              )
+                            )}
+                          </div>
+                          <Input
+                            {...field}
+                            id={field.name}
+                            aria-invalid={fieldState.invalid}
+                            className="focus-visible:border-plum"
+                            placeholder="Enter the publication URL"
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      );
+                    }}
                   />
 
                   <Controller
                     name="publication_year"
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor={field.name}
-                          className="text-plum/85"
-                        >
-                          Publication year
-                        </FieldLabel>
-                        <Input
-                          {...field}
-                          id={field.name}
-                          aria-invalid={fieldState.invalid}
-                          className="focus-visible:border-plum"
-                          placeholder="Enter publication year"
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
+                    render={({ field, fieldState }) => {
+                      const isAiGenerated =
+                        aiResults.publication_year === field.value;
+                      const isManuallyEdited = !isAiGenerated;
+                      return (
+                        <Field data-invalid={fieldState.invalid}>
+                          <div className="flex gap-2 items-center flex-wrap">
+                            <FieldLabel
+                              htmlFor={field.name}
+                              className="text-plum/85"
+                            >
+                              Publication year
+                            </FieldLabel>
+                            {isManuallyEdited ? (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-4 px-0 text-xs gap-1"
+                                onClick={() =>
+                                  handleFieldResetToAi("publication_year")
+                                }
+                              >
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs cursor-pointer"
+                                >
+                                  <RotateCcw className="w-1 h-1" color="blue" />
+                                  Reset to AI
+                                </Badge>
+                              </Button>
+                            ) : (
+                              aiResults.title && (
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs "
+                                >
+                                  <Sparkles className="w-3 h-3" color="blue" />
+                                  AI
+                                </Badge>
+                              )
+                            )}
+                          </div>
+                          <Input
+                            {...field}
+                            id={field.name}
+                            aria-invalid={fieldState.invalid}
+                            className="focus-visible:border-plum"
+                            placeholder="Enter publication year"
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      );
+                    }}
                   />
                   <Controller
                     name="publication_type"
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor="form-metadata-select-pubtype"
-                          className="text-plum/85"
-                        >
-                          Publication type
-                        </FieldLabel>
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          disabled={isLocked}
-                        >
-                          <SelectTrigger
-                            id="form-metadata-select-pubtype"
-                            aria-invalid={fieldState.invalid}
-                            className="min-w-[120px]"
+                    render={({ field, fieldState }) => {
+                      const isAiGenerated =
+                        aiResults.publication_type === field.value;
+                      const isManuallyEdited = !isAiGenerated;
+                      return (
+                        <Field data-invalid={fieldState.invalid}>
+                          <div className="flex gap-2 items-center flex-wrap">
+                            <FieldLabel
+                              htmlFor="form-metadata-select-pubtype"
+                              className="text-plum/85"
+                            >
+                              Publication type
+                            </FieldLabel>
+                            {isManuallyEdited ? (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-4 px-0 text-xs gap-1"
+                                onClick={() =>
+                                  handleFieldResetToAi("publication_type")
+                                }
+                              >
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs cursor-pointer"
+                                >
+                                  <RotateCcw className="w-1 h-1" color="blue" />
+                                  Reset to AI Suggestion
+                                </Badge>
+                              </Button>
+                            ) : (
+                              aiResults.title && (
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs "
+                                >
+                                  <Sparkles className="w-3 h-3" color="blue" />
+                                  AI
+                                </Badge>
+                              )
+                            )}
+                          </div>
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={field.onChange}
                             disabled={isLocked}
                           >
-                            <SelectValue placeholder="Select a type" />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            {METADATA_FORM_CFG.publicationType.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
+                            <SelectTrigger
+                              id="form-metadata-select-pubtype"
+                              aria-invalid={fieldState.invalid}
+                              className="min-w-[120px]"
+                              disabled={isLocked}
+                            >
+                              <SelectValue placeholder="Select a type" />
+                            </SelectTrigger>
+                            <SelectContent position="item-aligned">
+                              {METADATA_FORM_CFG.publicationType.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      );
+                    }}
                   />
                 </div>
               </FieldGroup>
@@ -764,41 +1279,76 @@ export default function ModelMetadataForm({
                   <Controller
                     name="source_type"
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor="form-metadata-select-source"
-                          className="text-plum/85"
-                        >
-                          Source type
-                        </FieldLabel>
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          disabled={isLocked}
-                        >
-                          <SelectTrigger
-                            id="form-metadata-select-source"
-                            aria-invalid={fieldState.invalid}
-                            className="min-w-[120px]"
+                    render={({ field, fieldState }) => {
+                      const isAiGenerated =
+                        aiResults.source_type === field.value;
+                      const isManuallyEdited = !isAiGenerated;
+                      return (
+                        <Field data-invalid={fieldState.invalid}>
+                          <div className="flex gap-2 items-center">
+                            <FieldLabel
+                              htmlFor="form-metadata-select-source"
+                              className="text-plum/85"
+                            >
+                              Source type
+                            </FieldLabel>
+                            {isManuallyEdited ? (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-4 px-0 text-xs gap-1"
+                                onClick={() =>
+                                  handleFieldResetToAi("source_type")
+                                }
+                              >
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs cursor-pointer"
+                                >
+                                  <RotateCcw className="w-1 h-1" color="blue" />
+                                  Reset to AI Suggestion
+                                </Badge>
+                              </Button>
+                            ) : (
+                              aiResults.title && (
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs "
+                                >
+                                  <Sparkles className="w-3 h-3" color="blue" />
+                                  AI
+                                </Badge>
+                              )
+                            )}
+                          </div>
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={field.onChange}
                             disabled={isLocked}
                           >
-                            <SelectValue placeholder="Select a source type" />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            {METADATA_FORM_CFG.sourceType.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
+                            <SelectTrigger
+                              id="form-metadata-select-source"
+                              aria-invalid={fieldState.invalid}
+                              className="min-w-[120px]"
+                              disabled={isLocked}
+                            >
+                              <SelectValue placeholder="Select a source type" />
+                            </SelectTrigger>
+                            <SelectContent position="item-aligned">
+                              {METADATA_FORM_CFG.sourceType.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      );
+                    }}
                   />
                 </div>
               </FieldGroup>
@@ -807,80 +1357,147 @@ export default function ModelMetadataForm({
                   <Controller
                     name="license"
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor="form-metadata-select-lic"
-                          className="text-plum/85"
-                        >
-                          License
-                        </FieldLabel>
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          disabled={isLocked}
-                        >
-                          <SelectTrigger
-                            id="form-metadata-select-lic"
-                            aria-invalid={fieldState.invalid}
-                            className="min-w-[120px]"
+                    render={({ field, fieldState }) => {
+                      const isAiGenerated = aiResults.license === field.value;
+                      const isManuallyEdited = !isAiGenerated;
+                      return (
+                        <Field data-invalid={fieldState.invalid}>
+                          <div className="flex gap-2 items-center">
+                            <FieldLabel
+                              htmlFor="form-metadata-select-lic"
+                              className="text-plum/85"
+                            >
+                              License
+                            </FieldLabel>
+                            {isManuallyEdited ? (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-4 px-0 text-xs gap-1"
+                                onClick={() => handleFieldResetToAi("license")}
+                              >
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs cursor-pointer"
+                                >
+                                  <RotateCcw className="w-1 h-1" color="blue" />
+                                  Reset to AI Suggestion
+                                </Badge>
+                              </Button>
+                            ) : (
+                              aiResults.title && (
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs "
+                                >
+                                  <Sparkles className="w-3 h-3" color="blue" />
+                                  AI
+                                </Badge>
+                              )
+                            )}
+                          </div>
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={field.onChange}
                             disabled={isLocked}
                           >
-                            <SelectValue placeholder="Select a license" />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            {METADATA_FORM_CFG.licenses.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
+                            <SelectTrigger
+                              id="form-metadata-select-lic"
+                              aria-invalid={fieldState.invalid}
+                              className="min-w-[120px]"
+                              disabled={isLocked}
+                            >
+                              <SelectValue placeholder="Select a license" />
+                            </SelectTrigger>
+                            <SelectContent position="item-aligned">
+                              {METADATA_FORM_CFG.licenses.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      );
+                    }}
                   />
                   <Controller
                     name="deployment"
                     control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor="form-metadata-select-dep"
-                          className="text-plum/85"
-                        >
-                          Deployment
-                        </FieldLabel>
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          disabled={isLocked}
-                        >
-                          <SelectTrigger
-                            id="form-metadata-select-dep"
-                            aria-invalid={fieldState.invalid}
-                            className="min-w-[120px]"
+                    render={({ field, fieldState }) => {
+                      const isAiGenerated =
+                        aiResults.deployment === field.value;
+                      const isManuallyEdited = !isAiGenerated;
+                      return (
+                        <Field data-invalid={fieldState.invalid}>
+                          <div className="flex gap-2 items-center">
+                            <FieldLabel
+                              htmlFor="form-metadata-select-dep"
+                              className="text-plum/85"
+                            >
+                              Deployment
+                            </FieldLabel>
+                            {isManuallyEdited ? (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-4 px-0 text-xs gap-1"
+                                onClick={() =>
+                                  handleFieldResetToAi("deployment")
+                                }
+                              >
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs cursor-pointer"
+                                >
+                                  <RotateCcw className="w-1 h-1" color="blue" />
+                                  Reset to AI Suggestion
+                                </Badge>
+                              </Button>
+                            ) : (
+                              aiResults.title && (
+                                <Badge
+                                  variant="secondary"
+                                  className="gap-1 text-xs "
+                                >
+                                  <Sparkles className="w-3 h-3" color="blue" />
+                                  AI
+                                </Badge>
+                              )
+                            )}
+                          </div>
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={field.onChange}
                             disabled={isLocked}
                           >
-                            <SelectValue placeholder="Select a deployment" />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            {METADATA_FORM_CFG.deployment.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
+                            <SelectTrigger
+                              id="form-metadata-select-dep"
+                              aria-invalid={fieldState.invalid}
+                              className="min-w-[120px]"
+                              disabled={isLocked}
+                            >
+                              <SelectValue placeholder="Select a deployment" />
+                            </SelectTrigger>
+                            <SelectContent position="item-aligned">
+                              {METADATA_FORM_CFG.deployment.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      );
+                    }}
                   />
                 </div>
               </FieldGroup>
@@ -901,52 +1518,139 @@ export default function ModelMetadataForm({
                 <Controller
                   name="biomedical_area"
                   control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Biomedical area
-                      </FieldLabel>
-                      <MultiSelect
-                        id={field.name}
-                        options={METADATA_FORM_CFG.biomedicalArea}
-                        value={field.value || []}
-                        onChange={field.onChange}
-                        placeholder="Select areas..."
-                        className={cn(
-                          fieldState.invalid &&
-                            "border-red-500 focus-visible:border-red-500"
+                  render={({ field, fieldState }) => {
+                    const currentBioArea = field.value || [];
+                    const originalBioArea = aiResults.biomedical_area || [];
+
+                    const isAiGenerated = areArraysEqual(
+                      currentBioArea,
+                      originalBioArea
+                    );
+                    const isManuallyEdited = !isAiGenerated;
+                    return (
+                      <Field data-invalid={fieldState.invalid}>
+                        <div className="flex gap-2 items-center">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-plum/85"
+                          >
+                            Biomedical area
+                          </FieldLabel>
+                          {isManuallyEdited ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 px-0 text-xs gap-1"
+                              onClick={() =>
+                                handleFieldResetToAi("biomedical_area")
+                              }
+                            >
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs cursor-pointer"
+                              >
+                                <RotateCcw className="w-1 h-1" color="blue" />
+                                Reset to AI Suggestion
+                              </Badge>
+                            </Button>
+                          ) : (
+                            aiResults.title && (
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs "
+                              >
+                                <Sparkles className="w-3 h-3" color="blue" />
+                                AI
+                              </Badge>
+                            )
+                          )}
+                        </div>
+                        <MultiSelect
+                          id={field.name}
+                          options={METADATA_FORM_CFG.biomedicalArea}
+                          value={field.value || []}
+                          onChange={field.onChange}
+                          placeholder="Select areas..."
+                          className={cn(
+                            fieldState.invalid &&
+                              "border-red-500 focus-visible:border-red-500"
+                          )}
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
                         )}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
+                      </Field>
+                    );
+                  }}
                 />
                 <Controller
                   name="target_organism"
                   control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Target organism
-                      </FieldLabel>
-                      <MultiSelect
-                        id={field.name}
-                        options={METADATA_FORM_CFG.targetOrganism}
-                        value={field.value || []}
-                        onChange={field.onChange}
-                        placeholder="Select targets..."
-                        className={cn(
-                          fieldState.invalid &&
-                            "border-red-500 focus-visible:border-red-500"
+                  render={({ field, fieldState }) => {
+                    const currentTargetOrganism = field.value || [];
+                    const originalTargetOrganism =
+                      aiResults.target_organism || [];
+
+                    const isAiGenerated = areArraysEqual(
+                      currentTargetOrganism,
+                      originalTargetOrganism
+                    );
+                    const isManuallyEdited = !isAiGenerated;
+                    return (
+                      <Field data-invalid={fieldState.invalid}>
+                        <div className="flex gap-2 items-center">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-plum/85"
+                          >
+                            Target organism
+                          </FieldLabel>
+                          {isManuallyEdited ? (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-4 px-0 text-xs gap-1"
+                              onClick={() =>
+                                handleFieldResetToAi("target_organism")
+                              }
+                            >
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs cursor-pointer"
+                              >
+                                <RotateCcw className="w-1 h-1" color="blue" />
+                                Reset to AI Suggestion
+                              </Badge>
+                            </Button>
+                          ) : (
+                            aiResults.title && (
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 text-xs "
+                              >
+                                <Sparkles className="w-3 h-3" color="blue" />
+                                AI
+                              </Badge>
+                            )
+                          )}
+                        </div>
+                        <MultiSelect
+                          id={field.name}
+                          options={METADATA_FORM_CFG.targetOrganism}
+                          value={field.value || []}
+                          onChange={field.onChange}
+                          placeholder="Select targets..."
+                          className={cn(
+                            fieldState.invalid &&
+                              "border-red-500 focus-visible:border-red-500"
+                          )}
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
                         )}
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
+                      </Field>
+                    );
+                  }}
                 />
               </FieldGroup>
             </FieldSet>
