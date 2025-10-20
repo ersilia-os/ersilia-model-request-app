@@ -3,13 +3,13 @@ import { METADATA_FORM_CFG } from "@/config/form-cfg";
 import { z } from "zod";
 
 export const MetadataFormSchema = z.object({
-  title: z.string().trim().min(50, {
-    message: "Please provide a title with at least 50 characters.",
+  title: z.string().trim().min(10, {
+    message: "Please provide a title with at least 10 characters.",
   }),
   slug: z
     .string()
     .trim()
-    .min(1, { message: "Please provide a slug" })
+    .min(5, { message: "Please provide a slug" })
     .max(60, { message: "Maxiumum 60 characters" })
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
       message:
@@ -18,7 +18,7 @@ export const MetadataFormSchema = z.object({
   description: z.string().trim().min(200, {
     message: "Please provide a description of a minimum of 200 characters.",
   }),
-  interpretation: z.string().trim().min(1, {
+  interpretation: z.string().trim().min(10, {
     message:
       "Please provide a description of how to interpret the model results.",
   }),
