@@ -1,14 +1,44 @@
 "use client";
-import { FileText, Github } from "lucide-react";
+import { FileText, Github, Loader2 } from "lucide-react";
 import { ModelMetadata } from "../../../generated/prisma";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Separator } from "../ui/separator";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { useSubmitToErsilia } from "@/hooks/useSubmitToErsilia";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface PreviewSubmitProps {
   data: ModelMetadata;
 }
 
 export default function PreviewSubmit({ data }: PreviewSubmitProps) {
+  const router = useRouter();
+  const [confirmStep, setConfirmStep] = useState(false);
+  const { submitMetadata, loading } = useSubmitToErsilia({
+    owner: "arobri67",
+    repo: "testerbot",
+  });
+
+  async function handleSend() {
+    if (!confirmStep) {
+      setConfirmStep(true);
+
+      setTimeout(() => setConfirmStep(false), 3000);
+      return;
+    }
+
+    const result = await submitMetadata(data.id);
+
+    if (result.success) {
+      setConfirmStep(false);
+      setTimeout(() => {
+        router.push(`/thank-you/${data.slug}`);
+      }, 1500);
+    }
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center py-10">
       <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
@@ -275,6 +305,36 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               </div>
             </div>
           )}
+          <Separator />
+          <div className="flex items-center gap-3 pt-4">
+            <Button
+              variant={"plum"}
+              className="text-base"
+              onClick={handleSend}
+              disabled={loading || data.status === "SUBMITTED"}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  Sending...
+                </>
+              ) : confirmStep ? (
+                "Click again to confirm"
+              ) : (
+                "Send to Ersilia"
+              )}
+            </Button>
+            <Link href="/new-model/metadata">
+              <Button
+                type="button"
+                variant="transparent"
+                className="text-base"
+                disabled={loading || data.status === "SUBMITTED"}
+              >
+                Edit Metadata
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

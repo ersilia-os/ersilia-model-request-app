@@ -34,9 +34,6 @@ export const MetadataFormSchema = z.object({
   input: z.string().min(1, {
     message: "Please select one input.",
   }),
-  status: z.string().min(1, {
-    message: "Please select one input.",
-  }),
   input_dimension: z
     .string()
     .min(1, { message: "Please enter the input dimension of the model." }),
@@ -198,8 +195,6 @@ export const AiAnalysisModelMetadataSchema = z.object({
     ),
 
   input: z.string().min(1).describe("This is always 'Compound'"),
-
-  status: z.string().min(1).describe("This is always 'In Progress' "),
 
   input_dimension: z.string().describe("This is always '1'"),
 
