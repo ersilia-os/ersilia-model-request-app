@@ -30,6 +30,7 @@ export function useAiPublicationAnalysis() {
       }
 
       const metadata = await api.analyzePdf(pdfFile);
+
       sessionStorage.setItem("aiAnalysis", JSON.stringify(metadata));
     } catch (err) {
       console.error(err);
