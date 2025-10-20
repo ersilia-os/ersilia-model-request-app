@@ -211,7 +211,7 @@ export default function ModelMetadataForm({
                         id={field.name}
                         aria-invalid={fieldState.invalid}
                         className="focus-visible:border-plum"
-                        placeholder="Model title (minimum 70 characters)"
+                        placeholder="Model title"
                       />
 
                       {fieldState.invalid && (

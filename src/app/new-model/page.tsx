@@ -7,10 +7,11 @@ import PublicationInput from "@/components/new-model/PublicationInput";
 import FileDrop from "@/components/new-model/FileDrop";
 
 import { useAiPublicationAnalysis } from "@/hooks/usePublicationAnalysis";
+import { Separator } from "@/components/ui/separator";
+import ContextInput from "@/components/new-model/ContextInput";
 
 export default function NewModelPage() {
-  const { publication, setPublication, file, setFile, handleSubmit } =
-    useAiPublicationAnalysis();
+  const { file, setFile, form, onSubmit } = useAiPublicationAnalysis();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
@@ -20,25 +21,33 @@ export default function NewModelPage() {
             Add New Model to Ersilia
           </h1>
           <p className="text-center text-gray-400 text-sm md:text-base lg:text-lg mb-2">
-            Provide a publication to extract model metadata
+            Provide a publication and answer a few questions to help our AI
+            extract accurate model metadata
           </p>
         </CardHeader>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
           <CardContent className="flex flex-col gap-4 p-0">
-            <PublicationInput
-              publication={publication}
-              setPublication={setPublication}
-              disabled={!!file}
-            />
-
+            <PublicationInput control={form.control} disabled={!!file} />
+            <div className="relative flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative bg-white px-4">
+                <span className="text-sm font-medium text-gray-500">OR</span>
+              </div>
+            </div>
             <FileDrop
               file={file}
-              publication={publication}
+              publication={form.watch("publication")}
               onDrop={(acceptedFiles) => setFile(acceptedFiles[0])}
               onRemoveFile={() => setFile(null)}
             />
-
+            <Separator />
+            <ContextInput control={form.control} />
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
               <Button
                 asChild
@@ -52,7 +61,7 @@ export default function NewModelPage() {
                 type="submit"
                 variant="plum"
                 className="w-full sm:flex-1"
-                disabled={!file && !publication}
+                disabled={!file && !form.watch("publication")}
               >
                 Analyze
               </Button>

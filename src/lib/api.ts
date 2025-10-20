@@ -1,5 +1,10 @@
 import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
 
+type Question = {
+  question1: string;
+  question2: string;
+};
+
 const api = {
   async downloadPdfFromUrl(url: string): Promise<File | undefined> {
     try {
@@ -26,9 +31,14 @@ const api = {
     }
   },
 
-  async analyzePdf(file: File): Promise<AiAnalysisModelMetadataSchema> {
+  async analyzePdf(
+    file: File,
+    questions: Question
+  ): Promise<AiAnalysisModelMetadataSchema> {
     const fd = new FormData();
     fd.append("file", file);
+    fd.append("question1", questions.question1);
+    fd.append("question2", questions.question2);
 
     const res = await fetch("/api/analysis", {
       method: "POST",

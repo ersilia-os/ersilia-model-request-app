@@ -1,14 +1,27 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
+import { useForm } from "react-hook-form";
+import { UploadFormSchema } from "@/schema/upload";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function useAiPublicationAnalysis() {
   const router = useRouter();
-  const [publication, setPublication] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const form = useForm<z.infer<typeof UploadFormSchema>>({
+    resolver: zodResolver(UploadFormSchema),
+    mode: "onSubmit",
+    defaultValues: {
+      publication: "",
+      question1: "",
+      question2: "",
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof UploadFormSchema>) => {
+    const { publication, question1, question2 } = data;
 
     if (!file && !publication) {
       alert("Please upload a PDF or provide a publication link.");
@@ -28,8 +41,12 @@ export function useAiPublicationAnalysis() {
       if (!pdfFile) {
         throw new Error("No file available for analysis");
       }
+      console.log("🟩🟩🟩🟩", pdfFile);
 
-      const metadata = await api.analyzePdf(pdfFile);
+      const metadata = await api.analyzePdf(pdfFile, {
+        question1,
+        question2,
+      });
 
       sessionStorage.setItem("aiAnalysis", JSON.stringify(metadata));
     } catch (err) {
@@ -41,10 +58,9 @@ export function useAiPublicationAnalysis() {
   };
 
   return {
-    publication,
-    setPublication,
     file,
     setFile,
-    handleSubmit,
+    onSubmit,
+    form,
   };
 }

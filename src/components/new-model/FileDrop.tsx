@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   file: File | null;
-  publication: string;
+  publication?: string;
   onDrop: (acceptedFiles: File[]) => void;
   onRemoveFile: () => void;
 }
@@ -26,7 +26,7 @@ export default function FileDrop({
         maxFiles={1}
         disabled={!!publication}
         className={cn(
-          "rounded-xl min-h-48 transition-colors cursor-pointer border-2 border-dashed border-gray-300",
+          "rounded-xl min-h-48 transition-colors cursor-pointer border-2 border-dashed border-plum/20",
           publication
             ? "bg-gray-100 opacity-60 cursor-not-allowed"
             : "hover:bg-gray-100 active:bg-gray-200"

@@ -9,8 +9,10 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
+    const question1 = formData.get("question1") as string | null;
+    const question2 = formData.get("question2") as string | null;
 
-    if (!file) {
+    if (!file || !question1 || !question2) {
       return NextResponse.json({ error: "No file uploaded." }, { status: 400 });
     }
 
@@ -19,7 +21,14 @@ export async function POST(req: NextRequest) {
 
     const prompt = `You are a biomedical model extraction assistant. 
 Analyze the scientific publication PDF and extract structured metadata according to the provided schema.
-Extract all relevant information about the biomedical model described in this publication.`;
+
+Extract all relevant information about the biomedical model described in this publication.
+
+${question1 ? `\nAdditional Context 1: ${question1}` : ""}
+${question2 ? `\nAdditional Context 2: ${question2}` : ""}
+
+Pay special attention to any information related to the additional context provided above when extracting metadata.`;
+
     const result = await generateObject({
       model: openai("gpt-5-nano"),
       schema: AiAnalysisModelMetadataSchema,
