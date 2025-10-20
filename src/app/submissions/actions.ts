@@ -1,12 +1,18 @@
 "use server";
+import prisma from "@/lib/prisma";
 
-import { userData } from "./mock-data";
-
-export async function getSubmissionsByUser(sid: string) {
-  //mocking the db request
-  console.log(sid);
-
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  return userData.submissions;
+export async function getSubmissionsByUser(sub: string) {
+  try {
+    const submissionList = await prisma.modelMetadata.findMany({
+      where: {
+        createdBy: sub,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return submissionList;
+  } catch {
+    throw new Error("You don´t have any submissions");
+  }
 }
