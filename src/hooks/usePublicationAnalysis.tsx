@@ -41,7 +41,6 @@ export function useAiPublicationAnalysis() {
       if (!pdfFile) {
         throw new Error("No file available for analysis");
       }
-      console.log("🟩🟩🟩🟩", pdfFile);
 
       const metadata = await api.analyzePdf(pdfFile, {
         question1,
