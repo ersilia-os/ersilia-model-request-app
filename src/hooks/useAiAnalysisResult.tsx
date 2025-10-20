@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
+import { alertError } from "@/lib/alerts";
 
 type AiAnalysisState =
   | { isLoading: true; aiResults: null }
@@ -28,7 +29,7 @@ export function useAiAnalysisResults(): AiAnalysisState {
       console.error(err);
 
       router.push("/new-model");
-      alert("Error generating report. Please try again.");
+      alertError("Error generating report. Please try again.");
     }
   }, [router]);
 
