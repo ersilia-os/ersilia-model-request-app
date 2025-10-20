@@ -13,6 +13,7 @@ import {
   FieldSet,
   FieldTitle,
 } from "../ui/field";
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import z from "zod";
@@ -23,7 +24,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { METADATA_FORM_CFG } from "@/config/form-cfg";
-
+import { Info } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Checkbox } from "../ui/checkbox";
 import { cn } from "@/lib/utils";
@@ -180,9 +181,35 @@ export default function ModelMetadataForm({
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Title
-                      </FieldLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="p-0 m-0 bg-transparent border-none"
+                          >
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                              Title
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
+                            </FieldLabel>
+                          </button>
+                        </PopoverTrigger>
+
+                        <PopoverContent
+                          className="w-64 bg-white text-plum/85 text-sm"
+                          side="bottom"
+                          align="start"
+                        >
+                          Provide a clear and descriptive title for your model.
+                          The title should be at least 70 characters long and
+                          convey the main purpose or function of the model.
+                          Avoid overly generic names and make sure it reflects
+                          the type of predictions or results the model produces.
+                        </PopoverContent>
+                      </Popover>
+
                       <Input
                         {...field}
                         id={field.name}
@@ -190,6 +217,7 @@ export default function ModelMetadataForm({
                         className="focus-visible:border-plum"
                         placeholder="Model title (minimum 70 characters)"
                       />
+
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -203,9 +231,35 @@ export default function ModelMetadataForm({
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Slug
-                      </FieldLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="p-0 m-0 bg-transparent border-none"
+                          >
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                              Slug
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
+                            </FieldLabel>
+                          </button>
+                        </PopoverTrigger>
+
+                        <PopoverContent
+                          className="w-64 bg-white text-plum/85 text-sm"
+                          side="bottom"
+                          align="start"
+                        >
+                          The slug is a short, easy-to-read version of your
+                          model&apos;`s name used in URLs, all lowercase with
+                          words separated by dashes, like
+                          “predictive-cancer-analysis” for “Predictive Cancer
+                          Analysis.”
+                        </PopoverContent>
+                      </Popover>
+
                       <Input
                         {...field}
                         id={field.name}
@@ -213,6 +267,7 @@ export default function ModelMetadataForm({
                         className="focus-visible:border-plum"
                         placeholder="e.g. model-name-slug"
                       />
+
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -238,9 +293,34 @@ export default function ModelMetadataForm({
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Description
-                      </FieldLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="p-0 m-0 bg-transparent border-none"
+                          >
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                              Description
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
+                            </FieldLabel>
+                          </button>
+                        </PopoverTrigger>
+
+                        <PopoverContent
+                          className="w-64 bg-white text-plum/85 text-sm"
+                          side="bottom"
+                          align="start"
+                        >
+                          Provide a brief overview of what your model does, what
+                          results it produces, and what kind of data was used to
+                          train it, just enough for someone to understand its
+                          purpose at a glance.
+                        </PopoverContent>
+                      </Popover>
+
                       <Textarea
                         {...field}
                         id={field.name}
@@ -248,6 +328,7 @@ export default function ModelMetadataForm({
                         className="focus-visible:border-plum"
                         placeholder="Minimum information about model type, results and the training dataset."
                       />
+
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -259,9 +340,34 @@ export default function ModelMetadataForm({
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Interpretation
-                      </FieldLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="p-0 m-0 bg-transparent border-none"
+                          >
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                              Interpretation
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
+                            </FieldLabel>
+                          </button>
+                        </PopoverTrigger>
+
+                        <PopoverContent
+                          className="w-64 bg-white text-plum/85 text-sm"
+                          side="bottom"
+                          align="start"
+                        >
+                          Explain in simple terms what the model’s output means
+                          and how someone should read or understand the results,
+                          for example, whether a higher score indicates stronger
+                          activity or greater likelihood.
+                        </PopoverContent>
+                      </Popover>
+
                       <Textarea
                         {...field}
                         id={field.name}
@@ -269,6 +375,7 @@ export default function ModelMetadataForm({
                         className="focus-visible:border-plum"
                         placeholder="A brief description of how to interpret the model results"
                       />
+
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -295,9 +402,32 @@ export default function ModelMetadataForm({
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Tags
-                      </FieldLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="p-0 m-0 bg-transparent border-none"
+                          >
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                              Tags
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
+                            </FieldLabel>
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          className="w-64 bg-white text-plum/85 text-sm"
+                          side="bottom"
+                          align="start"
+                        >
+                          Tags are keywords that describe the model&apos;s
+                          purpose, domain, or key features, helping users
+                          quickly find and categorize it.
+                        </PopoverContent>
+                      </Popover>
+
                       <MultiSelect
                         id={field.name}
                         options={METADATA_FORM_CFG.tags}
@@ -309,6 +439,7 @@ export default function ModelMetadataForm({
                             "border-red-500 focus-visible:border-red-500"
                         )}
                       />
+
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
@@ -336,7 +467,34 @@ export default function ModelMetadataForm({
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <FieldSet data-invalid={fieldState.invalid}>
-                          <FieldTitle className="text-plum/85">Task</FieldTitle>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <button
+                                type="button"
+                                className="p-0 m-0 bg-transparent border-none"
+                              >
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                  Task
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
+                                </FieldTitle>
+                              </button>
+                            </PopoverTrigger>
+
+                            <PopoverContent
+                              className="w-64 bg-white text-plum/85 text-sm"
+                              side="bottom"
+                              align="start"
+                            >
+                              Select the primary task that this model performs,
+                              such as classification, regression, or data
+                              generation. This helps categorize the model and
+                              guide users on its main purpose.
+                            </PopoverContent>
+                          </Popover>
+
                           <RadioGroup
                             name={field.name}
                             value={field.value}
@@ -363,6 +521,7 @@ export default function ModelMetadataForm({
                               </Field>
                             ))}
                           </RadioGroup>
+
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
                           )}
@@ -374,9 +533,32 @@ export default function ModelMetadataForm({
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <FieldSet data-invalid={fieldState.invalid}>
-                          <FieldTitle className="text-plum/85">
-                            Subtask
-                          </FieldTitle>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <button
+                                type="button"
+                                className="p-0 m-0 bg-transparent border-none"
+                              >
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                  Subtask
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
+                                </FieldTitle>
+                              </button>
+                            </PopoverTrigger>
+
+                            <PopoverContent
+                              className="w-64 bg-white text-plum/85 text-sm"
+                              side="bottom"
+                              align="start"
+                            >
+                              Choose the specific subtask or variant of the
+                              primary task that this model handles.
+                            </PopoverContent>
+                          </Popover>
+
                           <RadioGroup
                             name={field.name}
                             value={field.value}
@@ -403,6 +585,7 @@ export default function ModelMetadataForm({
                               </Field>
                             ))}
                           </RadioGroup>
+
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
                           )}
@@ -414,9 +597,34 @@ export default function ModelMetadataForm({
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <FieldSet data-invalid={fieldState.invalid}>
-                          <FieldTitle className="text-plum/85">
-                            Input
-                          </FieldTitle>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <button
+                                type="button"
+                                className="p-0 m-0 bg-transparent border-none"
+                              >
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                  Input
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
+                                </FieldTitle>
+                              </button>
+                            </PopoverTrigger>
+
+                            <PopoverContent
+                              className="w-64 bg-white text-plum/85 text-sm"
+                              side="bottom"
+                              align="start"
+                            >
+                              The input defines the type of data the model
+                              expects. Currently, all Ersilia models accept only{" "}
+                              <strong>Compound</strong> as input. This field is
+                              a string with only this single accepted value.
+                            </PopoverContent>
+                          </Popover>
+
                           <RadioGroup
                             name={field.name}
                             value={field.value}
@@ -444,23 +652,50 @@ export default function ModelMetadataForm({
                               </Field>
                             ))}
                           </RadioGroup>
+
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
                           )}
                         </FieldSet>
                       )}
                     />
+
                     <Controller
                       name="input_dimension"
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel
-                            htmlFor={field.name}
-                            className="text-plum/85"
-                          >
-                            Input Dimension
-                          </FieldLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <button
+                                type="button"
+                                className="p-0 m-0 bg-transparent border-none"
+                              >
+                                <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                  Input Dimension
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
+                                </FieldLabel>
+                              </button>
+                            </PopoverTrigger>
+
+                            <PopoverContent
+                              className="w-64 bg-white text-plum/85 text-sm"
+                              side="bottom"
+                              align="start"
+                            >
+                              This defines the input format expected by the
+                              model. Currently, all Ersilia models accept only{" "}
+                              <strong>1</strong> (numeric) as the input
+                              dimension. You can pass a list of inputs, but the
+                              model makes predictions one input at a time, not
+                              combined. This field only accepts this single
+                              integer value.
+                            </PopoverContent>
+                          </Popover>
+
                           <Input
                             {...field}
                             id={field.name}
@@ -469,6 +704,7 @@ export default function ModelMetadataForm({
                             placeholder="Input dimension"
                             disabled
                           />
+
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
                           )}
@@ -482,9 +718,51 @@ export default function ModelMetadataForm({
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <FieldSet>
-                          <FieldTitle className="text-plum/85">
-                            Output
-                          </FieldTitle>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <button
+                                type="button"
+                                className="p-0 m-0 bg-transparent border-none"
+                              >
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                  Output
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
+                                </FieldTitle>
+                              </button>
+                            </PopoverTrigger>
+
+                            <PopoverContent
+                              className="w-64 bg-white text-plum/85 text-sm"
+                              side="bottom"
+                              align="start"
+                            >
+                              The output defines the type of data produced by
+                              the model. Accepted output formats are:
+                              <ul className="list-disc ml-4 mt-1">
+                                <li>
+                                  <strong>Score:</strong> e.g., a probability
+                                </li>
+                                <li>
+                                  <strong>Value:</strong> experimental value,
+                                  molecular descriptor, or calculated property
+                                </li>
+                                <li>
+                                  <strong>Compound:</strong> a new compound
+                                  generated by the model
+                                </li>
+                                <li>
+                                  <strong>Text:</strong> natural language
+                                  output, e.g., a description
+                                </li>
+                              </ul>
+                              This field is a list, so multiple outputs can be
+                              selected.
+                            </PopoverContent>
+                          </Popover>
+
                           <FieldGroup data-slot="checkbox-group">
                             {METADATA_FORM_CFG.outputs.map((output) => (
                               <Field
@@ -515,6 +793,7 @@ export default function ModelMetadataForm({
                               </Field>
                             ))}
                           </FieldGroup>
+
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
                           )}
@@ -526,12 +805,33 @@ export default function ModelMetadataForm({
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel
-                            htmlFor={field.name}
-                            className="text-plum/85"
-                          >
-                            Output Dimension
-                          </FieldLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <button
+                                type="button"
+                                className="p-0 m-0 bg-transparent border-none"
+                              >
+                                <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                  Output Dimension
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
+                                </FieldLabel>
+                              </button>
+                            </PopoverTrigger>
+
+                            <PopoverContent
+                              className="w-64 bg-white text-plum/85 text-sm"
+                              side="bottom"
+                              align="start"
+                            >
+                              Defines the length of the output for each input,
+                              similar to the input dimension. This field accepts
+                              only a single integer value.
+                            </PopoverContent>
+                          </Popover>
+
                           <Input
                             {...field}
                             id={field.name}
@@ -539,6 +839,7 @@ export default function ModelMetadataForm({
                             className="focus-visible:border-plum"
                             placeholder="Output dimension"
                           />
+
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
                           )}
@@ -551,9 +852,37 @@ export default function ModelMetadataForm({
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <FieldSet data-invalid={fieldState.invalid}>
-                          <FieldTitle className="text-plum/85">
-                            Output consistency
-                          </FieldTitle>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <button
+                                type="button"
+                                className="p-0 m-0 bg-transparent border-none"
+                              >
+                                <FieldTitle className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                  Output consistency
+                                  <Info
+                                    size={16}
+                                    className="relative top-[0.5px]"
+                                  />
+                                </FieldTitle>
+                              </button>
+                            </PopoverTrigger>
+
+                            <PopoverContent
+                              className="w-64 bg-white text-plum/85 text-sm"
+                              side="bottom"
+                              align="start"
+                            >
+                              Indicates whether the model produces the same
+                              prediction for the same input.{" "}
+                              <strong>Fixed</strong> means predictions are
+                              always the same (typical for QSAR models), while{" "}
+                              <strong>Variable</strong> indicates predictions
+                              may change (common in generative models). This
+                              field only accepts a single string value.
+                            </PopoverContent>
+                          </Popover>
+
                           <RadioGroup
                             name={field.name}
                             value={field.value}
@@ -582,6 +911,7 @@ export default function ModelMetadataForm({
                               )
                             )}
                           </RadioGroup>
+
                           {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
                           )}
@@ -610,12 +940,36 @@ export default function ModelMetadataForm({
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor={field.name}
-                          className="text-plum/85"
-                        >
-                          Publication URL
-                        </FieldLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="p-0 m-0 bg-transparent border-none"
+                            >
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                Publication URL
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
+                              </FieldLabel>
+                            </button>
+                          </PopoverTrigger>
+
+                          <PopoverContent
+                            className="w-64 bg-white text-plum/85 text-sm"
+                            side="bottom"
+                            align="start"
+                          >
+                            Provide the URL of the publication associated with
+                            this model. This could be a journal article,
+                            preprint, or conference paper that describes the
+                            methodology, datasets, and results. Including the
+                            publication helps users verify the model and
+                            understand its background.
+                          </PopoverContent>
+                        </Popover>
+
                         <Input
                           {...field}
                           id={field.name}
@@ -623,6 +977,7 @@ export default function ModelMetadataForm({
                           className="focus-visible:border-plum"
                           placeholder="Enter the publication URL"
                         />
+
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
@@ -635,12 +990,35 @@ export default function ModelMetadataForm({
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor={field.name}
-                          className="text-plum/85"
-                        >
-                          Publication year
-                        </FieldLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="p-0 m-0 bg-transparent border-none"
+                            >
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                Publication year
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
+                              </FieldLabel>
+                            </button>
+                          </PopoverTrigger>
+
+                          <PopoverContent
+                            className="w-64 bg-white text-plum/85 text-sm"
+                            side="bottom"
+                            align="start"
+                          >
+                            Enter the year in which the publication associated
+                            with this model was released. This helps users
+                            understand the timeline of the research and assess
+                            the relevance and recency of the model’s methodology
+                            and results.
+                          </PopoverContent>
+                        </Popover>
+
                         <Input
                           {...field}
                           id={field.name}
@@ -648,6 +1026,7 @@ export default function ModelMetadataForm({
                           className="focus-visible:border-plum"
                           placeholder="Enter publication year"
                         />
+
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
@@ -659,34 +1038,60 @@ export default function ModelMetadataForm({
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor="form-metadata-select-pubtype"
-                          className="text-plum/85"
-                        >
-                          Publication type
-                        </FieldLabel>
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          disabled={isLocked}
-                        >
-                          <SelectTrigger
-                            id="form-metadata-select-pubtype"
-                            aria-invalid={fieldState.invalid}
-                            className="min-w-[120px]"
-                            disabled={isLocked}
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="p-0 m-0 bg-transparent border-none"
+                            >
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                Publication type
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
+                              </FieldLabel>
+                            </button>
+                          </PopoverTrigger>
+
+                          <PopoverContent
+                            className="w-64 bg-white text-plum/85 text-sm"
+                            side="bottom"
+                            align="start"
                           >
-                            <SelectValue placeholder="Select a type" />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            {METADATA_FORM_CFG.publicationType.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                            Select the type of publication associated with this
+                            model. This could be a peer-reviewed journal
+                            article, conference paper, preprint, technical
+                            report, or any other format that documents the
+                            model’s methodology, results, and datasets.
+                            Providing this information helps users quickly
+                            identify the source and credibility of the model.
+                          </PopoverContent>
+                        </Popover>
+
+                        <div className="mt-1">
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger
+                              id="form-metadata-select-pubtype"
+                              aria-invalid={fieldState.invalid}
+                              className="min-w-[120px]"
+                            >
+                              <SelectValue placeholder="Select a type" />
+                            </SelectTrigger>
+                            <SelectContent position="item-aligned">
+                              {METADATA_FORM_CFG.publicationType.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
@@ -702,12 +1107,36 @@ export default function ModelMetadataForm({
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor={field.name}
-                          className="text-plum/85"
-                        >
-                          Source code URL
-                        </FieldLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="p-0 m-0 bg-transparent border-none"
+                            >
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                Source code URL
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
+                              </FieldLabel>
+                            </button>
+                          </PopoverTrigger>
+
+                          <PopoverContent
+                            className="w-64 bg-white text-plum/85 text-sm"
+                            side="bottom"
+                            align="start"
+                          >
+                            Provide the URL where the source code for this model
+                            is hosted. This could be a GitHub repository, GitLab
+                            project, or any other online code repository.
+                            Including the source code link helps users inspect
+                            the implementation, reproduce results, and
+                            understand the model’s inner workings.
+                          </PopoverContent>
+                        </Popover>
+
                         <Input
                           {...field}
                           id={field.name}
@@ -715,6 +1144,7 @@ export default function ModelMetadataForm({
                           className="focus-visible:border-plum"
                           placeholder="Enter a link to the source code"
                         />
+
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
@@ -726,34 +1156,71 @@ export default function ModelMetadataForm({
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor="form-metadata-select-source"
-                          className="text-plum/85"
-                        >
-                          Source type
-                        </FieldLabel>
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          disabled={isLocked}
-                        >
-                          <SelectTrigger
-                            id="form-metadata-select-source"
-                            aria-invalid={fieldState.invalid}
-                            className="min-w-[120px]"
-                            disabled={isLocked}
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="p-0 m-0 bg-transparent border-none"
+                            >
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                Source type
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
+                              </FieldLabel>
+                            </button>
+                          </PopoverTrigger>
+
+                          <PopoverContent
+                            className="w-64 bg-white text-plum/85 text-sm"
+                            side="bottom"
+                            align="start"
                           >
-                            <SelectValue placeholder="Select a source type" />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            {METADATA_FORM_CFG.sourceType.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                            Specify the type of source for this model.
+                            <ul className="list-disc pl-4 mt-1">
+                              <li>
+                                <strong>Internal:</strong> Data or code
+                                maintained within the organization.
+                              </li>
+                              <li>
+                                <strong>External:</strong> Publicly available
+                                data or code from outside sources.
+                              </li>
+                              <li>
+                                <strong>Replicated:</strong> Data or models
+                                copied or reproduced from another source.
+                              </li>
+                            </ul>
+                            Providing the correct source type helps users
+                            understand the origin and trustworthiness of the
+                            model.
+                          </PopoverContent>
+                        </Popover>
+
+                        <div className="mt-1">
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger
+                              id="form-metadata-select-source"
+                              aria-invalid={fieldState.invalid}
+                              className="min-w-[120px]"
+                            >
+                              <SelectValue placeholder="Select a source type" />
+                            </SelectTrigger>
+                            <SelectContent position="item-aligned">
+                              {METADATA_FORM_CFG.sourceType.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
@@ -769,62 +1236,108 @@ export default function ModelMetadataForm({
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor="form-metadata-select-lic"
-                          className="text-plum/85"
-                        >
-                          License
-                        </FieldLabel>
-                        <Select
-                          name={field.name}
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          disabled={isLocked}
-                        >
-                          <SelectTrigger
-                            id="form-metadata-select-lic"
-                            aria-invalid={fieldState.invalid}
-                            className="min-w-[120px]"
-                            disabled={isLocked}
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="p-0 m-0 bg-transparent border-none"
+                            >
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                License
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
+                              </FieldLabel>
+                            </button>
+                          </PopoverTrigger>
+
+                          <PopoverContent
+                            className="w-64 bg-white text-plum/85 text-sm"
+                            side="bottom"
+                            align="start"
                           >
-                            <SelectValue placeholder="Select a license" />
-                          </SelectTrigger>
-                          <SelectContent position="item-aligned">
-                            {METADATA_FORM_CFG.licenses.map((type) => (
-                              <SelectItem key={type.value} value={type.value}>
-                                {type.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                            Choose the license under which this model is shared.
+                            Common options include AGPL, GPL, LGPL, etc. This
+                            determines how others can use, modify, or distribute
+                            the model and its code. For example, GPL allows
+                            redistribution but requires derived works to use the
+                            same license.
+                          </PopoverContent>
+                        </Popover>
+
+                        <div className="mt-1">
+                          <Select
+                            name={field.name}
+                            value={field.value}
+                            onValueChange={field.onChange}
+                          >
+                            <SelectTrigger
+                              id="form-metadata-select-lic"
+                              aria-invalid={fieldState.invalid}
+                              className="min-w-[120px]"
+                            >
+                              <SelectValue placeholder="Select a license" />
+                            </SelectTrigger>
+                            <SelectContent position="item-aligned">
+                              {METADATA_FORM_CFG.licenses.map((type) => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
                       </Field>
                     )}
                   />
+
                   <Controller
                     name="deployment"
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel
-                          htmlFor="form-metadata-select-dep"
-                          className="text-plum/85"
-                        >
-                          Deployment
-                        </FieldLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              type="button"
+                              className="p-0 m-0 bg-transparent border-none"
+                            >
+                              <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                                Deployment
+                                <Info
+                                  size={16}
+                                  className="relative top-[0.5px]"
+                                />
+                              </FieldLabel>
+                            </button>
+                          </PopoverTrigger>
+
+                          <PopoverContent
+                            className="w-64 bg-white text-plum/85 text-sm"
+                            side="bottom"
+                            align="start"
+                          >
+                            Specify how this model is deployed. It can be{" "}
+                            <strong>Local</strong>, meaning it runs on a user’s
+                            machine, or <strong>Online</strong>, meaning it is
+                            hosted on a server and accessed remotely.
+                          </PopoverContent>
+                        </Popover>
+
                         <Select
                           name={field.name}
                           value={field.value}
                           onValueChange={field.onChange}
-                          disabled={isLocked}
                         >
                           <SelectTrigger
                             id="form-metadata-select-dep"
                             aria-invalid={fieldState.invalid}
                             className="min-w-[120px]"
-                            disabled={isLocked}
                           >
                             <SelectValue placeholder="Select a deployment" />
                           </SelectTrigger>
@@ -836,6 +1349,7 @@ export default function ModelMetadataForm({
                             ))}
                           </SelectContent>
                         </Select>
+
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
@@ -863,9 +1377,33 @@ export default function ModelMetadataForm({
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Biomedical area
-                      </FieldLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="p-0 m-0 bg-transparent border-none"
+                          >
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                              Biomedical area
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
+                            </FieldLabel>
+                          </button>
+                        </PopoverTrigger>
+
+                        <PopoverContent
+                          className="w-64 bg-white text-plum/85 text-sm"
+                          side="bottom"
+                          align="start"
+                        >
+                          Select the biomedical research areas relevant to this
+                          model. Examples include oncology, immunology,
+                          genomics, pharmacology, or neuroscience.
+                        </PopoverContent>
+                      </Popover>
+
                       <MultiSelect
                         id={field.name}
                         options={METADATA_FORM_CFG.biomedicalArea}
@@ -877,20 +1415,48 @@ export default function ModelMetadataForm({
                             "border-red-500 focus-visible:border-red-500"
                         )}
                       />
+
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
                     </Field>
                   )}
                 />
+
                 <Controller
                   name="target_organism"
                   control={form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel htmlFor={field.name} className="text-plum/85">
-                        Target organism
-                      </FieldLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className="p-0 m-0 bg-transparent border-none"
+                          >
+                            <FieldLabel className="text-plum/85 cursor-pointer select-none flex items-center gap-1">
+                              Target organism
+                              <Info
+                                size={16}
+                                className="relative top-[0.5px]"
+                              />
+                            </FieldLabel>
+                          </button>
+                        </PopoverTrigger>
+
+                        <PopoverContent
+                          className="w-64 bg-white text-plum/85 text-sm"
+                          side="bottom"
+                          align="start"
+                        >
+                          Select the organisms that this model is designed to
+                          study or affect. Examples could include human, mouse,
+                          bacterial strains, or other experimental organisms.
+                          Correctly specifying target organisms ensures
+                          appropriate use and interpretation of the model.
+                        </PopoverContent>
+                      </Popover>
+
                       <MultiSelect
                         id={field.name}
                         options={METADATA_FORM_CFG.targetOrganism}
@@ -902,6 +1468,7 @@ export default function ModelMetadataForm({
                             "border-red-500 focus-visible:border-red-500"
                         )}
                       />
+
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
