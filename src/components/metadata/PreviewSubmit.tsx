@@ -254,7 +254,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               <h2 className="text-lg font-semibold text-plum mb-2">
                 Resources
               </h2>
-              <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3">
+              <div className="flex flex-col space-y-3 [@media(min-width:950px)]:flex-row [@media(min-width:950px)]:space-y-0 [@media(min-width:950px)]:space-x-3">
                 {data.publicationUrl && (
                   <a
                     href={data.publicationUrl}
