@@ -1,4 +1,6 @@
 import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
+import { extractErrorMessage } from "@/lib/error";
+import { alertError } from "@/lib/alerts";
 
 const api = {
   async downloadPdfFromUrl(url: string): Promise<File | undefined> {
@@ -20,9 +22,11 @@ const api = {
       const file = new File([blob], filename, { type: "application/pdf" });
 
       return file;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      alert("Error downloading the publication");
+      alertError(
+        extractErrorMessage(error, "Error downloading the publication")
+      );
     }
   },
 
