@@ -279,7 +279,7 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
             </div>
           )}
           <Separator />
-          <div className="flex items-center gap-3 pt-4"></div>
+          
         </CardContent>
       </Card>
     </div>
