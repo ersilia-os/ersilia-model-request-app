@@ -52,7 +52,7 @@ export async function submitToErsilia(
       where: { id: submissionId },
     });
 
-    if (!submission || !githubConfig.owner || githubConfig.repo) {
+    if (!submission || !githubConfig.owner || !githubConfig.repo) {
       return {
         success: false,
         message: "Submission not found",
@@ -80,6 +80,7 @@ export async function submitToErsilia(
         labels: ["model-submission", "metadata"],
       }
     );
+    console.log(issueData);
 
     await prisma.$transaction(async (tx) => {
       await tx.ersiliaIssue.create({
