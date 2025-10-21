@@ -66,10 +66,9 @@ model ModelMetadata {
 }
 
 model ErsiliaIssue {
-  id              String        @id @default(uuid())
+  id              String        @id
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
-  issueNumber     Int
   issueUrl        String
   modelMetadataId String        @unique
   model           ModelMetadata @relation(fields: [modelMetadataId], references: [id], onDelete: Cascade)

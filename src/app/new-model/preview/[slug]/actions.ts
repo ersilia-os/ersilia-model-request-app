@@ -52,7 +52,7 @@ export async function submitToErsilia(
       where: { id: submissionId },
     });
 
-    if (!submission) {
+    if (!submission || !githubConfig.owner || githubConfig.repo) {
       return {
         success: false,
         message: "Submission not found",

@@ -2,8 +2,8 @@ import { submitToErsilia } from "@/app/new-model/preview/[slug]/actions";
 import { useState } from "react";
 
 interface UseSubmitMetadataOptions {
-  owner: string;
-  repo: string;
+  owner: string | undefined;
+  repo: string | undefined;
 }
 
 export function useSubmitToErsilia({ owner, repo }: UseSubmitMetadataOptions) {
@@ -15,6 +15,15 @@ export function useSubmitToErsilia({ owner, repo }: UseSubmitMetadataOptions) {
     setLoading(true);
     setError("");
     setSuccess(false);
+
+    if (!owner || !repo) {
+      setError("GitHub configuration is incomplete");
+      setLoading(false);
+      return {
+        success: false,
+        message: "GitHub configuration is incomplete",
+      };
+    }
 
     const result = await submitToErsilia(submissionId, { owner, repo });
 
