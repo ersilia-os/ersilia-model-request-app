@@ -1,6 +1,6 @@
-import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
 import { extractErrorMessage } from "@/lib/error";
 import { alertError } from "@/lib/alerts";
+import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
 
 type Question = {
   question1: string;

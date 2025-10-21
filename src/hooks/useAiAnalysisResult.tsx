@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
+
 import { alertError } from "@/lib/alerts";
+import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
 
 type AiAnalysisState =
   | { isLoading: true; aiResults: null }

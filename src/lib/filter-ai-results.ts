@@ -1,5 +1,5 @@
 import { METADATA_FORM_CFG } from "@/config/form-cfg";
-import { AiAnalysisModelMetadataSchema } from "./schemas";
+import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
 
 const ALLOWED_TAGS = METADATA_FORM_CFG.tags.map((t) => t.value);
 const ALLOWED_TASKS = METADATA_FORM_CFG.tasks.map((t) => t.value);
