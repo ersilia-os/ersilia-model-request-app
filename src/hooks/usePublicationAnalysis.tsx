@@ -4,7 +4,7 @@ import api from "@/lib/api";
 import { alertError } from "@/lib/alerts";
 import { extractErrorMessage } from "@/lib/error";
 import { useForm } from "react-hook-form";
-import { UploadFormSchema } from "@/schema/upload";
+import { UploadFormSchema } from "@/schema/upload-schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 

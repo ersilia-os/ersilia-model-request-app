@@ -1,7 +1,7 @@
 import { Control, Controller } from "react-hook-form";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
-import { UploadFormSchema } from "@/schema/upload";
+import { UploadFormSchema } from "@/schema/upload-schema";
 import z from "zod";
 
 interface ContextFormProps {
