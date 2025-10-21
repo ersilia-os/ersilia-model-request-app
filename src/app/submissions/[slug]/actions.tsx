@@ -1,11 +1,11 @@
 "use server";
-
-import { userData } from "../mock-data";
+import prisma from "@/lib/prisma";
 
 export async function getSubmissionBySlug(slug: string) {
-  const submissionDetails = userData.submissions.find(
-    (submission) => submission.slug === slug
-  );
-
-  return submissionDetails;
+  const submission = await prisma.modelMetadata.findUnique({
+    where: {
+      slug,
+    },
+  });
+  return submission;
 }
