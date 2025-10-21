@@ -1,5 +1,5 @@
 import { Control, Controller } from "react-hook-form";
-import { Field, FieldError, FieldLabel } from "../ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { UploadFormSchema } from "@/schema/upload";
 import z from "zod";
@@ -19,14 +19,15 @@ export default function ContextInput({ control }: ContextFormProps) {
             <FieldLabel className="text-plum/85">
               What is the model target/endpoint?
             </FieldLabel>
-
+            <FieldDescription>
+              E.g: malaria, tuberculosis, molecular description, cytotoxicity
+            </FieldDescription>
             <Input
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
               className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed"
-              placeholder="E.g: malaria, tuberculosis,
-              molecular description, cytotoxicity"
+              placeholder="Enter your response here"
             />
 
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -41,13 +42,16 @@ export default function ContextInput({ control }: ContextFormProps) {
             <FieldLabel className="text-plum/85">
               Why is it relevant to drug discovery and global health?
             </FieldLabel>
-
+            <FieldDescription>
+              E.g: the model predicts the activity of small molecules against a
+              well known pathogen, plasmodium falciparum
+            </FieldDescription>
             <Input
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
               className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed"
-              placeholder="E.g: the model predicts the activity of small molecules against a well known pathogen, plasmodium falciparum"
+              placeholder="Enter your response here"
             />
 
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
