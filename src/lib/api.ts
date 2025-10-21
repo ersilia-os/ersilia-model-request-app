@@ -58,7 +58,7 @@ const api = {
     return data;
   },
 
-  uploadToGoogleDrive: async (file: File): Promise<string> => {
+  uploadToGoogleDrive: async (file: File): Promise<string | undefined> => {
     const formData = new FormData();
     formData.append("file", file);
 
@@ -68,11 +68,12 @@ const api = {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to upload to Google Drive");
+      throw new Error("Something went wrong, please try again");
     }
 
     const data = await response.json();
-    return data.fileId;
+
+    return data.link;
   },
 };
 

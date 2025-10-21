@@ -1,12 +1,12 @@
-// app/api/upload-to-drive/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
 import { Readable } from "stream";
+import { normalizeFilename } from "@/lib/utils";
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
-    const file = formData.get("file") as File;
+    const file = formData.get("file") as File | null;
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
@@ -24,7 +24,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Initialize Google Drive API
     const auth = new google.auth.JWT({
       email: process.env.GOOGLE_SERVICE_CLIENT_EMAIL,
       key: process.env.GOOGLE_SERVICE_PRIVATE_KEY.replace(/\\n/g, "\n"),
@@ -33,14 +32,14 @@ export async function POST(request: NextRequest) {
 
     const drive = google.drive({ version: "v3", auth });
 
-    // Convert File to Buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Upload to your shared folder
-    const response = await drive.files.create({
+    const normalizedFilename = normalizeFilename(file.name);
+
+    const newFile = await drive.files.create({
       requestBody: {
-        name: file.name,
+        name: normalizedFilename,
         mimeType: file.type,
         parents: [process.env.GOOGLE_SERVICE_SHARED_DRIVE_ID],
       },
@@ -49,21 +48,19 @@ export async function POST(request: NextRequest) {
         body: Readable.from(buffer),
       },
       fields: "id, name, webViewLink",
+      supportsAllDrives: true,
     });
 
-    console.log("✅ Upload successful! File ID:", response.data.id);
+    const link = newFile.data.webViewLink;
 
     return NextResponse.json({
-      fileId: response.data.id,
-      fileName: response.data.name,
-      webViewLink: response.data.webViewLink,
+      link,
     });
   } catch (error: unknown) {
-    console.error("❌ Error uploading to Google Drive:", error);
+    console.error(error);
     return NextResponse.json(
       {
-        error: "Failed to upload file to Google Drive",
-        details: error,
+        error: "Something went wrong, please try again",
       },
       { status: 500 }
     );

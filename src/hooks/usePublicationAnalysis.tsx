@@ -44,22 +44,23 @@ export function useAiPublicationAnalysis() {
         throw new Error("No file available for analysis");
       }
 
-      // Upload PDF to Google Drive
-      // const driveFileId = await api.uploadToGoogleDrive(pdfFile);
-      // console.log("Uploaded to Drive:", driveFileId);
+      const pdfInGDrive = await api.uploadToGoogleDrive(pdfFile);
+
+      if (!pdfInGDrive) {
+        throw new Error("Something went wrong, please try again");
+      }
 
       const metadata = await api.analyzePdf(pdfFile, {
         question1,
         question2,
       });
 
-      // add the Drive file ID to metadata
-      // const metadataWithDrive = {
-      //   ...metadata,
-      //   driveFileId,
-      // };
+      const metadataWithDrive = {
+        ...metadata,
+        link: pdfInGDrive,
+      };
 
-      sessionStorage.setItem("aiAnalysis", JSON.stringify(metadata));
+      sessionStorage.setItem("aiAnalysis", JSON.stringify(metadataWithDrive));
     } catch (err: unknown) {
       console.error(err);
 

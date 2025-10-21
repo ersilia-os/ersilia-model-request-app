@@ -80,3 +80,12 @@ export default function formatMetadataBody(data: ModelMetadata) {
 
   return sections.join("\n\n");
 }
+
+export function normalizeFilename(filename: string): string {
+  const lastDotIndex = filename.lastIndexOf(".");
+  const extension = lastDotIndex !== -1 ? filename.slice(lastDotIndex) : "";
+
+  const timestamp = Date.now();
+
+  return `new_submission_${timestamp}${extension.toLowerCase()}`;
+}
