@@ -1,8 +1,7 @@
 // schema-descriptions.ts
 
 export const SCHEMA_DESCRIPTIONS = {
-  isBiomedicalModel:
-    "Identify if this is a scientific publication that describes a biomedical model.",
+  isBiomedicalModel: `Identify if this is a scientific publication that describes a biomedical model.`,
 
   slug: "A short, descriptive URL-friendly identifier derived from the title, using hyphens instead of spaces. RULES: (1) All lowercase, max 50 characters, max 5 hyphens. (2) PRIORITIZE disease area, pathogen, or application over generic terms like 'deep-learning' or 'ml'. (3) If the method has a known name (e.g., ChemProp, DeepChem), include it. (4) Mention pathogen/disease when relevant (e.g., 'chemprop-abaumannii' for ChemProp trained on Acinetobacter baumannii data). (5) Include well-known dataset names when applicable (e.g., 'chembl', 'tdc'). (6) Avoid generic adverbs and prepositions (e.g., 'for', 'using'). (7) Do not include dates or author names. EXAMPLES: 'chemprop-abaumannii' (method + pathogen), 'malaria-drug-resistance' (disease + application), 'chembl-toxicity-predictor' (dataset + task), 'tuberculosis-compound-screening' (pathogen + task). Focus on making the slug informative about what the model does and what it targets, not how it does it.",
 
