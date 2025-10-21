@@ -3,7 +3,7 @@ import { getSubmissionBySlug } from "./actions";
 import { Separator } from "@radix-ui/react-separator";
 import { FileText } from "lucide-react";
 
-type Params = { slug: string };
+type Params = Promise<{ slug: string }>;
 
 export default async function SubmissionDetailsPage(props: { params: Params }) {
   const params = await props.params;
@@ -279,7 +279,6 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
             </div>
           )}
           <Separator />
-          
         </CardContent>
       </Card>
     </div>
