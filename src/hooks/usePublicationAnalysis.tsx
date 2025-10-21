@@ -3,14 +3,27 @@ import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 import { alertError } from "@/lib/alerts";
 import { extractErrorMessage } from "@/lib/error";
+import { useForm } from "react-hook-form";
+import { UploadFormSchema } from "@/schema/upload";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function useAiPublicationAnalysis() {
   const router = useRouter();
-  const [publication, setPublication] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const form = useForm<z.infer<typeof UploadFormSchema>>({
+    resolver: zodResolver(UploadFormSchema),
+    mode: "onSubmit",
+    defaultValues: {
+      publication: "",
+      question1: "",
+      question2: "",
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof UploadFormSchema>) => {
+    const { publication, question1, question2 } = data;
 
     if (!file && !publication) {
       alertError("Please upload a PDF or provide a publication link.");
@@ -35,7 +48,10 @@ export function useAiPublicationAnalysis() {
       // const driveFileId = await api.uploadToGoogleDrive(pdfFile);
       // console.log("Uploaded to Drive:", driveFileId);
 
-      const metadata = await api.analyzePdf(pdfFile);
+      const metadata = await api.analyzePdf(pdfFile, {
+        question1,
+        question2,
+      });
 
       // add the Drive file ID to metadata
       // const metadataWithDrive = {
@@ -59,10 +75,9 @@ export function useAiPublicationAnalysis() {
   };
 
   return {
-    publication,
-    setPublication,
     file,
     setFile,
-    handleSubmit,
+    onSubmit,
+    form,
   };
 }
