@@ -6,7 +6,15 @@ interface SubmissionsDataProps {
 }
 
 export default async function SubmissionsList({ data }: SubmissionsDataProps) {
-  const submissions = await data
+  const submissions = await data;
+  if (!submissions.length) {
+    return (
+      <div className="text-center text-plum text-sm md:text-base lg:text-lg mb-2">
+        <p className="text-center">You don’t have any submissions yet.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="mb-6 flex flex-col gap-3">
       {submissions.map((submission) => (
