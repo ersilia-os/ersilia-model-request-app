@@ -2,8 +2,9 @@
 
 import { auth0 } from "@/lib/auth0";
 import prisma from "@/lib/prisma";
-import { MetadataFormSchema } from "@/lib/schemas";
+
 import { formatMetadataForDb } from "@/lib/utils";
+import { MetadataFormSchema } from "@/schema/metadata-form-schema";
 import { z } from "zod";
 
 type formData = z.infer<typeof MetadataFormSchema>;
