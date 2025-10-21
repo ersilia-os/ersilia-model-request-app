@@ -9,6 +9,7 @@ import FileDrop from "@/components/new-model/FileDrop";
 import { useAiPublicationAnalysis } from "@/hooks/usePublicationAnalysis";
 import { Separator } from "@/components/ui/separator";
 import ContextInput from "@/components/new-model/ContextInput";
+import CustomSeparator from "@/components/CustomSeparator";
 
 export default function NewModelPage() {
   const { file, setFile, form, onSubmit } = useAiPublicationAnalysis();
@@ -32,14 +33,7 @@ export default function NewModelPage() {
         >
           <CardContent className="flex flex-col gap-4 p-0">
             <PublicationInput control={form.control} disabled={!!file} />
-            <div className="relative flex items-center justify-center">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative bg-white px-4">
-                <span className="text-sm font-medium text-gray-500">OR</span>
-              </div>
-            </div>
+            <CustomSeparator word="OR" />
             <FileDrop
               file={file}
               publication={form.watch("publication")}
