@@ -135,7 +135,6 @@ export default function ModelMetadataForm({
     form.setValue(fieldName, aiValue as string);
   };
 
-  // Function to compare field values (for arrays)
   const areArraysEqual = (a?: string[], b?: string[]) => {
     if (!a || !b) return a === b;
     if (a.length !== b.length) return false;
@@ -183,7 +182,6 @@ export default function ModelMetadataForm({
       >
         <fieldset disabled={isLocked} className="flex flex-col gap-7">
           <FieldGroup>
-            {/* section 1 */}
             <FieldSet>
               <FieldLegend className="text-plum/90">
                 Basic Identification
@@ -354,7 +352,6 @@ export default function ModelMetadataForm({
               </FieldGroup>
             </FieldSet>
             <FieldSeparator />
-            {/* section 2 */}
             <FieldSet>
               <FieldLegend className="text-plum/90">
                 Description & Interpretation
@@ -367,13 +364,11 @@ export default function ModelMetadataForm({
                   name="description"
                   control={form.control}
                   render={({ field, fieldState }) => {
-                    // Logic for AI/Manual state
                     const isAiGenerated = aiResults.description === field.value;
                     const isManuallyEdited = !isAiGenerated;
 
                     return (
                       <Field data-invalid={fieldState.invalid}>
-                        {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                         <div className="flex gap-2 items-center">
                           <Popover>
                             <PopoverTrigger asChild>
@@ -400,7 +395,6 @@ export default function ModelMetadataForm({
                             </PopoverContent>
                           </Popover>
 
-                          {/* Conditional AI/Reset UI */}
                           {isManuallyEdited ? (
                             <Button
                               variant="ghost"
@@ -419,7 +413,7 @@ export default function ModelMetadataForm({
                               </Badge>
                             </Button>
                           ) : (
-                            aiResults.description && ( // Check for aiResults.description instead of aiResults.title
+                            aiResults.description && (
                               <Badge
                                 variant="secondary"
                                 className="gap-1 text-xs "
@@ -450,14 +444,12 @@ export default function ModelMetadataForm({
                   name="interpretation"
                   control={form.control}
                   render={({ field, fieldState }) => {
-                    // Logic for AI/Manual state
                     const isAiGenerated =
                       aiResults.interpretation === field.value;
                     const isManuallyEdited = !isAiGenerated;
 
                     return (
                       <Field data-invalid={fieldState.invalid}>
-                        {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                         <div className="flex gap-2 items-center">
                           <Popover>
                             <PopoverTrigger asChild>
@@ -487,7 +479,6 @@ export default function ModelMetadataForm({
                             </PopoverContent>
                           </Popover>
 
-                          {/* Conditional AI/Reset UI */}
                           {isManuallyEdited ? (
                             <Button
                               variant="ghost"
@@ -506,7 +497,7 @@ export default function ModelMetadataForm({
                               </Badge>
                             </Button>
                           ) : (
-                            aiResults.interpretation && ( // Check for aiResults.interpretation
+                            aiResults.interpretation && (
                               <Badge
                                 variant="secondary"
                                 className="gap-1 text-xs "
@@ -536,7 +527,7 @@ export default function ModelMetadataForm({
               </FieldGroup>
             </FieldSet>
             <FieldSeparator />
-            {/* section 3 */}
+
             <FieldSet>
               <FieldLegend className="text-plum/90">
                 Classification & Tags
@@ -549,11 +540,9 @@ export default function ModelMetadataForm({
                   name="tags"
                   control={form.control}
                   render={({ field, fieldState }) => {
-                    // Logic for AI/Manual state (copied from old code)
                     const currentTags = field.value || [];
                     const originalTags = aiResults.tags || [];
 
-                    // NOTE: This assumes 'areArraysEqual' is defined and available in this scope.
                     const isAiGenerated = areArraysEqual(
                       currentTags,
                       originalTags
@@ -562,7 +551,6 @@ export default function ModelMetadataForm({
 
                     return (
                       <Field data-invalid={fieldState.invalid}>
-                        {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                         <div className="flex gap-2 items-center">
                           <Popover>
                             <PopoverTrigger asChild>
@@ -588,13 +576,11 @@ export default function ModelMetadataForm({
                             </PopoverContent>
                           </Popover>
 
-                          {/* Conditional AI/Reset UI */}
                           {isManuallyEdited ? (
                             <Button
                               variant="ghost"
                               size="sm"
                               className="h-4 px-0 text-xs gap-1"
-                              // Assuming handleFieldResetToAi is available in the component's scope
                               onClick={() => handleFieldResetToAi("tags")}
                             >
                               <Badge
@@ -606,7 +592,6 @@ export default function ModelMetadataForm({
                               </Badge>
                             </Button>
                           ) : (
-                            // Check for aiResults.tags instead of aiResults.title for the AI badge
                             aiResults.tags &&
                             aiResults.tags.length > 0 && (
                               <Badge
@@ -642,7 +627,6 @@ export default function ModelMetadataForm({
               </FieldGroup>
             </FieldSet>
             <FieldSeparator />
-            {/* section 4 */}
             <FieldSet>
               <FieldLegend className="text-plum/90">
                 Technical Specifications
@@ -657,13 +641,11 @@ export default function ModelMetadataForm({
                       name="task"
                       control={form.control}
                       render={({ field, fieldState }) => {
-                        // Logic for AI/Manual state
                         const isAiGenerated = aiResults.task === field.value;
                         const isManuallyEdited = !isAiGenerated;
 
                         return (
                           <FieldSet data-invalid={fieldState.invalid}>
-                            {/* Flex container for Popover (Title) and AI Badge/Reset Button */}
                             <div className="flex gap-2 items-center">
                               <Popover>
                                 <PopoverTrigger asChild>
@@ -690,7 +672,6 @@ export default function ModelMetadataForm({
                                 </PopoverContent>
                               </Popover>
 
-                              {/* Conditional AI/Reset UI */}
                               {isManuallyEdited ? (
                                 <Button
                                   variant="ghost"
@@ -710,7 +691,6 @@ export default function ModelMetadataForm({
                                   </Badge>
                                 </Button>
                               ) : (
-                                // Check for aiResults.task instead of aiResults.title for the AI badge
                                 aiResults.task && (
                                   <Badge
                                     variant="secondary"
@@ -764,13 +744,11 @@ export default function ModelMetadataForm({
                       name="subtask"
                       control={form.control}
                       render={({ field, fieldState }) => {
-                        // Logic for AI/Manual state
                         const isAiGenerated = aiResults.subtask === field.value;
                         const isManuallyEdited = !isAiGenerated;
 
                         return (
                           <FieldSet data-invalid={fieldState.invalid}>
-                            {/* Flex container for Popover (Title) and AI Badge/Reset Button */}
                             <div className="flex gap-2 items-center">
                               <Popover>
                                 <PopoverTrigger asChild>
@@ -797,7 +775,6 @@ export default function ModelMetadataForm({
                                 </PopoverContent>
                               </Popover>
 
-                              {/* Conditional AI/Reset UI */}
                               {isManuallyEdited ? (
                                 <Button
                                   variant="ghost"
@@ -819,7 +796,6 @@ export default function ModelMetadataForm({
                                   </Badge>
                                 </Button>
                               ) : (
-                                // Check for aiResults.subtask instead of aiResults.title for the AI badge
                                 aiResults.subtask && (
                                   <Badge
                                     variant="secondary"
@@ -985,11 +961,9 @@ export default function ModelMetadataForm({
                       name="output"
                       control={form.control}
                       render={({ field, fieldState }) => {
-                        // Logic for AI/Manual state (for array comparison)
                         const currentOutput = field.value || [];
                         const originalOutput = aiResults.output || [];
 
-                        // NOTE: Assumes 'areArraysEqual' is defined and available.
                         const isAiGenerated = areArraysEqual(
                           currentOutput,
                           originalOutput
@@ -998,7 +972,6 @@ export default function ModelMetadataForm({
 
                         return (
                           <FieldSet>
-                            {/* Flex container for Popover (Title) and AI Badge/Reset Button */}
                             <div className="flex gap-2 items-center">
                               <Popover>
                                 <PopoverTrigger asChild>
@@ -1025,7 +998,6 @@ export default function ModelMetadataForm({
                                 </PopoverContent>
                               </Popover>
 
-                              {/* Conditional AI/Reset UI */}
                               {isManuallyEdited ? (
                                 <Button
                                   variant="ghost"
@@ -1045,7 +1017,6 @@ export default function ModelMetadataForm({
                                   </Badge>
                                 </Button>
                               ) : (
-                                // Check for aiResults.output array presence for AI badge
                                 aiResults.output &&
                                 aiResults.output.length > 0 && (
                                   <Badge
@@ -1104,14 +1075,12 @@ export default function ModelMetadataForm({
                       name="output_dimension"
                       control={form.control}
                       render={({ field, fieldState }) => {
-                        // Logic for AI/Manual state
                         const isAiGenerated =
                           aiResults.output_dimension === field.value;
                         const isManuallyEdited = !isAiGenerated;
 
                         return (
                           <Field data-invalid={fieldState.invalid}>
-                            {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                             <div className="flex gap-2 items-center">
                               <Popover>
                                 <PopoverTrigger asChild>
@@ -1141,7 +1110,6 @@ export default function ModelMetadataForm({
                                 </PopoverContent>
                               </Popover>
 
-                              {/* Conditional AI/Reset UI */}
                               {isManuallyEdited ? (
                                 <Button
                                   variant="ghost"
@@ -1163,7 +1131,6 @@ export default function ModelMetadataForm({
                                   </Badge>
                                 </Button>
                               ) : (
-                                // Check for aiResults.output_dimension for AI badge
                                 aiResults.output_dimension && (
                                   <Badge
                                     variant="secondary"
@@ -1199,14 +1166,12 @@ export default function ModelMetadataForm({
                       name="output_consistency"
                       control={form.control}
                       render={({ field, fieldState }) => {
-                        // Logic for AI/Manual state
                         const isAiGenerated =
                           aiResults.output_consistency === field.value;
                         const isManuallyEdited = !isAiGenerated;
 
                         return (
                           <FieldSet data-invalid={fieldState.invalid}>
-                            {/* Flex container for Popover (Title) and AI Badge/Reset Button */}
                             <div className="flex gap-2 items-center">
                               <Popover>
                                 <PopoverTrigger asChild>
@@ -1236,7 +1201,6 @@ export default function ModelMetadataForm({
                                 </PopoverContent>
                               </Popover>
 
-                              {/* Conditional AI/Reset UI */}
                               {isManuallyEdited ? (
                                 <Button
                                   variant="ghost"
@@ -1258,7 +1222,6 @@ export default function ModelMetadataForm({
                                   </Badge>
                                 </Button>
                               ) : (
-                                // Check for aiResults.output_consistency for AI badge
                                 aiResults.output_consistency && (
                                   <Badge
                                     variant="secondary"
@@ -1315,7 +1278,6 @@ export default function ModelMetadataForm({
               </FieldGroup>
             </FieldSet>
             <FieldSeparator />
-            {/* section 5 */}
             <FieldSet>
               <FieldLegend className="text-plum/90">
                 Source & Licensing
@@ -1329,14 +1291,12 @@ export default function ModelMetadataForm({
                     name="publication_url"
                     control={form.control}
                     render={({ field, fieldState }) => {
-                      // Logic for AI/Manual state
                       const isAiGenerated =
                         aiResults.publication_url === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                           <div className="flex flex-wrap items-center gap-2">
                             <Popover>
                               <PopoverTrigger asChild>
@@ -1363,7 +1323,6 @@ export default function ModelMetadataForm({
                               </PopoverContent>
                             </Popover>
 
-                            {/* Conditional AI/Reset UI */}
                             {isManuallyEdited ? (
                               <Button
                                 variant="ghost"
@@ -1382,7 +1341,6 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              // Check for aiResults.publication_url for AI badge
                               aiResults.publication_url && (
                                 <Badge
                                   variant="secondary"
@@ -1415,14 +1373,12 @@ export default function ModelMetadataForm({
                     name="publication_year"
                     control={form.control}
                     render={({ field, fieldState }) => {
-                      // Logic for AI/Manual state
                       const isAiGenerated =
                         aiResults.publication_year === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                           <div className="flex flex-wrap items-center gap-2">
                             <Popover>
                               <PopoverTrigger asChild>
@@ -1449,7 +1405,6 @@ export default function ModelMetadataForm({
                               </PopoverContent>
                             </Popover>
 
-                            {/* Conditional AI/Reset UI */}
                             {isManuallyEdited ? (
                               <Button
                                 variant="ghost"
@@ -1468,7 +1423,6 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              // Check for aiResults.publication_year for AI badge
                               aiResults.publication_year && (
                                 <Badge
                                   variant="secondary"
@@ -1500,14 +1454,12 @@ export default function ModelMetadataForm({
                     name="publication_type"
                     control={form.control}
                     render={({ field, fieldState }) => {
-                      // Logic for AI/Manual state
                       const isAiGenerated =
                         aiResults.publication_type === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                           <div className="flex flex-wrap items-center gap-2">
                             <Popover>
                               <PopoverTrigger asChild>
@@ -1534,7 +1486,6 @@ export default function ModelMetadataForm({
                               </PopoverContent>
                             </Popover>
 
-                            {/* Conditional AI/Reset UI */}
                             {isManuallyEdited ? (
                               <Button
                                 variant="ghost"
@@ -1553,7 +1504,6 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              // Check for aiResults.publication_type for AI badge
                               aiResults.publication_type && (
                                 <Badge
                                   variant="secondary"
@@ -1653,14 +1603,12 @@ export default function ModelMetadataForm({
                     name="source_type"
                     control={form.control}
                     render={({ field, fieldState }) => {
-                      // Logic for AI/Manual state
                       const isAiGenerated =
                         aiResults.source_type === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                           <div className="flex gap-2 items-center">
                             <Popover>
                               <PopoverTrigger asChild>
@@ -1687,7 +1635,6 @@ export default function ModelMetadataForm({
                               </PopoverContent>
                             </Popover>
 
-                            {/* Conditional AI/Reset UI */}
                             {isManuallyEdited ? (
                               <Button
                                 variant="ghost"
@@ -1706,7 +1653,6 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              // Check for aiResults.source_type for AI badge
                               aiResults.source_type && (
                                 <Badge
                                   variant="secondary"
@@ -1760,13 +1706,11 @@ export default function ModelMetadataForm({
                     name="license"
                     control={form.control}
                     render={({ field, fieldState }) => {
-                      // Logic for AI/Manual state
                       const isAiGenerated = aiResults.license === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                           <div className="flex gap-2 items-center">
                             <Popover>
                               <PopoverTrigger asChild>
@@ -1793,7 +1737,6 @@ export default function ModelMetadataForm({
                               </PopoverContent>
                             </Popover>
 
-                            {/* Conditional AI/Reset UI */}
                             {isManuallyEdited ? (
                               <Button
                                 variant="ghost"
@@ -1810,7 +1753,6 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              // Check for aiResults.license for AI badge
                               aiResults.license && (
                                 <Badge
                                   variant="secondary"
@@ -1861,14 +1803,12 @@ export default function ModelMetadataForm({
                     name="deployment"
                     control={form.control}
                     render={({ field, fieldState }) => {
-                      // Logic for AI/Manual state
                       const isAiGenerated =
                         aiResults.deployment === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
                         <Field data-invalid={fieldState.invalid}>
-                          {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                           <div className="flex gap-2 items-center">
                             <Popover>
                               <PopoverTrigger asChild>
@@ -1895,7 +1835,6 @@ export default function ModelMetadataForm({
                               </PopoverContent>
                             </Popover>
 
-                            {/* Conditional AI/Reset UI */}
                             {isManuallyEdited ? (
                               <Button
                                 variant="ghost"
@@ -1914,7 +1853,6 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              // Check for aiResults.deployment for AI badge
                               aiResults.deployment && (
                                 <Badge
                                   variant="secondary"
@@ -1927,7 +1865,6 @@ export default function ModelMetadataForm({
                             )}
                           </div>
 
-                          {/* Note: the new code didn't have a div.mt-1 around Select for deployment, so I kept it out. */}
                           <Select
                             name={field.name}
                             value={field.value}
@@ -1960,7 +1897,6 @@ export default function ModelMetadataForm({
               </FieldGroup>
             </FieldSet>
             <FieldSeparator />
-            {/* section 6 */}
             <FieldSet>
               <FieldLegend className="text-plum/90">
                 Research Context
@@ -1973,7 +1909,6 @@ export default function ModelMetadataForm({
                   name="biomedical_area"
                   control={form.control}
                   render={({ field, fieldState }) => {
-                    // Logic for AI/Manual state (for array comparison)
                     const currentBioArea = field.value || [];
                     const originalBioArea = aiResults.biomedical_area || [];
 
@@ -1985,7 +1920,6 @@ export default function ModelMetadataForm({
 
                     return (
                       <Field data-invalid={fieldState.invalid}>
-                        {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                         <div className="flex gap-2 items-center">
                           <Popover>
                             <PopoverTrigger asChild>
@@ -2012,7 +1946,6 @@ export default function ModelMetadataForm({
                             </PopoverContent>
                           </Popover>
 
-                          {/* Conditional AI/Reset UI */}
                           {isManuallyEdited ? (
                             <Button
                               variant="ghost"
@@ -2031,7 +1964,6 @@ export default function ModelMetadataForm({
                               </Badge>
                             </Button>
                           ) : (
-                            // Check for aiResults.biomedical_area array presence for AI badge
                             aiResults.biomedical_area &&
                             aiResults.biomedical_area.length > 0 && (
                               <Badge
@@ -2068,7 +2000,6 @@ export default function ModelMetadataForm({
                   name="target_organism"
                   control={form.control}
                   render={({ field, fieldState }) => {
-                    // Logic for AI/Manual state (for array comparison)
                     const currentTargetOrganism = field.value || [];
                     const originalTargetOrganism =
                       aiResults.target_organism || [];
@@ -2081,7 +2012,6 @@ export default function ModelMetadataForm({
 
                     return (
                       <Field data-invalid={fieldState.invalid}>
-                        {/* Flex container for Popover (Label) and AI Badge/Reset Button */}
                         <div className="flex gap-2 items-center">
                           <Popover>
                             <PopoverTrigger asChild>
@@ -2108,7 +2038,6 @@ export default function ModelMetadataForm({
                             </PopoverContent>
                           </Popover>
 
-                          {/* Conditional AI/Reset UI */}
                           {isManuallyEdited ? (
                             <Button
                               variant="ghost"
@@ -2127,7 +2056,6 @@ export default function ModelMetadataForm({
                               </Badge>
                             </Button>
                           ) : (
-                            // Check for aiResults.target_organism array presence for AI badge
                             aiResults.target_organism &&
                             aiResults.target_organism.length > 0 && (
                               <Badge
