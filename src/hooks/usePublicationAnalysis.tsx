@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
+import { alertError } from "@/lib/alerts";
+import { extractErrorMessage } from "@/lib/error";
 
 export function useAiPublicationAnalysis() {
   const router = useRouter();
@@ -11,7 +13,7 @@ export function useAiPublicationAnalysis() {
     e.preventDefault();
 
     if (!file && !publication) {
-      alert("Please upload a PDF or provide a publication link.");
+      alertError("Please upload a PDF or provide a publication link.");
       return;
     }
 
@@ -32,11 +34,17 @@ export function useAiPublicationAnalysis() {
       const metadata = await api.analyzePdf(pdfFile);
 
       sessionStorage.setItem("aiAnalysis", JSON.stringify(metadata));
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err);
 
       router.push("/new-model");
-      alert("Error generating report. Please try again.");
+
+      const message = extractErrorMessage(
+        err,
+        "Error generating report. Please try again."
+      );
+
+      alertError(message);
     }
   };
 

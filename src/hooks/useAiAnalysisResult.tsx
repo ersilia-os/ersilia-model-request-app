@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
+import { alertError } from "@/lib/alerts";
 
 type AiAnalysisState =
   | { isLoading: true; aiResults: null }
@@ -25,8 +26,10 @@ export function useAiAnalysisResults(): AiAnalysisState {
       const data = JSON.parse(aiResultsJSON);
       setState({ isLoading: false, aiResults: data });
     } catch (err) {
-      console.error("Failed to parse AI results:", err);
+      console.error(err);
+
       router.push("/new-model");
+      alertError("Error generating report. Please try again.");
     }
   }, [router]);
 
