@@ -15,7 +15,7 @@ export default async function SubmissionPage() {
     redirect("/auth/login");
   }
 
-  const submissionsData = getSubmissionsByUser(session.internal.sid);
+  const submissions = getSubmissionsByUser(session.user.sub);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
@@ -44,7 +44,7 @@ export default async function SubmissionPage() {
 
         <CardContent className="p-0">
           <Suspense fallback={<SubmissionsLoading />}>
-            <SubmissionsList data={submissionsData} />
+            <SubmissionsList data={submissions} />
           </Suspense>
         </CardContent>
       </Card>

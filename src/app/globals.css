@@ -4,9 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-plum: #50285A;
+  --color-plum: #50285a;
   --color-plum-hover: #6f3b73;
-  --color-mint: #BEE6B4;
+  --color-mint: #bee6b4;
 }
 
 @theme inline {

@@ -1,13 +1,16 @@
+import { SCHEMA_DESCRIPTIONS } from "@/config/ai-prompt";
+import { METADATA_FORM_CFG } from "@/config/form-cfg";
 import { z } from "zod";
 
 export const MetadataFormSchema = z.object({
-  title: z.string().trim().min(70, {
-    message: "Please provide at least a title with at least 70 characters.",
+  title: z.string().trim().min(10, {
+    message: "Please provide a title with at least 10 characters.",
   }),
   slug: z
     .string()
     .trim()
-    .min(1, "Slug cannot be empty.")
+    .min(5, { message: "Please provide a slug" })
+    .max(60, { message: "Maxiumum 60 characters" })
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
       message:
         "Slug must be lowercase, alphanumeric, and hyphens only. It cannot start or end with a hyphen, or contain consecutive hyphens.",
@@ -15,7 +18,7 @@ export const MetadataFormSchema = z.object({
   description: z.string().trim().min(200, {
     message: "Please provide a description of a minimum of 200 characters.",
   }),
-  interpretation: z.string().trim().min(1, {
+  interpretation: z.string().trim().min(10, {
     message:
       "Please provide a description of how to interpret the model results.",
   }),
@@ -30,9 +33,6 @@ export const MetadataFormSchema = z.object({
     message: "Please select one subtask.",
   }),
   input: z.string().min(1, {
-    message: "Please select one input.",
-  }),
-  status: z.string().min(1, {
     message: "Please select one input.",
   }),
   input_dimension: z
@@ -90,89 +90,91 @@ export const MetadataFormSchema = z.object({
     .min(1, { message: "Please provide at least one target." }),
 });
 
-export const ModelMetadataSchema = z.object({
-  identifier: z.string().min(1, { message: "Identifier cannot be empty." }),
+const ALLOWED_TAGS = METADATA_FORM_CFG.tags.map((t) => t.value);
+const ALLOWED_TASKS = METADATA_FORM_CFG.tasks.map((t) => t.value);
+const ALLOWED_SUBTASKS = METADATA_FORM_CFG.subTasks.map((t) => t.value);
+const ALLOWED_OUTPUTS = METADATA_FORM_CFG.outputs.map((t) => t.value);
+const ALLOWED_OUTPUT_CONSISTENCY = METADATA_FORM_CFG.outputConsistencys.map(
+  (t) => t.value
+);
+const ALLOWED_PUBLICATION_TYPES = METADATA_FORM_CFG.publicationType.map(
+  (t) => t.value
+);
+const ALLOWED_BIOMEDICAL_AREAS = METADATA_FORM_CFG.biomedicalArea.map(
+  (t) => t.value
+);
+const ALLOWED_TARGET_ORGANISMS = METADATA_FORM_CFG.targetOrganism.map(
+  (t) => t.value
+);
+const ALLOWED_LICENSES = METADATA_FORM_CFG.licenses.map((t) => t.value);
 
-  title: z.string().trim().min(20, {
-    message: "Please provide a title with at least 20 characters.",
-  }),
+export const AiAnalysisModelMetadataSchema = z.object({
+  isBiomedicalModel: z
+    .boolean()
+    .describe(SCHEMA_DESCRIPTIONS.isBiomedicalModel),
 
-  slug: z
+  slug: z.string().trim().describe(SCHEMA_DESCRIPTIONS.slug),
+
+  title: z.string().describe(SCHEMA_DESCRIPTIONS.title),
+
+  description: z.string().describe(SCHEMA_DESCRIPTIONS.description),
+
+  interpretation: z.string().describe(SCHEMA_DESCRIPTIONS.interpretation),
+
+  tags: z
+    .array(z.string())
+    .min(0)
+    .max(5)
+    .describe(SCHEMA_DESCRIPTIONS.tags(ALLOWED_TAGS)),
+
+  publication_url: z.string().describe(SCHEMA_DESCRIPTIONS.publication_url),
+
+  source_url: z.string().describe(SCHEMA_DESCRIPTIONS.source_url),
+
+  license: z.string().describe(SCHEMA_DESCRIPTIONS.license(ALLOWED_LICENSES)),
+
+  deployment: z.string().describe(SCHEMA_DESCRIPTIONS.deployment),
+
+  source_type: z.string().describe(SCHEMA_DESCRIPTIONS.source_type),
+
+  task: z.string().describe(SCHEMA_DESCRIPTIONS.task(ALLOWED_TASKS)),
+
+  subtask: z.string().describe(SCHEMA_DESCRIPTIONS.subtask(ALLOWED_SUBTASKS)),
+
+  input: z.string().describe(SCHEMA_DESCRIPTIONS.input),
+
+  input_dimension: z.string().describe(SCHEMA_DESCRIPTIONS.input_dimension),
+
+  output: z
+    .array(z.string())
+    .min(0)
+    .describe(SCHEMA_DESCRIPTIONS.output(ALLOWED_OUTPUTS)),
+
+  output_dimension: z.string().describe(SCHEMA_DESCRIPTIONS.output_dimension),
+
+  output_consistency: z
     .string()
-    .trim()
-    .min(1, "Slug cannot be empty.")
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
-      message:
-        "Slug must be lowercase, alphanumeric, and hyphens only. It cannot start or end with a hyphen, or contain consecutive hyphens.",
-    }),
-
-  description: z.string().trim().min(100, {
-    message: "Please provide a description of at least 100 characters.",
-  }),
-
-  interpretation: z.string().trim().min(1),
-
-  tags: z.array(z.string()).min(1).max(5),
-
-  task: z.string(),
-  subtask: z.string(),
-  input: z.string(),
-  status: z.string(),
-
-  input_dimension: z
-    .union([z.string(), z.number()])
-    .transform((val) => Number(val))
-    .refine((num) => Number.isInteger(num) && num > 0, {
-      message: "Please enter a valid input dimension (positive integer).",
-    }),
-
-  output: z.array(z.string()).min(1),
-
-  output_dimension: z
-    .union([z.string(), z.number()])
-    .transform((val) => Number(val))
-    .refine((num) => Number.isInteger(num) && num > 0, {
-      message: "Please enter a valid output dimension (positive integer).",
-    }),
-
-  output_consistency: z.string(),
-
-  publication_url: z
-    .string()
-    .or(z.string().optional())
-    .or(z.literal(""))
-    .optional()
-    .default("Not specified"),
-
-  source_url: z
-    .string()
-    .or(z.string().optional())
-    .or(z.literal(""))
-    .optional()
-    .default("Not specified"),
-
-  license: z.string().min(1),
-
-  deployment: z.union([
-    z.string(),
-    z.array(z.string()).transform((arr) => arr.join(", ")),
-  ]),
-
-  source_type: z.string(),
-  publication_type: z.string(),
-
-  publication_year: z
-    .union([z.string().transform((v) => Number(v)), z.number()])
-    .refine(
-      (num) =>
-        Number.isInteger(num) && num >= 1900 && num <= new Date().getFullYear(),
-      { message: "Please provide a valid year." }
+    .describe(
+      SCHEMA_DESCRIPTIONS.output_consistency(ALLOWED_OUTPUT_CONSISTENCY)
     ),
 
-  biomedical_area: z.array(z.string()).min(1),
+  publication_type: z
+    .string()
+    .describe(SCHEMA_DESCRIPTIONS.publication_type(ALLOWED_PUBLICATION_TYPES)),
+
+  publication_year: z.string().describe(SCHEMA_DESCRIPTIONS.publication_year),
+
+  biomedical_area: z
+    .array(z.string())
+    .min(0)
+    .describe(SCHEMA_DESCRIPTIONS.biomedical_area(ALLOWED_BIOMEDICAL_AREAS)),
+
   target_organism: z
     .array(z.string())
-    .default(["Not specified"])
-    .transform((arr) => (arr.length === 0 ? ["Not specified"] : arr)),
+    .min(0)
+    .describe(SCHEMA_DESCRIPTIONS.target_organism(ALLOWED_TARGET_ORGANISMS)),
 });
-export type ModelMetadata = z.infer<typeof ModelMetadataSchema>;
+
+export type AiAnalysisModelMetadataSchema = z.infer<
+  typeof AiAnalysisModelMetadataSchema
+>;
