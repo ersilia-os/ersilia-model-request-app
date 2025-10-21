@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
+import { alertError } from "@/lib/alerts";
+import { extractErrorMessage } from "@/lib/error";
 import { useForm } from "react-hook-form";
 import { UploadFormSchema } from "@/schema/upload";
 import { z } from "zod";
@@ -24,7 +26,7 @@ export function useAiPublicationAnalysis() {
     const { publication, question1, question2 } = data;
 
     if (!file && !publication) {
-      alert("Please upload a PDF or provide a publication link.");
+      alertError("Please upload a PDF or provide a publication link.");
       return;
     }
 
@@ -48,11 +50,17 @@ export function useAiPublicationAnalysis() {
       });
 
       sessionStorage.setItem("aiAnalysis", JSON.stringify(metadata));
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err);
 
       router.push("/new-model");
-      alert("Error generating report. Please try again.");
+
+      const message = extractErrorMessage(
+        err,
+        "Error generating report. Please try again."
+      );
+
+      alertError(message);
     }
   };
 

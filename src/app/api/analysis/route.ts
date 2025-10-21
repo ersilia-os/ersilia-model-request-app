@@ -49,7 +49,10 @@ Pay special attention to any information related to the additional context provi
 
     const filtered = filterAiResults(result.object);
     if (!filtered.isBiomedicalModel) {
-      throw new Error("This appears to be not a scientific publication");
+      return NextResponse.json(
+        { error: "This appears to be not a scientific publication" },
+        { status: 400 }
+      );
     }
     return NextResponse.json(filtered);
   } catch (error: unknown) {
