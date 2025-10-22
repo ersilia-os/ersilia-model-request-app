@@ -34,13 +34,13 @@ export function filterAiResults(aiResults: AiAnalysisModelMetadataSchema) {
       ALLOWED_OUTPUTS.includes(o)
     );
   }
-  if (filtered.biomedical_area) {
-    filtered.biomedical_area = filtered.biomedical_area.filter((a: string) =>
+  if (filtered.biomedicalArea) {
+    filtered.biomedicalArea = filtered.biomedicalArea.filter((a: string) =>
       ALLOWED_BIOMEDICAL_AREAS.includes(a)
     );
   }
-  if (filtered.target_organism) {
-    filtered.target_organism = filtered.target_organism.filter((o: string) =>
+  if (filtered.targetOrganism) {
+    filtered.targetOrganism = filtered.targetOrganism.filter((o: string) =>
       ALLOWED_TARGET_ORGANISMS.includes(o)
     );
   }
@@ -64,22 +64,22 @@ export function filterAiResults(aiResults: AiAnalysisModelMetadataSchema) {
     filtered.deployment = "";
   }
   if (
-    filtered.source_type &&
-    !ALLOWED_SOURCE_TYPES.includes(filtered.source_type)
+    filtered.sourceType &&
+    !ALLOWED_SOURCE_TYPES.includes(filtered.sourceType)
   ) {
-    filtered.source_type = "";
+    filtered.sourceType = "";
   }
   if (
-    filtered.output_consistency &&
-    !ALLOWED_OUTPUT_CONSISTENCY.includes(filtered.output_consistency)
+    filtered.outputConsistency &&
+    !ALLOWED_OUTPUT_CONSISTENCY.includes(filtered.outputConsistency)
   ) {
-    filtered.output_consistency = "";
+    filtered.outputConsistency = "";
   }
   if (
-    filtered.publication_type &&
-    !ALLOWED_PUBLICATION_TYPES.includes(filtered.publication_type)
+    filtered.publicationType &&
+    !ALLOWED_PUBLICATION_TYPES.includes(filtered.publicationType)
   ) {
-    filtered.publication_type = "";
+    filtered.publicationType = "";
   }
 
   return filtered;

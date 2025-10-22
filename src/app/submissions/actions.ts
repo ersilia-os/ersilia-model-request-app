@@ -13,6 +13,6 @@ export async function getSubmissionsByUser(sub: string) {
     });
     return submissionList;
   } catch {
-    throw new Error("You don´t have any submissions");
+    throw new Error("You don't have any submissions");
   }
 }

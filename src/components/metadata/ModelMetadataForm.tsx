@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller, FieldErrors, useForm } from "react-hook-form";
 import {
   Field,
@@ -38,16 +38,16 @@ import MultiSelect from "../multi-select";
 import {
   saveMetadataAction,
   saveValidatedMetadataAction,
-} from "@/app/new-model/metadata/actions";
+} from "@/app/new-model/metadata/[slug]/actions";
 import { useRouter } from "next/navigation";
 import { Loader2, RotateCcw } from "lucide-react";
 import { HELP_CFG } from "@/config/help-popover-form";
 import { alertError, alertSuccess } from "@/lib/alerts";
-import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
 import { MetadataFormSchema } from "@/schema/metadata-form-schema";
+import { ModelMetadata } from "../../../generated/prisma";
 
 interface ModelMetadataFormProps {
-  aiResults: AiAnalysisModelMetadataSchema;
+  aiResults: ModelMetadata;
 }
 
 export default function ModelMetadataForm({
@@ -56,7 +56,7 @@ export default function ModelMetadataForm({
   const router = useRouter();
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
     resolver: zodResolver(MetadataFormSchema),
-    mode: "onChange",
+    mode: "onBlur",
     defaultValues: {
       title: aiResults.title || "",
       slug: aiResults.slug || "",
@@ -66,18 +66,18 @@ export default function ModelMetadataForm({
       task: aiResults.task || "",
       subtask: aiResults.subtask || "",
       input: aiResults.input,
-      input_dimension: aiResults.input_dimension,
+      inputDimension: aiResults.inputDimension,
       output: aiResults.output || [],
-      output_dimension: aiResults.output_dimension || "",
-      output_consistency: aiResults.output_consistency || "",
-      publication_url: aiResults.publication_url || "",
-      publication_year: aiResults.publication_year || "",
-      publication_type: aiResults.publication_type || "",
-      source_url: aiResults.source_url || "",
-      source_type: aiResults.source_type || "",
+      outputDimension: aiResults.outputDimension || "",
+      outputConsistency: aiResults.outputConsistency || "",
+      publicationUrl: aiResults.publicationUrl || "",
+      publicationYear: aiResults.publicationYear || "",
+      publicationType: aiResults.publicationType || "",
+      sourceUrl: aiResults.sourceUrl || "",
+      sourceType: aiResults.sourceType || "",
       deployment: aiResults.deployment || "",
-      biomedical_area: aiResults.biomedical_area || [],
-      target_organism: aiResults.target_organism || [],
+      biomedicalArea: aiResults.biomedicalArea || [],
+      targetOrganism: aiResults.targetOrganism || [],
       license: aiResults.license || "",
     },
   });
@@ -86,11 +86,12 @@ export default function ModelMetadataForm({
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-    const action = await saveValidatedMetadataAction(data);
+    const action = await saveValidatedMetadataAction(data, aiResults.id);
 
     if (action.success === true) {
       setIsLocked(true);
-      router.push(`/new-model/preview/${data.slug}`);
+      const slugToUse = action.newSlug || data.slug;
+      router.push(`/new-model/preview/${slugToUse}`);
     } else {
       alertError("Something wrong happen and data were not saved");
     }
@@ -111,11 +112,14 @@ export default function ModelMetadataForm({
       }
 
       const currentFormData = form.getValues();
-      const action = await saveMetadataAction(currentFormData);
+      const action = await saveMetadataAction(currentFormData, aiResults.id);
 
       if (action.success === true) {
         alertSuccess("Metadata saved");
         setIsLocked(true);
+        if (action.newSlug && action.newSlug !== aiResults.slug) {
+          router.push(`/new-model/metadata/${action.newSlug}`);
+        }
       } else {
         alertError("Something went wrong and data were not saved");
       }
@@ -140,15 +144,11 @@ export default function ModelMetadataForm({
     return [...a].sort().join() === [...b].sort().join();
   };
 
-  const watchedValues = form.watch();
-
-  useEffect(() => {
-    const checkValidation = async () => {
-      const isValid = await form.trigger();
-      if (isValid) setValidated("");
-    };
-    checkValidation();
-  }, [watchedValues, form]);
+  const handleFormChange = () => {
+    if (isValidated) {
+      setValidated("");
+    }
+  };
 
   const handleEditClick = () => {
     setIsLocked(false);
@@ -178,6 +178,7 @@ export default function ModelMetadataForm({
         id="form-metadata"
         className="mb-6"
         onSubmit={form.handleSubmit(onSubmit, onInvalid)}
+        onChange={handleFormChange}
       >
         <fieldset disabled={isLocked} className="flex flex-col gap-7">
           <FieldGroup>
@@ -910,7 +911,7 @@ export default function ModelMetadataForm({
                     />
 
                     <Controller
-                      name="input_dimension"
+                      name="inputDimension"
                       control={form.control}
                       render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
@@ -1071,11 +1072,11 @@ export default function ModelMetadataForm({
                       }}
                     />
                     <Controller
-                      name="output_dimension"
+                      name="outputDimension"
                       control={form.control}
                       render={({ field, fieldState }) => {
                         const isAiGenerated =
-                          aiResults.output_dimension === field.value;
+                          aiResults.outputDimension === field.value;
                         const isManuallyEdited = !isAiGenerated;
 
                         return (
@@ -1115,7 +1116,7 @@ export default function ModelMetadataForm({
                                   size="sm"
                                   className="h-4 px-0 text-xs gap-1"
                                   onClick={() =>
-                                    handleFieldResetToAi("output_dimension")
+                                    handleFieldResetToAi("outputDimension")
                                   }
                                 >
                                   <Badge
@@ -1130,7 +1131,7 @@ export default function ModelMetadataForm({
                                   </Badge>
                                 </Button>
                               ) : (
-                                aiResults.output_dimension && (
+                                aiResults.outputDimension && (
                                   <Badge
                                     variant="secondary"
                                     className="gap-1 text-xs "
@@ -1162,11 +1163,11 @@ export default function ModelMetadataForm({
                     />
 
                     <Controller
-                      name="output_consistency"
+                      name="outputConsistency"
                       control={form.control}
                       render={({ field, fieldState }) => {
                         const isAiGenerated =
-                          aiResults.output_consistency === field.value;
+                          aiResults.outputConsistency === field.value;
                         const isManuallyEdited = !isAiGenerated;
 
                         return (
@@ -1206,7 +1207,7 @@ export default function ModelMetadataForm({
                                   size="sm"
                                   className="h-4 px-0 text-xs gap-1"
                                   onClick={() =>
-                                    handleFieldResetToAi("output_consistency")
+                                    handleFieldResetToAi("outputConsistency")
                                   }
                                 >
                                   <Badge
@@ -1221,7 +1222,7 @@ export default function ModelMetadataForm({
                                   </Badge>
                                 </Button>
                               ) : (
-                                aiResults.output_consistency && (
+                                aiResults.outputConsistency && (
                                   <Badge
                                     variant="secondary"
                                     className="gap-1 text-xs "
@@ -1287,11 +1288,11 @@ export default function ModelMetadataForm({
               <FieldGroup>
                 <div className="grid grid-cols-2 gap-4">
                   <Controller
-                    name="publication_url"
+                    name="publicationUrl"
                     control={form.control}
                     render={({ field, fieldState }) => {
                       const isAiGenerated =
-                        aiResults.publication_url === field.value;
+                        aiResults.publicationUrl === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
@@ -1328,7 +1329,7 @@ export default function ModelMetadataForm({
                                 size="sm"
                                 className="h-4 px-0 text-xs gap-1"
                                 onClick={() =>
-                                  handleFieldResetToAi("publication_url")
+                                  handleFieldResetToAi("publicationUrl")
                                 }
                               >
                                 <Badge
@@ -1340,7 +1341,7 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              aiResults.publication_url && (
+                              aiResults.publicationUrl && (
                                 <Badge
                                   variant="secondary"
                                   className="gap-1 text-xs "
@@ -1369,11 +1370,11 @@ export default function ModelMetadataForm({
                   />
 
                   <Controller
-                    name="publication_year"
+                    name="publicationYear"
                     control={form.control}
                     render={({ field, fieldState }) => {
                       const isAiGenerated =
-                        aiResults.publication_year === field.value;
+                        aiResults.publicationYear === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
@@ -1410,7 +1411,7 @@ export default function ModelMetadataForm({
                                 size="sm"
                                 className="h-4 px-0 text-xs gap-1"
                                 onClick={() =>
-                                  handleFieldResetToAi("publication_year")
+                                  handleFieldResetToAi("publicationYear")
                                 }
                               >
                                 <Badge
@@ -1422,7 +1423,7 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              aiResults.publication_year && (
+                              aiResults.publicationYear && (
                                 <Badge
                                   variant="secondary"
                                   className="gap-1 text-xs "
@@ -1450,11 +1451,11 @@ export default function ModelMetadataForm({
                     }}
                   />
                   <Controller
-                    name="publication_type"
+                    name="publicationType"
                     control={form.control}
                     render={({ field, fieldState }) => {
                       const isAiGenerated =
-                        aiResults.publication_type === field.value;
+                        aiResults.publicationType === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
@@ -1491,7 +1492,7 @@ export default function ModelMetadataForm({
                                 size="sm"
                                 className="h-4 px-0 text-xs gap-1"
                                 onClick={() =>
-                                  handleFieldResetToAi("publication_type")
+                                  handleFieldResetToAi("publicationType")
                                 }
                               >
                                 <Badge
@@ -1503,7 +1504,7 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              aiResults.publication_type && (
+                              aiResults.publicationType && (
                                 <Badge
                                   variant="secondary"
                                   className="gap-1 text-xs "
@@ -1555,7 +1556,7 @@ export default function ModelMetadataForm({
               <FieldGroup>
                 <div className="grid grid-cols-2 gap-4">
                   <Controller
-                    name="source_url"
+                    name="sourceUrl"
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
@@ -1599,11 +1600,11 @@ export default function ModelMetadataForm({
                     )}
                   />
                   <Controller
-                    name="source_type"
+                    name="sourceType"
                     control={form.control}
                     render={({ field, fieldState }) => {
                       const isAiGenerated =
-                        aiResults.source_type === field.value;
+                        aiResults.sourceType === field.value;
                       const isManuallyEdited = !isAiGenerated;
 
                       return (
@@ -1640,7 +1641,7 @@ export default function ModelMetadataForm({
                                 size="sm"
                                 className="h-4 px-0 text-xs gap-1"
                                 onClick={() =>
-                                  handleFieldResetToAi("source_type")
+                                  handleFieldResetToAi("sourceType")
                                 }
                               >
                                 <Badge
@@ -1652,7 +1653,7 @@ export default function ModelMetadataForm({
                                 </Badge>
                               </Button>
                             ) : (
-                              aiResults.source_type && (
+                              aiResults.sourceType && (
                                 <Badge
                                   variant="secondary"
                                   className="gap-1 text-xs "
@@ -1905,11 +1906,11 @@ export default function ModelMetadataForm({
               </FieldDescription>
               <FieldGroup>
                 <Controller
-                  name="biomedical_area"
+                  name="biomedicalArea"
                   control={form.control}
                   render={({ field, fieldState }) => {
                     const currentBioArea = field.value || [];
-                    const originalBioArea = aiResults.biomedical_area || [];
+                    const originalBioArea = aiResults.biomedicalArea || [];
 
                     const isAiGenerated = areArraysEqual(
                       currentBioArea,
@@ -1951,7 +1952,7 @@ export default function ModelMetadataForm({
                               size="sm"
                               className="h-4 px-0 text-xs gap-1"
                               onClick={() =>
-                                handleFieldResetToAi("biomedical_area")
+                                handleFieldResetToAi("biomedicalArea")
                               }
                             >
                               <Badge
@@ -1963,8 +1964,8 @@ export default function ModelMetadataForm({
                               </Badge>
                             </Button>
                           ) : (
-                            aiResults.biomedical_area &&
-                            aiResults.biomedical_area.length > 0 && (
+                            aiResults.biomedicalArea &&
+                            aiResults.biomedicalArea.length > 0 && (
                               <Badge
                                 variant="secondary"
                                 className="gap-1 text-xs "
@@ -1996,12 +1997,12 @@ export default function ModelMetadataForm({
                   }}
                 />
                 <Controller
-                  name="target_organism"
+                  name="targetOrganism"
                   control={form.control}
                   render={({ field, fieldState }) => {
                     const currentTargetOrganism = field.value || [];
                     const originalTargetOrganism =
-                      aiResults.target_organism || [];
+                      aiResults.targetOrganism || [];
 
                     const isAiGenerated = areArraysEqual(
                       currentTargetOrganism,
@@ -2043,7 +2044,7 @@ export default function ModelMetadataForm({
                               size="sm"
                               className="h-4 px-0 text-xs gap-1"
                               onClick={() =>
-                                handleFieldResetToAi("target_organism")
+                                handleFieldResetToAi("targetOrganism")
                               }
                             >
                               <Badge
@@ -2055,8 +2056,8 @@ export default function ModelMetadataForm({
                               </Badge>
                             </Button>
                           ) : (
-                            aiResults.target_organism &&
-                            aiResults.target_organism.length > 0 && (
+                            aiResults.targetOrganism &&
+                            aiResults.targetOrganism.length > 0 && (
                               <Badge
                                 variant="secondary"
                                 className="gap-1 text-xs "

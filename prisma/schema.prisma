@@ -38,28 +38,29 @@ model ModelMetadata {
   createdBy String // The user's Auth0 'sub' ID
   author    User   @relation(fields: [createdBy], references: [sub])
 
-  description    String?
-  interpretation String?
+  description    String
+  interpretation String
   tags           String[]
 
-  task              String?
-  subtask           String?
-  input             String?
-  inputDimension    String?  @map("input_dimension")
+  task              String
+  subtask           String
+  input             String
+  inputDimension    String
   output            String[]
-  outputDimension   String?  @map("output_dimension")
-  outputConsistency String?  @map("output_consistency")
+  outputDimension   String
+  outputConsistency String
 
-  publicationUrl  String? @map("publication_url")
-  publicationYear String? @map("publication_year")
-  publicationType String? @map("publication_type")
-  sourceUrl       String? @map("source_url")
-  sourceType      String? @map("source_type")
-  deployment      String?
-  license         String?
+  publicationUrl  String
+  publicationYear String
+  publicationType String
+  sourceUrl       String
+  sourceType      String
+  deployment      String
+  license         String
 
-  biomedicalArea String[]      @map("biomedical_area")
-  targetOrganism String[]      @map("target_organism")
+  biomedicalArea String[]
+  targetOrganism String[]
+  linkPdfStorage String?
   ErsiliaIssue   ErsiliaIssue?
 
   @@map("model_metadata")
