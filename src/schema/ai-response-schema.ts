@@ -36,7 +36,7 @@ export const AiAnalysisModelMetadataSchema = z.object({
   tags: z
     .array(z.string())
     .min(0)
-    .max(5)
+    .max(10)
     .describe(SCHEMA_DESCRIPTIONS.tags(ALLOWED_TAGS)),
 
   publicationUrl: z.string().describe(SCHEMA_DESCRIPTIONS.publication_url),
