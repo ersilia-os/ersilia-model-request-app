@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { UploadFormSchema } from "@/schema/upload-schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { addNewModelMetadata } from "@/app/new-model/actions";
 
 export function useAiPublicationAnalysis() {
   const router = useRouter();
@@ -30,7 +31,7 @@ export function useAiPublicationAnalysis() {
       return;
     }
 
-    sessionStorage.removeItem("aiAnalysis");
+    localStorage.removeItem("slug");
     router.push("/new-model/processing");
 
     try {
@@ -55,12 +56,12 @@ export function useAiPublicationAnalysis() {
         question2,
       });
 
-      const metadataWithDrive = {
-        ...metadata,
-        link: pdfInGDrive,
-      };
+      const result = await addNewModelMetadata(metadata, pdfInGDrive);
 
-      sessionStorage.setItem("aiAnalysis", JSON.stringify(metadataWithDrive));
+      if (!result.success || !result.data) {
+        throw new Error(result.error);
+      }
+      localStorage.setItem("slug", JSON.stringify(result.data.slug));
     } catch (err: unknown) {
       console.error(err);
 

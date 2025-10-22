@@ -1,40 +1,38 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import z from "zod";
 import { ModelMetadata } from "../../generated/prisma";
-import { MetadataFormSchema } from "@/schema/metadata-form-schema";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatMetadataForDb(data: z.infer<typeof MetadataFormSchema>) {
-  const formMetaData = {
-    title: data.title,
-    slug: data.slug,
-    description: data.description,
-    interpretation: data.interpretation,
-    tags: data.tags,
-    task: data.task,
-    subtask: data.subtask,
-    input: data.input,
-    inputDimension: data.input_dimension,
-    output: data.output,
-    outputDimension: data.output_dimension,
-    outputConsistency: data.output_consistency,
-    publicationUrl: data.publication_url,
-    publicationYear: data.publication_year,
-    publicationType: data.publication_type,
-    sourceUrl: data.source_url,
-    sourceType: data.source_type,
-    deployment: data.deployment,
-    biomedicalArea: data.biomedical_area,
-    targetOrganism: data.target_organism,
-    license: data.license,
-  };
-  return formMetaData;
-}
+// export function formatMetadataForDb(data: z.infer<typeof MetadataFormSchema>) {
+//   const formMetaData = {
+//     title: data.title,
+//     slug: data.slug,
+//     description: data.description,
+//     interpretation: data.interpretation,
+//     tags: data.tags,
+//     task: data.task,
+//     subtask: data.subtask,
+//     input: data.input,
+//     inputDimension: data.input_dimension,
+//     output: data.output,
+//     outputDimension: data.output_dimension,
+//     outputConsistency: data.output_consistency,
+//     publicationUrl: data.publication_url,
+//     publicationYear: data.publication_year,
+//     publicationType: data.publication_type,
+//     sourceUrl: data.source_url,
+//     sourceType: data.source_type,
+//     deployment: data.deployment,
+//     biomedicalArea: data.biomedical_area,
+//     targetOrganism: data.target_organism,
+//     license: data.license,
+//   };
+//   return formMetaData;
+// }
 
 export default function formatMetadataBody(data: ModelMetadata) {
   const sections: string[] = [];
@@ -90,3 +88,28 @@ export function normalizeFilename(filename: string): string {
 
   return `new_submission_${timestamp}${extension.toLowerCase()}`;
 }
+
+export const setItem = (key: string, value: string) => {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getItem = (key: string) => {
+  try {
+    const item = window.localStorage.getItem(key);
+    return item ? JSON.parse(item) : undefined;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeItem = (key: string) => {
+  try {
+    window.localStorage.removeItem(key);
+  } catch (error) {
+    console.log(error);
+  }
+};

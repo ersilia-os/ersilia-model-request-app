@@ -55,7 +55,7 @@ export default function NewModelPage() {
                 type="submit"
                 variant="plum"
                 className="w-full sm:flex-1"
-                disabled={!file && !form.watch("publication")}
+                // disabled={!file && !form.watch("publication")}
               >
                 Analyze
               </Button>

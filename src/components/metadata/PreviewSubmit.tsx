@@ -327,7 +327,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
                 "Send to Ersilia"
               )}
             </Button>
-            <Link href="/new-model/metadata">
+            <Link href={`/new-model/metadata/${data.slug}`}>
               <Button
                 type="button"
                 variant="transparent"

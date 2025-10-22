@@ -21,9 +21,9 @@ const ALLOWED_TARGET_ORGANISMS = METADATA_FORM_CFG.targetOrganism.map(
 const ALLOWED_LICENSES = METADATA_FORM_CFG.licenses.map((t) => t.value);
 
 export const AiAnalysisModelMetadataSchema = z.object({
-  isBiomedicalModel: z
-    .boolean()
-    .describe(SCHEMA_DESCRIPTIONS.isBiomedicalModel),
+  // isBiomedicalModel: z
+  //   .boolean()
+  //   .describe(SCHEMA_DESCRIPTIONS.isBiomedicalModel),
 
   slug: z.string().trim().describe(SCHEMA_DESCRIPTIONS.slug),
 
@@ -39,15 +39,15 @@ export const AiAnalysisModelMetadataSchema = z.object({
     .max(5)
     .describe(SCHEMA_DESCRIPTIONS.tags(ALLOWED_TAGS)),
 
-  publication_url: z.string().describe(SCHEMA_DESCRIPTIONS.publication_url),
+  publicationUrl: z.string().describe(SCHEMA_DESCRIPTIONS.publication_url),
 
-  source_url: z.string().describe(SCHEMA_DESCRIPTIONS.source_url),
+  sourceUrl: z.string().describe(SCHEMA_DESCRIPTIONS.source_url),
 
   license: z.string().describe(SCHEMA_DESCRIPTIONS.license(ALLOWED_LICENSES)),
 
   deployment: z.string().describe(SCHEMA_DESCRIPTIONS.deployment),
 
-  source_type: z.string().describe(SCHEMA_DESCRIPTIONS.source_type),
+  sourceType: z.string().describe(SCHEMA_DESCRIPTIONS.source_type),
 
   task: z.string().describe(SCHEMA_DESCRIPTIONS.task(ALLOWED_TASKS)),
 
@@ -55,33 +55,33 @@ export const AiAnalysisModelMetadataSchema = z.object({
 
   input: z.string().describe(SCHEMA_DESCRIPTIONS.input),
 
-  input_dimension: z.string().describe(SCHEMA_DESCRIPTIONS.input_dimension),
+  inputDimension: z.string().describe(SCHEMA_DESCRIPTIONS.input_dimension),
 
   output: z
     .array(z.string())
     .min(0)
     .describe(SCHEMA_DESCRIPTIONS.output(ALLOWED_OUTPUTS)),
 
-  output_dimension: z.string().describe(SCHEMA_DESCRIPTIONS.output_dimension),
+  outputDimension: z.string().describe(SCHEMA_DESCRIPTIONS.output_dimension),
 
-  output_consistency: z
+  outputConsistency: z
     .string()
     .describe(
       SCHEMA_DESCRIPTIONS.output_consistency(ALLOWED_OUTPUT_CONSISTENCY)
     ),
 
-  publication_type: z
+  publicationType: z
     .string()
     .describe(SCHEMA_DESCRIPTIONS.publication_type(ALLOWED_PUBLICATION_TYPES)),
 
-  publication_year: z.string().describe(SCHEMA_DESCRIPTIONS.publication_year),
+  publicationYear: z.string().describe(SCHEMA_DESCRIPTIONS.publication_year),
 
-  biomedical_area: z
+  biomedicalArea: z
     .array(z.string())
     .min(0)
     .describe(SCHEMA_DESCRIPTIONS.biomedical_area(ALLOWED_BIOMEDICAL_AREAS)),
 
-  target_organism: z
+  targetOrganism: z
     .array(z.string())
     .min(0)
     .describe(SCHEMA_DESCRIPTIONS.target_organism(ALLOWED_TARGET_ORGANISMS)),
