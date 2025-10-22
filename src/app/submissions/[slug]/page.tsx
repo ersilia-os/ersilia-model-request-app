@@ -236,7 +236,7 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
                     rel="noopener noreferrer"
                     className="w-full flex items-center gap-2 p-3 border-2 border-plum/20 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                   >
-                    <FileText className="w-5 h-5 text-plum flex-shrink-0" />
+                    <FileText className="w-5 h-5 text-plum shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-plum">
                         Publication
