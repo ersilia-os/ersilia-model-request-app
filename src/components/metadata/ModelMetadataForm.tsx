@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller, FieldErrors, useForm } from "react-hook-form";
 import {
   Field,
@@ -145,21 +145,10 @@ export default function ModelMetadataForm({
   };
 
   const handleFormChange = () => {
-    // Clear validation error if user is actively fixing issues
     if (isValidated) {
       setValidated("");
     }
   };
-
-  // const watchedValues = form.watch();
-
-  // useEffect(() => {
-  //   const checkValidation = async () => {
-  //     const isValid = await form.trigger();
-  //     if (isValid) setValidated("");
-  //   };
-  //   checkValidation();
-  // }, [watchedValues, form]);
 
   const handleEditClick = () => {
     setIsLocked(false);
