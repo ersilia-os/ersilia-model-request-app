@@ -56,7 +56,7 @@ export default function ModelMetadataForm({
   const router = useRouter();
   const form = useForm<z.infer<typeof MetadataFormSchema>>({
     resolver: zodResolver(MetadataFormSchema),
-    mode: "onChange",
+    mode: "onBlur",
     defaultValues: {
       title: aiResults.title || "",
       slug: aiResults.slug || "",
@@ -144,15 +144,22 @@ export default function ModelMetadataForm({
     return [...a].sort().join() === [...b].sort().join();
   };
 
-  const watchedValues = form.watch();
+  const handleFormChange = () => {
+    // Clear validation error if user is actively fixing issues
+    if (isValidated) {
+      setValidated("");
+    }
+  };
 
-  useEffect(() => {
-    const checkValidation = async () => {
-      const isValid = await form.trigger();
-      if (isValid) setValidated("");
-    };
-    checkValidation();
-  }, [watchedValues, form]);
+  // const watchedValues = form.watch();
+
+  // useEffect(() => {
+  //   const checkValidation = async () => {
+  //     const isValid = await form.trigger();
+  //     if (isValid) setValidated("");
+  //   };
+  //   checkValidation();
+  // }, [watchedValues, form]);
 
   const handleEditClick = () => {
     setIsLocked(false);
@@ -182,6 +189,7 @@ export default function ModelMetadataForm({
         id="form-metadata"
         className="mb-6"
         onSubmit={form.handleSubmit(onSubmit, onInvalid)}
+        onChange={handleFormChange}
       >
         <fieldset disabled={isLocked} className="flex flex-col gap-7">
           <FieldGroup>
