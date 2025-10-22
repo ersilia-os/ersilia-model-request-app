@@ -6,6 +6,9 @@ export async function getSubmissionBySlug(slug: string) {
     where: {
       slug,
     },
+    include: {
+      ErsiliaIssue: true,
+    },
   });
   return submission;
 }
