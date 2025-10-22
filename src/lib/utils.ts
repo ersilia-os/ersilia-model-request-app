@@ -1,8 +1,9 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { MetadataFormSchema } from "./schemas";
+
 import z from "zod";
 import { ModelMetadata } from "../../generated/prisma";
+import { MetadataFormSchema } from "@/schema/metadata-form-schema";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -79,4 +80,13 @@ export default function formatMetadataBody(data: ModelMetadata) {
   sections.push(`## Deployment\n${data.deployment}`);
 
   return sections.join("\n\n");
+}
+
+export function normalizeFilename(filename: string): string {
+  const lastDotIndex = filename.lastIndexOf(".");
+  const extension = lastDotIndex !== -1 ? filename.slice(lastDotIndex) : "";
+
+  const timestamp = Date.now();
+
+  return `new_submission_${timestamp}${extension.toLowerCase()}`;
 }

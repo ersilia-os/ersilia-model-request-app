@@ -1,6 +1,6 @@
-import { AiAnalysisModelMetadataSchema } from "@/lib/schemas";
 import { extractErrorMessage } from "@/lib/error";
 import { alertError } from "@/lib/alerts";
+import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
 
 type Question = {
   question1: string;
@@ -56,6 +56,24 @@ const api = {
     }
 
     return data;
+  },
+
+  uploadToGoogleDrive: async (file: File): Promise<string | undefined> => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Something went wrong, please try again");
+    }
+
+    const data = await response.json();
+
+    return data.link;
   },
 };
 

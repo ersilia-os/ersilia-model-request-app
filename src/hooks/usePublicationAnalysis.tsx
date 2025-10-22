@@ -4,7 +4,7 @@ import api from "@/lib/api";
 import { alertError } from "@/lib/alerts";
 import { extractErrorMessage } from "@/lib/error";
 import { useForm } from "react-hook-form";
-import { UploadFormSchema } from "@/schema/upload";
+import { UploadFormSchema } from "@/schema/upload-schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -44,12 +44,23 @@ export function useAiPublicationAnalysis() {
         throw new Error("No file available for analysis");
       }
 
+      const pdfInGDrive = await api.uploadToGoogleDrive(pdfFile);
+
+      if (!pdfInGDrive) {
+        throw new Error("Something went wrong, please try again");
+      }
+
       const metadata = await api.analyzePdf(pdfFile, {
         question1,
         question2,
       });
 
-      sessionStorage.setItem("aiAnalysis", JSON.stringify(metadata));
+      const metadataWithDrive = {
+        ...metadata,
+        link: pdfInGDrive,
+      };
+
+      sessionStorage.setItem("aiAnalysis", JSON.stringify(metadataWithDrive));
     } catch (err: unknown) {
       console.error(err);
 

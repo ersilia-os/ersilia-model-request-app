@@ -17,10 +17,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import z from "zod";
-import {
-  AiAnalysisModelMetadataSchema,
-  MetadataFormSchema,
-} from "@/lib/schemas";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { METADATA_FORM_CFG } from "@/config/form-cfg";
@@ -46,6 +43,8 @@ import { useRouter } from "next/navigation";
 import { Loader2, RotateCcw } from "lucide-react";
 import { HELP_CFG } from "@/config/help-popover-form";
 import { alertError, alertSuccess } from "@/lib/alerts";
+import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
+import { MetadataFormSchema } from "@/schema/metadata-form-schema";
 
 interface ModelMetadataFormProps {
   aiResults: AiAnalysisModelMetadataSchema;

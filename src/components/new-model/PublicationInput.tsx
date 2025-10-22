@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Control, Controller } from "react-hook-form";
 import { Field, FieldLabel } from "../ui/field";
 import { z } from "zod";
-import { UploadFormSchema } from "@/schema/upload";
+import { UploadFormSchema } from "@/schema/upload-schema";
 
 interface PublicationInputProps {
   control: Control<z.infer<typeof UploadFormSchema>>;
