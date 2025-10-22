@@ -38,7 +38,7 @@ export default function WelcomeScreen() {
 
       <Alert className="mx-auto max-w-2/3 min-w-3/4 border-plum/40">
         <InfoIcon className="h-4 w-4" />
-        <AlertDescription className="text-pretty">
+        <AlertDescription className="text-pretty text-xs md:text-sm lg:text-base">
           For more information regarding the submission process, please visit
           the official{" "}
           <Link
