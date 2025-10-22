@@ -1,7 +1,10 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getSubmissionBySlug } from "./actions";
 import { Separator } from "@radix-ui/react-separator";
-import { FileText } from "lucide-react";
+import { FileText, Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
 type Params = Promise<{ slug: string }>;
 
@@ -11,7 +14,9 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
 
   const submission = await getSubmissionBySlug(slug);
 
-  if (!submission) return;
+  if (!submission) {
+    redirect("/submissions");
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center py-10">
@@ -236,7 +241,7 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
                     rel="noopener noreferrer"
                     className="w-full flex items-center gap-2 p-3 border-2 border-plum/20 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                   >
-                    <FileText className="w-5 h-5 text-plum flex-shrink-0" />
+                    <FileText className="w-5 h-5 text-plum shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-plum">
                         Publication
@@ -260,6 +265,7 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
                     rel="noopener noreferrer"
                     className="w-full flex items-center gap-2 p-3 border-2 border-plum/20 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                   >
+                    <Github className="w-5 h-5 text-plum shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-plum">
                         Source Code
@@ -279,6 +285,20 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
             </div>
           )}
           <Separator />
+          <div className="space-x-3">
+            {submission.status === "DRAFT" && (
+              <Link href={`/new-model/metadata/${submission.slug}`}>
+                <Button type="button" variant="edit" className="text-base">
+                  Edit Metadata
+                </Button>
+              </Link>
+            )}
+            <Link href="/submissions">
+              <Button type="button" variant="transparent" className="text-base">
+                Back to Submissions
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>

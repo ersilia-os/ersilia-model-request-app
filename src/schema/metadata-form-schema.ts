@@ -33,13 +33,13 @@ export const MetadataFormSchema = z.object({
   input: z.string().min(1, {
     message: "Please select one input.",
   }),
-  input_dimension: z
+  inputDimension: z
     .string()
     .min(1, { message: "Please enter the input dimension of the model." }),
   output: z
     .array(z.string())
     .min(1, { message: "Please select at least one output." }),
-  output_dimension: z
+  outputDimension: z
     .string()
     .min(1, { message: "Please enter a output dimension for the model." })
     .refine(
@@ -49,13 +49,13 @@ export const MetadataFormSchema = z.object({
       },
       { message: "Please enter a valid output dimension for the model." }
     ),
-  output_consistency: z
+  outputConsistency: z
     .string()
     .min(1, { message: "Please choose at least one option." }),
-  publication_url: z.string().min(1, {
+  publicationUrl: z.string().min(1, {
     message: "Please provide a publication url",
   }),
-  publication_year: z
+  publicationYear: z
     .string()
     .min(4, { message: "Please provide the year of the publication." })
     .refine(
@@ -65,13 +65,13 @@ export const MetadataFormSchema = z.object({
       },
       { message: "Please provide a valid year " }
     ),
-  source_url: z.string().min(1, {
+  sourceUrl: z.string().min(1, {
     message: "Please provide a source code url",
   }),
-  publication_type: z.string().min(1, {
+  publicationType: z.string().min(1, {
     message: "Please select one publication type",
   }),
-  source_type: z.string().min(1, {
+  sourceType: z.string().min(1, {
     message: "Please select one source type",
   }),
   deployment: z.string().min(1, {
@@ -80,10 +80,10 @@ export const MetadataFormSchema = z.object({
   license: z.string().min(1, {
     message: "Please select one license",
   }),
-  biomedical_area: z
+  biomedicalArea: z
     .array(z.string())
     .min(1, { message: "Please provide at least one area." }),
-  target_organism: z
+  targetOrganism: z
     .array(z.string())
     .min(1, { message: "Please provide at least one target." }),
 });
