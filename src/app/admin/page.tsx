@@ -1,11 +1,23 @@
 import { auth0 } from "@/lib/auth0";
 import { getPublishingUsers } from "./actions";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import prisma from "@/lib/prisma";
 import UserList from "@/components/admin/UserList";
 import { redirect } from "next/navigation";
+import { UserRole } from "@prisma-generated";
+
 export default async function AdminDashboardPage() {
   const session = await auth0.getSession();
   if (!session) redirect("/auth/login");
+
+  const email = session.user.email;
+
+  const dbUser = await prisma.user.findUnique({
+    where: { email },
+    select: { role: true },
+  });
+
+  if (!dbUser || dbUser.role !== UserRole.ADMIN) redirect("/");
 
   const users = await getPublishingUsers();
 
