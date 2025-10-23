@@ -14,11 +14,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  USER
-  ADMIN
-}
-
 enum FormStatus {
   DRAFT
   SUBMITTED
@@ -28,7 +23,6 @@ model User {
   sub             String          @id
   name            String?
   email           String?         @unique
-  role      UserRole @default(USER)
   metadataRecords ModelMetadata[]
 }
 
