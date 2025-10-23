@@ -23,6 +23,7 @@ model User {
   sub             String          @id
   name            String?
   email           String?         @unique
+  githubAccount   String?
   metadataRecords ModelMetadata[]
 }
 
