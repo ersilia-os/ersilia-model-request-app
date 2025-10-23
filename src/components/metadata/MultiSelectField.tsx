@@ -1,4 +1,3 @@
-// components/form/MultiSelectField.tsx
 import { Controller, Control, FieldValues, Path } from "react-hook-form";
 import { Field, FieldError } from "../ui/field";
 import MultiSelect from "../multi-select";
