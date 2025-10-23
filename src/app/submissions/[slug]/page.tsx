@@ -35,9 +35,21 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
             >
               {submission.status}
             </span>
-            <span className="text-sm text-gray-500">
-              Last update: {new Date(submission.updatedAt).toLocaleDateString()}
-            </span>
+            {submission.status === "DRAFT" ? (
+              <span className="text-sm text-gray-500">
+                Last update:{" "}
+                {new Date(submission.updatedAt).toLocaleDateString()}
+              </span>
+            ) : (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-gray-500"
+                href={submission.ErsiliaIssue?.issueUrl}
+              >
+                View status on Ersilia Hub
+              </a>
+            )}
           </div>
         </CardHeader>
 
