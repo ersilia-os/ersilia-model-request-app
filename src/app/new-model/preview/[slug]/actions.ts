@@ -45,7 +45,8 @@ export async function submitToErsilia(
   githubConfig: {
     owner: string;
     repo: string;
-  }
+  },
+  isContributor: boolean
 ): Promise<SubmitToErsiliaResult> {
   try {
     const submission = await prisma.modelMetadata.findUnique({
@@ -66,7 +67,21 @@ export async function submitToErsilia(
       };
     }
 
-    const issueBody = formatMetadataBody(submission);
+    let contributor = "Ersilia App";
+
+    if (isContributor) {
+      const user = await prisma.user.findUnique({
+        where: {
+          sub: submission.createdBy,
+        },
+      });
+
+      if (user && user.githubAccount) {
+        contributor = user.githubAccount;
+      }
+    }
+
+    const issueBody = formatMetadataBody(submission, contributor);
 
     const octokit = await getOctokit();
 
@@ -80,7 +95,6 @@ export async function submitToErsilia(
         labels: ["model-submission", "metadata"],
       }
     );
-    console.log(issueData);
 
     await prisma.$transaction(async (tx) => {
       await tx.ersiliaIssue.create({

@@ -62,6 +62,7 @@ model ModelMetadata {
   biomedicalArea String[]
   targetOrganism String[]
   linkPdfStorage String?
+  isContributor  Boolean       @default(false)
   ErsiliaIssue   ErsiliaIssue?
 
   @@map("model_metadata")

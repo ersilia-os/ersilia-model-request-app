@@ -2,7 +2,8 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import ModelMetadataForm from "@/components/metadata/ModelMetadataForm";
 
 import { redirect } from "next/navigation";
-import { getModelMetadatBySlug } from "./actions";
+import { getGitHubAccount, getModelMetadatBySlug } from "./actions";
+import { auth0 } from "@/lib/auth0";
 
 type Params = Promise<{ slug: string }>;
 
@@ -10,9 +11,16 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
   const params = await props.params;
   const slug = params.slug;
 
+  const session = await auth0.getSession();
+
+  if (!session) {
+    redirect("/auth/login");
+  }
+  const gitHubAccount = await getGitHubAccount(session.user.sub);
+
   const aiResults = await getModelMetadatBySlug(slug);
 
-  if (!aiResults.success || !aiResults.data) {
+  if (!aiResults.success || !aiResults.data || !gitHubAccount.success) {
     redirect("/new-model");
   }
 
@@ -30,7 +38,10 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
         </CardHeader>
 
         <CardContent className="p-0">
-          <ModelMetadataForm aiResults={aiResults.data} />
+          <ModelMetadataForm
+            aiResults={aiResults.data}
+            gitHubAccount={gitHubAccount.data}
+          />
         </CardContent>
       </Card>
     </main>

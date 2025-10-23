@@ -1,11 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { FieldErrors, Path, PathValue, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldErrors,
+  Path,
+  PathValue,
+  useForm,
+} from "react-hook-form";
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
+  FieldLabel,
   FieldLegend,
   FieldSeparator,
 } from "../ui/field";
@@ -32,15 +40,20 @@ import { MultiSelectField } from "./MultiSelectField";
 import { RadioGroupField } from "./RadioGroupField";
 import { CheckboxGroupField } from "./CheckBoxField";
 import { SelectField } from "./SelectField";
+import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
+import Link from "next/link";
 
 interface ModelMetadataFormProps {
   aiResults: ModelMetadata;
+  gitHubAccount: string | null | undefined;
 }
 
 type FormValues = z.infer<typeof MetadataFormSchema>;
 
 export default function ModelMetadataForm({
   aiResults,
+  gitHubAccount,
 }: ModelMetadataFormProps) {
   const router = useRouter();
 
@@ -69,26 +82,35 @@ export default function ModelMetadataForm({
       biomedicalArea: aiResults.biomedicalArea || [],
       targetOrganism: aiResults.targetOrganism || [],
       license: aiResults.license || "",
+      isContributor: aiResults.isContributor,
+      githubAccount: gitHubAccount || "",
     },
   });
   const [isLocked, setIsLocked] = useState(false);
-  const [isValidated, setValidated] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(data: z.infer<typeof MetadataFormSchema>) {
-    const action = await saveValidatedMetadataAction(data, aiResults.id);
+    setIsLoading(true);
 
-    if (action.success === true) {
-      setIsLocked(true);
-      const slugToUse = action.newSlug || data.slug;
-      router.push(`/new-model/preview/${slugToUse}`);
-    } else {
-      alertError("Something wrong happen and data were not saved");
+    try {
+      const action = await saveValidatedMetadataAction(data, aiResults.id);
+
+      if (action.success) {
+        setIsLocked(true);
+        alertSuccess("Model metadata saved successfully");
+        const slugToUse = action.newSlug || data.slug;
+        router.push(`/new-model/preview/${slugToUse}`);
+      } else {
+        alertError(action.message || "Failed to submit metadata");
+      }
+    } catch (err) {
+      console.error("Unexpected client error:", err);
+      alertError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLocked(true);
   }
-  //TODO: do we need a trycatch?
+
   async function handleSaveClick() {
     setIsLoading(true);
 
@@ -97,6 +119,7 @@ export default function ModelMetadataForm({
       const slugResult = await form.trigger("slug");
 
       if (!titleResult || !slugResult) {
+        alertError("Please title and slug are required");
         setIsLocked(false);
         return;
       }
@@ -104,18 +127,18 @@ export default function ModelMetadataForm({
       const currentFormData = form.getValues();
       const action = await saveMetadataAction(currentFormData, aiResults.id);
 
-      if (action.success === true) {
-        alertSuccess("Metadata saved");
+      if (action.success) {
+        alertSuccess("Metadata saved successfully");
         setIsLocked(true);
         if (action.newSlug && action.newSlug !== aiResults.slug) {
           router.push(`/new-model/metadata/${action.newSlug}`);
         }
       } else {
-        alertError("Something went wrong and data were not saved");
+        alertError(action.message || "Failed to save metadata");
       }
     } catch (err) {
-      console.error("Error while saving metadata:", err);
-      alertError("Unexpected error occurred");
+      console.error("Unexpected client error:", err);
+      alertError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -129,21 +152,11 @@ export default function ModelMetadataForm({
     });
   }
 
-  const handleFormChange = () => {
-    if (isValidated) {
-      setValidated("");
-    }
-  };
-
-  const handleEditClick = () => {
+  function handleEditClick() {
     setIsLocked(false);
-  };
+  }
 
-  const onInvalid = (
-    errors: FieldErrors<z.infer<typeof MetadataFormSchema>>
-  ) => {
-    setValidated("*Please fix the highlighted errors first.");
-
+  function onInvalid(errors: FieldErrors<z.infer<typeof MetadataFormSchema>>) {
     const firstErrorField = Object.keys(errors)[0];
 
     const element = document.querySelector(`[name="${firstErrorField}"]`);
@@ -155,7 +168,7 @@ export default function ModelMetadataForm({
         fieldSet.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
-  };
+  }
 
   return (
     <>
@@ -163,7 +176,6 @@ export default function ModelMetadataForm({
         id="form-metadata"
         className="mb-6"
         onSubmit={form.handleSubmit(onSubmit, onInvalid)}
-        onChange={handleFormChange}
       >
         <fieldset disabled={isLocked} className="flex flex-col gap-7">
           <FieldGroup>
@@ -440,6 +452,72 @@ export default function ModelMetadataForm({
             </FieldGroup>
 
             <FieldSeparator />
+            <FieldGroup>
+              <FieldLegend className="text-plum/90">Contribution</FieldLegend>
+              <div className="space-y-4">
+                <Controller
+                  name="isContributor"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field
+                      orientation="horizontal"
+                      data-invalid={fieldState.invalid}
+                    >
+                      <Checkbox
+                        id="form-metadata-checkbox-contributor"
+                        name={field.name}
+                        checked={field.value || false}
+                        onCheckedChange={field.onChange}
+                        aria-invalid={fieldState.invalid}
+                      />
+
+                      <FieldLabel
+                        htmlFor="form-metadata-checkbox-contributor"
+                        className="font-normal text-gray-700"
+                      >
+                        I want to be listed as a contributor
+                      </FieldLabel>
+
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+
+                {form.watch("isContributor") && (
+                  <Controller
+                    name="githubAccount"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field
+                        data-invalid={fieldState.invalid}
+                        className="w-[300px]"
+                      >
+                        <FieldLabel
+                          htmlFor={`field-${field.name}`}
+                          className="text-plum/85"
+                        >
+                          Github Account
+                        </FieldLabel>
+                        <Input
+                          aria-invalid={fieldState.invalid}
+                          className="focus-visible:border-plum "
+                          {...field}
+                          id={`field-${field.name}`}
+                          placeholder="Enter your Github account name"
+                        />
+
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                )}
+              </div>
+            </FieldGroup>
+            <FieldSeparator />
           </FieldGroup>
         </fieldset>
       </form>
@@ -473,6 +551,11 @@ export default function ModelMetadataForm({
           >
             Edit
           </Button>
+          <Link href="/">
+            <Button type="button" variant="transparent">
+              Home
+            </Button>
+          </Link>
         </div>
 
         <div className="relative">
@@ -480,9 +563,9 @@ export default function ModelMetadataForm({
             Preview
           </Button>
 
-          {isValidated && (
+          {form.formState.isSubmitted && !form.formState.isValid && (
             <p className="absolute right-0 mt-2 text-destructive font-bold text-xs whitespace-nowrap">
-              {isValidated}
+              *Please fix the highlighted errors first.
             </p>
           )}
         </div>

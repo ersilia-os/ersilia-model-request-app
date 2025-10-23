@@ -32,7 +32,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
       return;
     }
 
-    const result = await submitMetadata(data.id);
+    const result = await submitMetadata(data.id, data.isContributor);
 
     if (result.success) {
       setConfirmStep(false);
@@ -66,6 +66,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
         </CardHeader>
 
         <CardContent className="p-0 space-y-6">
+          <Separator />
           {data.description && (
             <div>
               <h2 className="text-lg font-semibold text-plum mb-2">
@@ -306,6 +307,17 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
                   </a>
                 )}
               </div>
+            </div>
+          )}
+          <Separator />
+          {data.isContributor && (
+            <div>
+              <h2 className="text-lg font-semibold text-plum mb-2">
+                Contribution
+              </h2>
+              <p className="text-gray-600 text-sm md:text-base">
+                You will be listed as a contributor with your Github Account
+              </p>
             </div>
           )}
           <Separator />

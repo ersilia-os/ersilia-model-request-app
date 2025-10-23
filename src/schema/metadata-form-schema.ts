@@ -86,4 +86,6 @@ export const MetadataFormSchema = z.object({
   targetOrganism: z
     .array(z.string())
     .min(1, { message: "Please provide at least one target." }),
+  isContributor: z.boolean(),
+  githubAccount: z.string(),
 });
