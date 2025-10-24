@@ -1,6 +1,11 @@
+import { ModelMetadata } from "../../generated/prisma";
+
+type MetadataTask = ModelMetadata["task"];
+type MetadataSubTask = ModelMetadata["subtask"];
+
 interface TaskSectionProps {
-  task: string;
-  subtask: string;
+  task: MetadataTask;
+  subtask: MetadataSubTask;
 }
 
 export function TaskSection({ task, subtask }: TaskSectionProps) {

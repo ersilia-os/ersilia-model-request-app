@@ -1,5 +1,5 @@
 "use client";
-import { FileText, Github, Loader2 } from "lucide-react";
+
 import { ModelMetadata } from "../../../generated/prisma";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Separator } from "../ui/separator";
@@ -18,6 +18,7 @@ import { BiomedicalAreaSection } from "../BiomedicalAreaSection";
 import { TargetOrganismSection } from "../TargetSection";
 import { DeploymentInfoSection } from "../DeployementSection";
 import { ResourcesSection } from "../RessoucesSection";
+import { Loader2 } from "lucide-react";
 
 interface PreviewSubmitProps {
   data: ModelMetadata;
