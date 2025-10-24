@@ -23,6 +23,7 @@ model User {
   sub             String          @id
   name            String?
   email           String?         @unique
+  githubAccount   String?
   metadataRecords ModelMetadata[]
 }
 
@@ -61,6 +62,7 @@ model ModelMetadata {
   biomedicalArea String[]
   targetOrganism String[]
   linkPdfStorage String?
+  isContributor  Boolean       @default(false)
   ErsiliaIssue   ErsiliaIssue?
 
   @@map("model_metadata")

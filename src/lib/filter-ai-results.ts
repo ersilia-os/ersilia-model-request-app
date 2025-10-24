@@ -25,24 +25,34 @@ export function filterAiResults(aiResults: AiAnalysisModelMetadataSchema) {
   const filtered = { ...aiResults };
 
   if (filtered.tags) {
-    filtered.tags = filtered.tags.filter((t: string) =>
-      ALLOWED_TAGS.includes(t)
-    );
+    filtered.tags = [
+      ...new Set(filtered.tags.filter((t: string) => ALLOWED_TAGS.includes(t))),
+    ];
   }
   if (filtered.output) {
-    filtered.output = filtered.output.filter((o: string) =>
-      ALLOWED_OUTPUTS.includes(o)
-    );
+    filtered.output = [
+      ...new Set(
+        filtered.output.filter((o: string) => ALLOWED_OUTPUTS.includes(o))
+      ),
+    ];
   }
   if (filtered.biomedicalArea) {
-    filtered.biomedicalArea = filtered.biomedicalArea.filter((a: string) =>
-      ALLOWED_BIOMEDICAL_AREAS.includes(a)
-    );
+    filtered.biomedicalArea = [
+      ...new Set(
+        filtered.biomedicalArea.filter((a: string) =>
+          ALLOWED_BIOMEDICAL_AREAS.includes(a)
+        )
+      ),
+    ];
   }
   if (filtered.targetOrganism) {
-    filtered.targetOrganism = filtered.targetOrganism.filter((o: string) =>
-      ALLOWED_TARGET_ORGANISMS.includes(o)
-    );
+    filtered.targetOrganism = [
+      ...new Set(
+        filtered.targetOrganism.filter((o: string) =>
+          ALLOWED_TARGET_ORGANISMS.includes(o)
+        )
+      ),
+    ];
   }
 
   if (filtered.task && !ALLOWED_TASKS.includes(filtered.task)) {

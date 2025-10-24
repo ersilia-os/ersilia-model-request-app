@@ -11,11 +11,7 @@ export default async function Home() {
     redirect("/auth/login");
   }
 
-  await getOrCreateUser(
-    session.user.sub,
-    session.user.email,
-    session.user.name
-  );
+  await getOrCreateUser(session);
 
   return (
     <>

@@ -7,7 +7,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export default function formatMetadataBody(data: ModelMetadata) {
+export default function formatMetadataBody(
+  data: ModelMetadata,
+  contributor: string
+) {
   const sections: string[] = [];
   // Title
   sections.push(`## Model Name\n${data.title}`);
@@ -49,6 +52,8 @@ export default function formatMetadataBody(data: ModelMetadata) {
   sections.push(`## License\n${data.license}`);
   // Deployment
   sections.push(`## Deployment\n${data.deployment}`);
+  //Contributor
+  sections.push(`## Deployment\n@${contributor}`);
 
   return sections.join("\n\n");
 }

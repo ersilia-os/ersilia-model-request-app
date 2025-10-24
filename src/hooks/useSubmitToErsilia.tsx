@@ -11,7 +11,7 @@ export function useSubmitToErsilia({ owner, repo }: UseSubmitMetadataOptions) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  async function submitMetadata(submissionId: string) {
+  async function submitMetadata(submissionId: string, isContributor: boolean) {
     setLoading(true);
     setError("");
     setSuccess(false);
@@ -25,7 +25,11 @@ export function useSubmitToErsilia({ owner, repo }: UseSubmitMetadataOptions) {
       };
     }
 
-    const result = await submitToErsilia(submissionId, { owner, repo });
+    const result = await submitToErsilia(
+      submissionId,
+      { owner, repo },
+      isContributor
+    );
 
     if (result.success) {
       setSuccess(true);
