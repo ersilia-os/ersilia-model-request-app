@@ -41,10 +41,10 @@ export default function MetadataHeader({
           <a
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-gray-500"
+            className="text-sm text-gray-500 underline"
             href={gihublink}
           >
-            View status on Ersilia Hub
+            Click to view status
           </a>
         )}
       </div>
