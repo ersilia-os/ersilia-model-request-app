@@ -1,4 +1,4 @@
-import PreviewSubmit from "@/components/metadata/PreviewSubmit";
+import PreviewSubmit from "@/components/preview/PreviewSubmit";
 import { getSubmissionBySlug } from "./actions";
 import { redirect } from "next/navigation";
 

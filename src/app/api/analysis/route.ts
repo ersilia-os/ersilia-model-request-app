@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { google } from "@ai-sdk/google";
 
 import { ZodError } from "zod";
 import { filterAiResults } from "@/lib/filter-ai-results";
@@ -17,6 +18,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file uploaded." }, { status: 400 });
     }
 
+    const model = google("gemini-2.0-flash-lite");
+
     const arrayBuffer = await file.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
 
@@ -31,7 +34,7 @@ ${question2 ? `\nAdditional Context 2: ${question2}` : ""}
 Pay special attention to any information related to the additional context provided above when extracting metadata.`;
 
     const result = await generateObject({
-      model: openai("gpt-5-nano"),
+      model,
       schema: AiAnalysisModelMetadataSchema,
       messages: [
         {
