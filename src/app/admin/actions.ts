@@ -5,8 +5,21 @@ import prisma from "@/lib/prisma";
 export async function getPublishingUsers() {
   try {
     return await prisma.user.findMany({
-      include: {
-        metadataRecords: true,
+      select: {
+        sub: true,
+        email: true,
+        metadataRecords: {
+          select: {
+            status: true,
+            fileName: true,
+            ErsiliaIssue: {
+              select: {
+                issueNumber: true,
+                issueUrl: true,
+              },
+            },
+          },
+        },
       },
     });
   } catch (error) {

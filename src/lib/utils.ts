@@ -64,7 +64,7 @@ export function normalizeFilename(filename: string): string {
 
   const timestamp = Date.now();
 
-  return `new_submission_${timestamp}${extension.toLowerCase()}`;
+  return `ersilia_${timestamp}${extension.toLowerCase()}`;
 }
 
 export const setItem = (key: string, value: string) => {

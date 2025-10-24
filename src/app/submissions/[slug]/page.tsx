@@ -76,16 +76,18 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
           />
           <Separator />
           {submission.isContributor && (
-            <div>
-              <h2 className="text-lg font-semibold text-plum mb-2">
-                Contribution
-              </h2>
-              <p className="text-gray-600 text-sm md:text-base">
-                You will be listed as a contributor with your Github Account
-              </p>
-            </div>
+            <>
+              <div>
+                <h2 className="text-lg font-semibold text-plum mb-2">
+                  Contribution
+                </h2>
+                <p className="text-gray-600 text-sm md:text-base">
+                  You will be listed as a contributor with your Github Account
+                </p>
+              </div>
+              <Separator />
+            </>
           )}
-          <Separator />
           <div className="space-x-3">
             {submission.status === "DRAFT" && (
               <Link href={`/new-model/metadata/${submission.slug}`}>

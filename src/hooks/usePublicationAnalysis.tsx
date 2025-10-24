@@ -51,12 +51,14 @@ export function useAiPublicationAnalysis() {
         throw new Error("Something went wrong, please try again");
       }
 
+      const { link, fileName } = pdfInGDrive;
+
       const metadata = await api.analyzePdf(pdfFile, {
         question1,
         question2,
       });
 
-      const result = await addNewModelMetadata(metadata, pdfInGDrive);
+      const result = await addNewModelMetadata(metadata, link, fileName);
 
       if (!result.success || !result.data) {
         throw new Error(result.error);
