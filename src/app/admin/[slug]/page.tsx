@@ -7,9 +7,10 @@ type Params = Promise<{ slug: string }>;
 
 export default async function AdminSubmissionPage(props: { params: Params }) {
   const session = await auth0.getSession();
-  if (!session) {
-    redirect("/auth/login");
-  }
+  if (!session) redirect("/auth/login");
+
+  const auth0Roles = (session.user.ersilia as string[]) || [];
+  if (!auth0Roles.includes("admin")) redirect("/");
 
   const params = await props.params;
   const submission = await getSubmissionBySlug(params.slug);

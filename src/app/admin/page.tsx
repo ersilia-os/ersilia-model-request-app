@@ -3,9 +3,13 @@ import { getPublishingUsers } from "./actions";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import UserList from "@/components/admin/UserList";
 import { redirect } from "next/navigation";
+
 export default async function AdminDashboardPage() {
   const session = await auth0.getSession();
   if (!session) redirect("/auth/login");
+
+  const auth0Roles = (session.user.ersilia as string[]) || [];
+  if (!auth0Roles.includes("admin")) redirect("/");
 
   const users = await getPublishingUsers();
 
