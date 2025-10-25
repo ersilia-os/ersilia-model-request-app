@@ -34,7 +34,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
 
   return (
     <div className="overflow-hidden rounded-md border border-plum-hover/30 w-full">
-      <Table style={{ tableLayout: "fixed", width: "100%" }}>
+      <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -42,7 +42,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
                 return (
                   <TableHead
                     key={header.id}
-                    className="text-plum font-bold text-base"
+                    className="text-plum font-bold text-base p-4"
                   >
                     {header.isPlaceholder
                       ? null
@@ -66,7 +66,10 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
                 onClick={() => router.push(`/submissions/${row.original.slug}`)}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className=" text-gray-800 text-base">
+                  <TableCell
+                    key={cell.id}
+                    className=" text-gray-800 text-base p-4"
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

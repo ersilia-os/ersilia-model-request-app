@@ -73,7 +73,7 @@ export function DataTableAdmin<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="text-plum font-bold text-base"
+                      className="text-plum font-bold text-base p-4"
                     >
                       {header.isPlaceholder
                         ? null
@@ -97,7 +97,7 @@ export function DataTableAdmin<TData, TValue>({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="text-gray-800 text-base"
+                      className="text-gray-800 text-base p-4"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

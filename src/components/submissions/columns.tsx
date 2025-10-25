@@ -25,7 +25,7 @@ export const columns: ColumnDef<Metadata>[] = [
     header: "Title",
     cell: ({ row }) => {
       return (
-        <div className="max-w-[500px] truncate">{row.getValue("title")}</div>
+        <div className="max-w-[400px] truncate">{row.getValue("title")}</div>
       );
     },
   },
@@ -36,15 +36,17 @@ export const columns: ColumnDef<Metadata>[] = [
       const status = row.getValue("status") as string;
 
       return (
-        <Badge
-          className={`${
-            status === "DRAFT"
-              ? "bg-yellow-100 text-yellow-700"
-              : "bg-green-100 text-green-700"
-          }`}
-        >
-          {status}
-        </Badge>
+        <div>
+          <Badge
+            className={`${
+              status === "DRAFT"
+                ? "bg-yellow-100 text-yellow-700"
+                : "bg-green-100 text-green-700"
+            }`}
+          >
+            {status}
+          </Badge>
+        </div>
       );
     },
   },
