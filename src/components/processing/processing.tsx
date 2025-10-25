@@ -13,7 +13,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 export function SpinnerEmpty() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white w-full">
+    <div className="min-h-[calc(100svh-70px-2px)] grid content-center bg-white-500 w-full">
       <Empty className="w-full shadow-xl border-2 border-solid border-plum rounded-2xl p-6 md:p-8 lg:p-10">
         <div className="text-center p-0 mb-4">
           <EmptyHeader>

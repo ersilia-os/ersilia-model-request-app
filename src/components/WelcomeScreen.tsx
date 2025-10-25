@@ -6,7 +6,7 @@ import { InfoIcon } from "lucide-react";
 
 export default function WelcomeScreen() {
   return (
-    <div className="flex flex-col h-[calc(100vh-70px)] justify-center gap-20">
+    <div className="flex flex-col h-[calc(100vh-70px-2px)] justify-center gap-20">
       <div className="flex flex-col items-center justify-center">
         <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
           <CardHeader className="text-center p-0 mb-4">

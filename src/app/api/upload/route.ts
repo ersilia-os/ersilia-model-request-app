@@ -52,9 +52,11 @@ export async function POST(request: NextRequest) {
     });
 
     const link = newFile.data.webViewLink;
+    const fileName = newFile.data.name;
 
     return NextResponse.json({
       link,
+      fileName,
     });
   } catch (error: unknown) {
     console.error(error);

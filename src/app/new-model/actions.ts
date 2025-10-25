@@ -7,7 +7,11 @@ import { z } from "zod";
 
 type aiResult = z.infer<typeof AiAnalysisModelMetadataSchema>;
 
-export async function addNewModelMetadata(data: aiResult, link: string) {
+export async function addNewModelMetadata(
+  data: aiResult,
+  link: string,
+  fileName: string
+) {
   const session = await auth0.getSession();
   if (!session || !session.user) {
     return { success: false, error: "Unauthorized. Please log in." };
@@ -15,12 +19,14 @@ export async function addNewModelMetadata(data: aiResult, link: string) {
 
   try {
     const userId = session.user.sub;
+    console.log("🟥🟥🟥", fileName);
 
     const newModel = await prisma.modelMetadata.create({
       data: {
         ...data,
         linkPdfStorage: link,
         createdBy: userId,
+        fileName: fileName,
       },
     });
 

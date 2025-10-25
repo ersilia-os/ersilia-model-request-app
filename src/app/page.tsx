@@ -6,7 +6,6 @@ import WelcomeScreen from "@/components/WelcomeScreen";
 export default async function Home() {
   const session = await auth0.getSession();
 
-  console.log("Home page session:", session);
   if (!session) {
     redirect("/auth/login");
   }

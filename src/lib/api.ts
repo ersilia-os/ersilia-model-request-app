@@ -2,6 +2,11 @@ import { extractErrorMessage } from "@/lib/error";
 import { alertError } from "@/lib/alerts";
 import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
 
+type LinkAndFileName = {
+  link: string;
+  fileName: string;
+};
+
 type Question = {
   question1: string;
   question2: string;
@@ -58,7 +63,9 @@ const api = {
     return data;
   },
 
-  uploadToGoogleDrive: async (file: File): Promise<string | undefined> => {
+  uploadToGoogleDrive: async (
+    file: File
+  ): Promise<LinkAndFileName | undefined> => {
     const formData = new FormData();
     formData.append("file", file);
 
@@ -73,7 +80,7 @@ const api = {
 
     const data = await response.json();
 
-    return data.link;
+    return data;
   },
 };
 
