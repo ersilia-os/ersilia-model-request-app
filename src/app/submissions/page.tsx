@@ -16,7 +16,7 @@ export default async function SubmissionPage() {
   const submissions = await getSubmissionsByUser(session.user.sub);
 
   return (
-    <div className="flex flex-col space-y-3 items-center min-h-[calc(100vh-70px-50px)] bg-white my-6">
+    <div className="flex flex-col justify-center space-y-3 items-center min-h-[calc(100vh-70px-50px)] bg-white my-6">
       <div>
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
           Your Submissions
@@ -25,18 +25,23 @@ export default async function SubmissionPage() {
           View your model submissions
         </p>
       </div>
-
       <DataTableSubmission columns={columns} data={submissions} />
 
-      <div className="flex items-center gap-2 sm:gap-6 mb-10 mt-4">
-        <Link href="/">
-          <Button variant={"transparent"} className="px-7 sm:px-20">
+      <div className="flex flex-row justify-center items-center gap-2 sm:gap-6 mb-10 mt-4 w-full">
+        <Link href="/" className="flex-1 sm:flex-none">
+          <Button
+            variant={"transparent"}
+            className="px-7 sm:px-20 w-full sm:w-auto sm:max-w-[230px]"
+          >
             Back to Home
           </Button>
         </Link>
 
-        <Link href="/new-model">
-          <Button variant={"plum"} className="px-7 sm:px-20">
+        <Link href="/new-model" className="flex-1 sm:flex-none">
+          <Button
+            variant={"plum"}
+            className="px-7 sm:px-20 w-full sm:w-auto sm:max-w-[230px]"
+          >
             Add New Model
           </Button>
         </Link>

@@ -42,14 +42,15 @@ export default function WelcomeScreen() {
       <Alert className="mx-auto max-w-4/5 sm:max-2/3 border-plum/40">
         <InfoIcon className="h-4 w-4" />
         <AlertDescription className="text-xs md:text-sm lg:text-base inline">
-          For more information regarding the submission process, please visit the official{" "}
-            <Link
-              href="https://ersilia.gitbook.io/ersilia-book/"
-              target="_blank"
-              className="underline text-plum hover:text-plum/80 whitespace-nowrap"
-            >
-              Ersilia documentation
-            </Link>
+          For more information regarding the submission process, please visit
+          the official{" "}
+          <Link
+            href="https://ersilia.gitbook.io/ersilia-book/"
+            target="_blank"
+            className="underline text-plum hover:text-plum/80 whitespace-nowrap"
+          >
+            Ersilia documentation
+          </Link>
         </AlertDescription>
       </Alert>
     </div>

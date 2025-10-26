@@ -12,3 +12,8 @@
 .text-type__cursor--hidden {
   display: none;
 }
+
+.text-type__content {
+  font: inherit;
+  color: inherit;
+}

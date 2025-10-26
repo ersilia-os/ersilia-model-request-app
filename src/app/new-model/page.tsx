@@ -21,7 +21,7 @@ export default function NewModelPage() {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
             Add New Model to Ersilia
           </h1>
-          <p className="text-center text-gray-400 text-sm md:text-base lg:text-lg mb-2">
+          <p className="text-center text-gray-400 text-sm md:text-base lg:text-lg sm:mb-2">
             Provide a publication and answer a few questions to help our AI
             extract accurate model metadata
           </p>
@@ -42,14 +42,7 @@ export default function NewModelPage() {
             />
             <Separator />
             <ContextInput control={form.control} />
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-              <Button
-                asChild
-                variant="transparent"
-                className="w-full sm:flex-1"
-              >
-                <Link href="/">Back to Home</Link>
-              </Button>
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full mt-2">
               <Button
                 type="submit"
                 variant="plum"
@@ -57,6 +50,13 @@ export default function NewModelPage() {
                 // disabled={!file && !form.watch("publication")}
               >
                 Analyze
+              </Button>
+              <Button
+                asChild
+                variant="transparent"
+                className="w-full sm:flex-1"
+              >
+                <Link href="/">Back to Home</Link>
               </Button>
             </div>
           </CardContent>

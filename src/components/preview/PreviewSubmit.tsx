@@ -38,7 +38,6 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
   async function handleSend() {
     if (!confirmStep) {
       setConfirmStep(true);
-
       setTimeout(() => setConfirmStep(false), 3000);
       return;
     }
@@ -66,7 +65,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
 
         <CardContent className="p-0 space-y-6">
           <Separator />
-          <DescriptionSection description={data.description} />
+          <DescriptionSection description={data.description}/>
           <Separator />
           <InterpretationSection interpretation={data.interpretation} />
           <Separator />
@@ -112,21 +111,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               <Separator />
             </>
           )}
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-            <Link
-              href={`/new-model/metadata/${data.slug}`}
-              className="w-full sm:flex-1"
-            >
-              <Button
-                type="button"
-                variant="transparent"
-                className="text-xs sm:text-base w-full"
-                disabled={loading || data.status === "SUBMITTED"}
-              >
-                Edit Metadata
-              </Button>
-            </Link>
-
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full">
             <Button
               variant={"plum"}
               className="text-xs sm:text-base w-full sm:flex-1"
@@ -144,6 +129,20 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
                 "Send to Ersilia"
               )}
             </Button>
+
+            <Link
+              href={`/new-model/metadata/${data.slug}`}
+              className="w-full sm:flex-1"
+            >
+              <Button
+                type="button"
+                variant="transparent"
+                className="text-xs sm:text-base w-full"
+                disabled={loading || data.status === "SUBMITTED"}
+              >
+                Edit Metadata
+              </Button>
+            </Link>
           </div>
         </CardContent>
       </Card>
