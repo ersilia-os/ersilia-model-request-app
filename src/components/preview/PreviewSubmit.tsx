@@ -65,7 +65,7 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
 
         <CardContent className="p-0 space-y-6">
           <Separator />
-          <DescriptionSection description={data.description}/>
+          <DescriptionSection description={data.description} />
           <Separator />
           <InterpretationSection interpretation={data.interpretation} />
           <Separator />
@@ -112,6 +112,19 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
             </>
           )}
           <div className="flex flex-col sm:flex-row items-center gap-2 w-full">
+            <Link
+              href={`/new-model/metadata/${data.slug}`}
+              className="w-full sm:flex-1"
+            >
+              <Button
+                type="button"
+                variant="transparent"
+                className="text-xs sm:text-base w-full"
+                disabled={loading || data.status === "SUBMITTED"}
+              >
+                Edit Metadata
+              </Button>
+            </Link>
             <Button
               variant={"plum"}
               className="text-xs sm:text-base w-full sm:flex-1"
@@ -129,20 +142,6 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
                 "Send to Ersilia"
               )}
             </Button>
-
-            <Link
-              href={`/new-model/metadata/${data.slug}`}
-              className="w-full sm:flex-1"
-            >
-              <Button
-                type="button"
-                variant="transparent"
-                className="text-xs sm:text-base w-full"
-                disabled={loading || data.status === "SUBMITTED"}
-              >
-                Edit Metadata
-              </Button>
-            </Link>
           </div>
         </CardContent>
       </Card>

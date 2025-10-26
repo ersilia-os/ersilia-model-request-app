@@ -44,19 +44,19 @@ export default function NewModelPage() {
             <ContextInput control={form.control} />
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full mt-2">
               <Button
+                asChild
+                variant="transparent"
+                className="w-full sm:flex-1"
+              >
+                <Link href="/">Back to Home</Link>
+              </Button>
+              <Button
                 type="submit"
                 variant="plum"
                 className="w-full sm:flex-1"
                 // disabled={!file && !form.watch("publication")}
               >
                 Analyze
-              </Button>
-              <Button
-                asChild
-                variant="transparent"
-                className="w-full sm:flex-1"
-              >
-                <Link href="/">Back to Home</Link>
               </Button>
             </div>
           </CardContent>

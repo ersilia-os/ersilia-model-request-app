@@ -28,19 +28,19 @@ export default async function SubmissionPage() {
       <DataTableSubmission columns={columns} data={submissions} />
 
       <div className="flex flex-row justify-center items-center gap-2 sm:gap-6 mb-10 mt-4 w-full">
-        <Link href="/" className="flex-1 sm:flex-none">
+        <Link href="/" className="flex-1">
           <Button
             variant={"transparent"}
-            className="px-7 sm:px-20 w-full sm:w-auto sm:max-w-[230px]"
+            className="px-7 sm:px-20 w-full"
           >
             Back to Home
           </Button>
         </Link>
 
-        <Link href="/new-model" className="flex-1 sm:flex-none">
+        <Link href="/new-model" className="flex-1">
           <Button
             variant={"plum"}
-            className="px-7 sm:px-20 w-full sm:w-auto sm:max-w-[230px]"
+            className="px-7 sm:px-20 w-full"
           >
             Add New Model
           </Button>

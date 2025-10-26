@@ -31,7 +31,7 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
             New Model Metadata
           </h1>
-          <p className="text-center text-gray-400 text-sm md:text-base lg:text-lg mb-2">
+          <p className="text-center text-gray-400 text-sm md:text-base mb-2 text-pretty">
             Carefully review the pre-filled metadata. This information is
             crucial for successful Ersilia Hub integration.
           </p>
