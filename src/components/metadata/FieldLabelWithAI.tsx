@@ -65,7 +65,7 @@ export function FieldLabelWithAI<T = string | string[]>({
         >
           <Badge variant="secondary" className="gap-1 text-xs cursor-pointer">
             <RotateCcw className="w-1 h-1" color="blue" />
-            Reset to AI Suggestion
+            <span className="hidden sm:inline">Reset to AI Suggestion</span>
           </Badge>
         </Button>
       ) : (
