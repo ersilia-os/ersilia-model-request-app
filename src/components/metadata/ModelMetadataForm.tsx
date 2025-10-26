@@ -567,7 +567,7 @@ export default function ModelMetadataForm({
           <Button
             type="submit"
             form="form-metadata"
-            onClick={(e) => {
+            onClick={() => {
               if (!form.formState.isValid) {
                 handleEditClick?.();
               }
