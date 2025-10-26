@@ -83,7 +83,7 @@ export function CheckboxGroupField<T extends FieldValues>({
                   />
                   <FieldLabel
                     htmlFor={`${field.name}-checkbox-${option.value}`}
-                    className="font-normal text-gray-700"
+                    className="font-normal text-gray-700 text-xs sm:text-sm"
                   >
                     {option.label}
                   </FieldLabel>

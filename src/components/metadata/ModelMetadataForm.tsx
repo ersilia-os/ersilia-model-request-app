@@ -318,7 +318,8 @@ export default function ModelMetadataForm({
                     helpText={HELP_CFG.technicalSpecifications.outputDimension}
                     placeholder="Output dimension"
                     aiValue={aiResults.outputDimension}
-                    onReset={() => handleFieldResetToAi("outputDimension")}
+                    onReset={() => handleFieldResetToAi("outputDimension")
+                    }
                   />
 
                   <RadioGroupField
@@ -447,7 +448,9 @@ export default function ModelMetadataForm({
                 placeholder="Select targets..."
                 options={METADATA_FORM_CFG.targetOrganism}
                 aiValue={aiResults.targetOrganism}
-                onReset={() => handleFieldResetToAi("targetOrganism")}
+                onReset={() => handleFieldResetToAi("targetOrganism")
+                }
+                
               />
             </FieldGroup>
 
@@ -502,7 +505,7 @@ export default function ModelMetadataForm({
                         </FieldLabel>
                         <Input
                           aria-invalid={fieldState.invalid}
-                          className="focus-visible:border-plum "
+                          className="focus-visible:border-plum placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
                           {...field}
                           id={`field-${field.name}`}
                           placeholder="Enter your Github account name"
@@ -523,16 +526,16 @@ export default function ModelMetadataForm({
       </form>
       <Field
         orientation="horizontal"
-        className="flex justify-between items-center mb-1"
+        className="flex justify-between items-center mb-4 sm:mb-2"
       >
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-1 sm:gap-2 items-center">
           <Button
             variant="plum"
             type="submit"
             form="form-metadata"
             onClick={handleSaveClick}
             disabled={isLocked || isLoading}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 text-xs sm:text-sm"
           >
             {isLoading ? (
               <>
@@ -548,23 +551,24 @@ export default function ModelMetadataForm({
             variant="edit"
             onClick={handleEditClick}
             disabled={!isLocked}
+            className="text-xs sm:text-sm"
           >
             Edit
           </Button>
           <Link href="/">
-            <Button type="button" variant="transparent">
+            <Button type="button" variant="transparent" className="text-xs sm:text-sm">
               Home
             </Button>
           </Link>
         </div>
 
         <div className="relative">
-          <Button type="submit" form="form-metadata" variant="plum">
+          <Button type="submit" form="form-metadata" variant="plum" className="text-xs sm:text-sm">
             Preview
           </Button>
 
           {form.formState.isSubmitted && !form.formState.isValid && (
-            <p className="absolute right-0 mt-2 text-destructive font-bold text-xs whitespace-nowrap">
+            <p className="absolute right-0 mt-2 text-destructive font-bold whitespace-nowrap text-[0.65rem] sm:text-xs">
               *Please fix the highlighted errors first.
             </p>
           )}

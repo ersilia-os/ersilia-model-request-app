@@ -63,7 +63,7 @@ export function SelectField<T extends FieldValues>({
                 <SelectTrigger
                   id={selectId}
                   aria-invalid={fieldState.invalid}
-                  className="min-w-[120px]"
+                  className="min-w-[120px] placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
                 >
                   <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
