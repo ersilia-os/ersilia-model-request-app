@@ -112,20 +112,24 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
               <Separator />
             </>
           )}
-          <div className="flex items-center justify-center gap-3 pt-4">
-            <Link href={`/new-model/metadata/${data.slug}`}>
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
+            <Link
+              href={`/new-model/metadata/${data.slug}`}
+              className="w-full sm:flex-1"
+            >
               <Button
                 type="button"
                 variant="transparent"
-                className="text-xs sm:text-base"
+                className="text-xs sm:text-base w-full"
                 disabled={loading || data.status === "SUBMITTED"}
               >
                 Edit Metadata
               </Button>
             </Link>
+
             <Button
               variant={"plum"}
-              className="text-xs sm:text-base"
+              className="text-xs sm:text-base w-full sm:flex-1"
               onClick={handleSend}
               disabled={loading || data.status === "SUBMITTED"}
             >

@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,7 +43,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
                 return (
                   <TableHead
                     key={header.id}
-                    className="text-plum font-bold text-base p-4"
+                    className="text-plum font-bold text-sm md:text-base p-4"
                   >
                     {header.isPlaceholder
                       ? null
@@ -65,10 +66,14 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
                 className="cursor-pointer hover:bg-muted/50"
                 onClick={() => router.push(`/submissions/${row.original.slug}`)}
               >
-                {row.getVisibleCells().map((cell) => (
+                {row.getVisibleCells().map((cell, index) => (
                   <TableCell
                     key={cell.id}
-                    className=" text-gray-800 text-base p-4"
+                    className={cn(
+                      "text-gray-800 text-xs sm:text-base p-4",
+                      index === 0 &&
+                        "max-w-[220px] sm:max-w-none"
+                    )}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

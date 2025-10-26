@@ -26,20 +26,21 @@ export default async function SubmissionPage() {
         </p>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center gap-3 mb-10">
-        <Link href="/" className="w-full">
-          <Button variant={"transparent"} className="w-full">
+      <DataTableSubmission columns={columns} data={submissions} />
+
+      <div className="flex items-center gap-4 mb-10 mt-4">
+        <Link href="/">
+          <Button variant={"transparent"}>
             Back to Home
           </Button>
         </Link>
 
-        <Link href="/new-model" className="w-full">
-          <Button variant={"plum"} className="w-full">
+        <Link href="/new-model">
+          <Button variant={"plum"}>
             Add New Model
           </Button>
         </Link>
       </div>
-      <DataTableSubmission columns={columns} data={submissions} />
     </div>
   );
 }

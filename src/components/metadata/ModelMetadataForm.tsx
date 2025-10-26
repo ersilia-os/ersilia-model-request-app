@@ -318,8 +318,7 @@ export default function ModelMetadataForm({
                     helpText={HELP_CFG.technicalSpecifications.outputDimension}
                     placeholder="Output dimension"
                     aiValue={aiResults.outputDimension}
-                    onReset={() => handleFieldResetToAi("outputDimension")
-                    }
+                    onReset={() => handleFieldResetToAi("outputDimension")}
                   />
 
                   <RadioGroupField
@@ -448,9 +447,7 @@ export default function ModelMetadataForm({
                 placeholder="Select targets..."
                 options={METADATA_FORM_CFG.targetOrganism}
                 aiValue={aiResults.targetOrganism}
-                onReset={() => handleFieldResetToAi("targetOrganism")
-                }
-                
+                onReset={() => handleFieldResetToAi("targetOrganism")}
               />
             </FieldGroup>
 
@@ -535,7 +532,7 @@ export default function ModelMetadataForm({
             form="form-metadata"
             onClick={handleSaveClick}
             disabled={isLocked || isLoading}
-            className="flex items-center gap-2 text-xs sm:text-sm"
+            className="flex px-4 sm:px-6 md:px-10 items-center gap-2 text-xs sm:text-sm"
           >
             {isLoading ? (
               <>
@@ -551,19 +548,33 @@ export default function ModelMetadataForm({
             variant="edit"
             onClick={handleEditClick}
             disabled={!isLocked}
-            className="text-xs sm:text-sm"
+            className="text-xs sm:text-sm px-4 sm:px-6 md:px-10"
           >
             Edit
           </Button>
           <Link href="/">
-            <Button type="button" variant="transparent" className="text-xs sm:text-sm">
+            <Button
+              type="button"
+              variant="transparent"
+              className="text-xs sm:text-sm px-4 sm:px-6 md:px-10"
+            >
               Home
             </Button>
           </Link>
         </div>
 
         <div className="relative">
-          <Button type="submit" form="form-metadata" variant="plum" className="text-xs sm:text-sm">
+          <Button
+            type="submit"
+            form="form-metadata"
+            onClick={(e) => {
+              if (!form.formState.isValid) {
+                handleEditClick?.();
+              }
+            }}
+            variant="plum"
+            className="text-xs sm:text-sm px-4 sm:px-6 md:px-12"
+          >
             Preview
           </Button>
 

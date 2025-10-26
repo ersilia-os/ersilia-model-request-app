@@ -96,8 +96,8 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
                 </Button>
               </Link>
             )}
-            <Link href="/submissions">
-              <Button type="button" variant="transparent" className="text-base">
+            <Link href="/submissions" className="flex justify-center">
+              <Button type="button" variant="transparent" className="text-xs sm:text-base">
                 Back to Submissions
               </Button>
             </Link>
