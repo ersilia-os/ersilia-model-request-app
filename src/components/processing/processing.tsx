@@ -31,6 +31,11 @@ export function SpinnerEmpty() {
               Please wait while we process your request. <br />
               Do not refresh the page.
             </EmptyDescription>
+
+            <EmptyDescription className="text-center text-gray-400 text-sm md:text-base lg:text-lg mb-2">
+              Please wait while we process your request. <br />
+              Do not refresh the page.
+            </EmptyDescription>
           </EmptyHeader>
         </div>
 
