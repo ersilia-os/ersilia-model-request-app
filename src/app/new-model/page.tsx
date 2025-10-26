@@ -43,13 +43,6 @@ export default function NewModelPage() {
             <Separator />
             <ContextInput control={form.control} />
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-              <Button
-                asChild
-                variant="transparent"
-                className="w-full sm:flex-1"
-              >
-                <Link href="/">Back to Home</Link>
-              </Button>
 
               <Button
                 type="submit"
@@ -58,6 +51,14 @@ export default function NewModelPage() {
                 // disabled={!file && !form.watch("publication")}
               >
                 Analyze
+              </Button>
+              
+              <Button
+                asChild
+                variant="transparent"
+                className="w-full sm:flex-1"
+              >
+                <Link href="/">Back to Home</Link>
               </Button>
             </div>
           </CardContent>
