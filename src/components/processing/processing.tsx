@@ -47,12 +47,6 @@ export function SpinnerEmpty() {
             </EmptyDescription>
           </EmptyHeader>
         </div>
-
-        <EmptyContent className="flex justify-center mt-4">
-          <Button variant="transparent" size="lg">
-            Cancel
-          </Button>
-        </EmptyContent>
       </Empty>
     </div>
   );
