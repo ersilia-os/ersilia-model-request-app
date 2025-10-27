@@ -45,7 +45,7 @@ export function TextAreaField<T extends FieldValues>({
               {...field}
               id={textareaId}
               aria-invalid={fieldState.invalid}
-              className="focus-visible:border-plum"
+              className="focus-visible:border-plum placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
               placeholder={placeholder}
             />
 

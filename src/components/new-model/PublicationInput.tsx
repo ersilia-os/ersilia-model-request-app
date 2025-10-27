@@ -29,7 +29,7 @@ export default function PublicationInput({
                 ? "Disabled — remove the file to insert a link"
                 : "Enter publication URL (PDF or article link)"
             }
-            className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed"
+            className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
             disabled={disabled}
           />
         </Field>

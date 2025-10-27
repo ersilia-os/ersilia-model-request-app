@@ -1,15 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
+import TextType from "../TextType";
 
 export function SpinnerEmpty() {
   return (
@@ -27,18 +26,25 @@ export function SpinnerEmpty() {
               Processing your request
             </EmptyTitle>
 
-            <EmptyDescription className="text-center text-gray-400 text-sm md:text-base lg:text-lg mb-2">
+            <TextType
+              as="span"
+              text={[
+                "Analyzing metadata extracted from your publication...",
+                "Preparing your model for integration into Ersilia...",
+              ]}
+              typingSpeed={70}
+              pauseDuration={1500}
+              showCursor={true}
+              cursorCharacter="_"
+              className="block text-center text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg mt-4 mb-6 w-full"
+            />
+
+            <EmptyDescription className="text-center text-gray-400 text-xs sm:text-sm md:text-base mb-2">
               Please wait while we process your request. <br />
               Do not refresh the page.
             </EmptyDescription>
           </EmptyHeader>
         </div>
-
-        <EmptyContent className="flex justify-center mt-4">
-          <Button variant="transparent" size="lg">
-            Cancel
-          </Button>
-        </EmptyContent>
       </Empty>
     </div>
   );

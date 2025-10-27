@@ -38,7 +38,6 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
   async function handleSend() {
     if (!confirmStep) {
       setConfirmStep(true);
-
       setTimeout(() => setConfirmStep(false), 3000);
       return;
     }
@@ -49,14 +48,14 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
       setConfirmStep(false);
       setTimeout(() => {
         router.push(`/thank-you/${data.slug}`);
-      }, 1500);
+      }, 4000);
     }
   }
 
   return (
     <div className="flex min-h-screen items-center justify-center py-10">
       <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
-        <CardHeader className="text-center p-0 mb-6">
+        <CardHeader className="text-center p-0 sm:mb-6">
           <MetadataHeader
             title={data.title}
             status={data.status}
@@ -100,26 +99,41 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
           />
           <Separator />
           {data.isContributor && (
-            <div>
-              <h2 className="text-lg font-semibold text-plum mb-2">
-                Contribution
-              </h2>
-              <p className="text-gray-600 text-sm md:text-base">
-                You will be listed as a contributor with your Github Account
-              </p>
-            </div>
+            <>
+              <div>
+                <h2 className="text-lg font-semibold text-plum mb-2">
+                  Contribution
+                </h2>
+                <p className="text-gray-600 text-sm md:text-base">
+                  You will be listed as a contributor with your Github Account
+                </p>
+              </div>
+              <Separator />
+            </>
           )}
-          <Separator />
-          <div className="flex items-center gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full">
+            <Link
+              href={`/new-model/metadata/${data.slug}`}
+              className="w-full sm:flex-1"
+            >
+              <Button
+                type="button"
+                variant="transparent"
+                className="text-xs sm:text-base w-full"
+                disabled={loading || data.status === "SUBMITTED"}
+              >
+                Edit Metadata
+              </Button>
+            </Link>
             <Button
               variant={"plum"}
-              className="text-base"
+              className="text-xs sm:text-base w-full sm:flex-1"
               onClick={handleSend}
               disabled={loading || data.status === "SUBMITTED"}
             >
               {loading ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  <Loader2 className="h-4 w-4 animate-spin mr-2 text-xs sm:text-sm" />
                   Sending...
                 </>
               ) : confirmStep ? (
@@ -128,16 +142,6 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
                 "Send to Ersilia"
               )}
             </Button>
-            <Link href={`/new-model/metadata/${data.slug}`}>
-              <Button
-                type="button"
-                variant="transparent"
-                className="text-base"
-                disabled={loading || data.status === "SUBMITTED"}
-              >
-                Edit Metadata
-              </Button>
-            </Link>
           </div>
         </CardContent>
       </Card>

@@ -88,19 +88,30 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
               <Separator />
             </>
           )}
-          <div className="space-x-3">
+          <div className="flex flex-col sm:flex-row gap-3 w-full">
+            <Link href="/submissions" className="w-full sm:flex-1">
+              <Button
+                type="button"
+                variant="transparent"
+                className="w-full text-xs sm:text-base"
+              >
+                Back to Submissions
+              </Button>
+            </Link>
             {submission.status === "DRAFT" && (
-              <Link href={`/new-model/metadata/${submission.slug}`}>
-                <Button type="button" variant="edit" className="text-base">
+              <Link
+                href={`/new-model/metadata/${submission.slug}`}
+                className="w-full sm:flex-1"
+              >
+                <Button
+                  type="button"
+                  variant="edit"
+                  className="w-full text-xs sm:text-base"
+                >
                   Edit Metadata
                 </Button>
               </Link>
             )}
-            <Link href="/submissions">
-              <Button type="button" variant="transparent" className="text-base">
-                Back to Submissions
-              </Button>
-            </Link>
           </div>
         </CardContent>
       </Card>

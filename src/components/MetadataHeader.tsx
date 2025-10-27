@@ -20,7 +20,7 @@ export default function MetadataHeader({
 }: MetadataHeaderProps) {
   return (
     <>
-      <h1 className="mb-2 text-2xl font-bold text-plum md:text-3xl lg:text-4xl">
+      <h1 className="mb-2 text-2xl font-bold text-plum md:text-3xl lg:text-4xl text-pretty">
         {title}
       </h1>
       <div className="flex items-center justify-center gap-2 mb-4">

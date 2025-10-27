@@ -502,7 +502,7 @@ export default function ModelMetadataForm({
                         </FieldLabel>
                         <Input
                           aria-invalid={fieldState.invalid}
-                          className="focus-visible:border-plum "
+                          className="focus-visible:border-plum placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
                           {...field}
                           id={`field-${field.name}`}
                           placeholder="Enter your Github account name"
@@ -523,21 +523,21 @@ export default function ModelMetadataForm({
       </form>
       <Field
         orientation="horizontal"
-        className="flex justify-between items-center mb-1"
+        className="flex justify-between items-center mb-4 sm:mb-2"
       >
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-1 sm:gap-2 items-center">
           <Button
             variant="plum"
             type="submit"
             form="form-metadata"
             onClick={handleSaveClick}
             disabled={isLocked || isLoading}
-            className="flex items-center gap-2"
+            className="flex px-4 sm:px-6 md:px-10 items-center gap-2 text-xs sm:text-sm"
           >
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Saving...
+                <span className="hidden sm:inline">Saving...</span>
               </>
             ) : (
               "Save"
@@ -548,23 +548,38 @@ export default function ModelMetadataForm({
             variant="edit"
             onClick={handleEditClick}
             disabled={!isLocked}
+            className="text-xs sm:text-sm px-4 sm:px-6 md:px-10"
           >
             Edit
           </Button>
           <Link href="/">
-            <Button type="button" variant="transparent">
+            <Button
+              type="button"
+              variant="transparent"
+              className="text-xs sm:text-sm px-4 sm:px-6 md:px-10"
+            >
               Home
             </Button>
           </Link>
         </div>
 
         <div className="relative">
-          <Button type="submit" form="form-metadata" variant="plum">
+          <Button
+            type="submit"
+            form="form-metadata"
+            onClick={() => {
+              if (!form.formState.isValid) {
+                handleEditClick?.();
+              }
+            }}
+            variant="plum"
+            className="text-xs sm:text-sm px-4 sm:px-6 md:px-12"
+          >
             Preview
           </Button>
 
           {form.formState.isSubmitted && !form.formState.isValid && (
-            <p className="absolute right-0 mt-2 text-destructive font-bold text-xs whitespace-nowrap">
+            <p className="absolute right-0 mt-2 text-destructive font-bold whitespace-nowrap text-[0.65rem] sm:text-xs">
               *Please fix the highlighted errors first.
             </p>
           )}

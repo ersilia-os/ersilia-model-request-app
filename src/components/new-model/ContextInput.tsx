@@ -26,7 +26,7 @@ export default function ContextInput({ control }: ContextFormProps) {
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
-              className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed"
+              className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
               placeholder="Enter your response here"
             />
 
@@ -50,7 +50,7 @@ export default function ContextInput({ control }: ContextFormProps) {
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
-              className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed"
+              className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
               placeholder="Enter your response here"
             />
 

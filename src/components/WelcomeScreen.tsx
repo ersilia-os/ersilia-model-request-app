@@ -21,14 +21,17 @@ export default function WelcomeScreen() {
           </CardHeader>
 
           <CardContent className="space-y-3 p-0 flex flex-col items-center">
-            <Link href="/new-model" className="w-2/3">
-              <Button variant={"plum"} className="w-full">
+            <Link href="/new-model" className="w-3/4 md:w-2/3">
+              <Button variant={"plum"} className="w-full text-xs md:text-sm">
                 Add New Model
               </Button>
             </Link>
 
-            <Link href="/submissions" className="w-2/3">
-              <Button variant={"transparent"} className="w-full">
+            <Link href="/submissions" className="w-3/4 md:w-2/3">
+              <Button
+                variant={"transparent"}
+                className="w-full text-xs md:text-sm"
+              >
                 View Previous Submissions
               </Button>
             </Link>
@@ -36,15 +39,15 @@ export default function WelcomeScreen() {
         </Card>
       </div>
 
-      <Alert className="mx-auto max-w-2/3 min-w-3/4 border-plum/40">
+      <Alert className="mx-auto max-w-4/5 sm:max-2/3 border-plum/40">
         <InfoIcon className="h-4 w-4" />
-        <AlertDescription className="text-pretty text-xs md:text-sm lg:text-base">
+        <AlertDescription className="text-xs md:text-sm lg:text-base inline">
           For more information regarding the submission process, please visit
           the official{" "}
           <Link
             href="https://ersilia.gitbook.io/ersilia-book/"
             target="_blank"
-            className="underline text-plum hover:text-plum/80"
+            className="underline text-plum hover:text-plum/80 whitespace-nowrap"
           >
             Ersilia documentation
           </Link>
