@@ -19,7 +19,6 @@ export async function addNewModelMetadata(
 
   try {
     const userId = session.user.sub;
-    console.log("🟥🟥🟥", fileName);
 
     const newModel = await prisma.modelMetadata.create({
       data: {

@@ -6,9 +6,7 @@ export const auth0 = new Auth0Client({
     return {
       ...session,
       user: {
-        name: session.user.name,
-        email: session.user.email,
-        sub: session.user.sub,
+        ...session.user,
         ersilia: session.user["ersiliaroles"],
       },
     };
