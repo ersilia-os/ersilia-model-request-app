@@ -1,9 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
@@ -28,18 +26,18 @@ export function SpinnerEmpty() {
               Processing your request
             </EmptyTitle>
 
-          <TextType
-            as="span"
-            text={[
-              "Analyzing metadata extracted from your publication...",
-              "Preparing your model for integration into Ersilia...",
-            ]}
-            typingSpeed={70}
-            pauseDuration={1500}
-            showCursor={true}
-            cursorCharacter="_"
-            className="block text-center text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg mt-4 mb-6 w-full"
-          />
+            <TextType
+              as="span"
+              text={[
+                "Analyzing metadata extracted from your publication...",
+                "Preparing your model for integration into Ersilia...",
+              ]}
+              typingSpeed={70}
+              pauseDuration={1500}
+              showCursor={true}
+              cursorCharacter="_"
+              className="block text-center text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg mt-4 mb-6 w-full"
+            />
 
             <EmptyDescription className="text-center text-gray-400 text-xs sm:text-sm md:text-base mb-2">
               Please wait while we process your request. <br />
