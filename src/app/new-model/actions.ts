@@ -4,6 +4,7 @@ import { auth0 } from "@/lib/auth0";
 import prisma from "@/lib/prisma";
 import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
 import { z } from "zod";
+import { Prisma } from "../../../generated/prisma";
 
 type aiResult = z.infer<typeof AiAnalysisModelMetadataSchema>;
 
@@ -19,7 +20,6 @@ export async function addNewModelMetadata(
 
   try {
     const userId = session.user.sub;
-    console.log("🟥🟥🟥", fileName);
 
     const newModel = await prisma.modelMetadata.create({
       data: {
