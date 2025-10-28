@@ -21,10 +21,6 @@ const ALLOWED_TARGET_ORGANISMS = METADATA_FORM_CFG.targetOrganism.map(
 const ALLOWED_LICENSES = METADATA_FORM_CFG.licenses.map((t) => t.value);
 
 export const AiAnalysisModelMetadataSchema = z.object({
-  // isBiomedicalModel: z
-  //   .boolean()
-  //   .describe(SCHEMA_DESCRIPTIONS.isBiomedicalModel),
-
   slug: z.string().trim().describe(SCHEMA_DESCRIPTIONS.slug),
 
   title: z.string().describe(SCHEMA_DESCRIPTIONS.title),

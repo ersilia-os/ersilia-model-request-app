@@ -50,12 +50,7 @@ export default function NewModelPage() {
               >
                 <Link href="/">Back to Home</Link>
               </Button>
-              <Button
-                type="submit"
-                variant="plum"
-                className="w-full sm:flex-1"
-                // disabled={!file && !form.watch("publication")}
-              >
+              <Button type="submit" variant="plum" className="w-full sm:flex-1">
                 Analyze
               </Button>
             </div>
