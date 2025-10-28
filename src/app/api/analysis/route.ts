@@ -35,6 +35,7 @@ Pay special attention to any information related to the additional context provi
     const result = await generateObject({
       model,
       schema: AiAnalysisModelMetadataSchema,
+      system: prompt,
       messages: [
         {
           role: "user",
@@ -51,12 +52,7 @@ Pay special attention to any information related to the additional context provi
     });
 
     const filtered = filterAiResults(result.object);
-    // if (!filtered.isBiomedicalModel) {
-    //   return NextResponse.json(
-    //     { error: "This appears to be not a scientific publication" },
-    //     { status: 400 }
-    //   );
-    // }
+
     return NextResponse.json(filtered);
   } catch (error: unknown) {
     console.error("Upload error:", error);
