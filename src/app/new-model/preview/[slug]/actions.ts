@@ -1,8 +1,8 @@
 "use server";
 
+import formatMetadataBody from "@/config/issue-body";
 import { getOctokit } from "@/lib/github";
 import prisma from "@/lib/prisma";
-import formatMetadataBody from "@/lib/utils";
 
 export async function getSubmissionBySlug(slug: string) {
   try {
