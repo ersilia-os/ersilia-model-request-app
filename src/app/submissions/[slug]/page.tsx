@@ -15,6 +15,7 @@ import { BiomedicalAreaSection } from "@/components/BiomedicalAreaSection";
 import { TargetOrganismSection } from "@/components/TargetSection";
 import { DeploymentInfoSection } from "@/components/DeployementSection";
 import { ResourcesSection } from "@/components/RessoucesSection";
+import { SectionHeader } from "@/components/SectionHeader";
 
 type Params = Promise<{ slug: string }>;
 
@@ -29,92 +30,88 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center py-10">
-      <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
-        <CardHeader className="text-center p-0 mb-6">
-          <MetadataHeader
-            title={submission.title}
-            status={submission.status}
-            updatedAt={submission.updatedAt}
-            gihublink={submission.ErsiliaIssue?.issueUrl}
-          />
-        </CardHeader>
+    <div className="space-y-8 px-6">
+      <SectionHeader title={submission.title} />
 
-        <CardContent className="p-0 space-y-6">
-          <Separator />
-          <DescriptionSection description={submission.description} />
+      <MetadataHeader
+        title={submission.title}
+        status={submission.status}
+        updatedAt={submission.updatedAt}
+        gihublink={submission.ErsiliaIssue?.issueUrl}
+      />
 
-          <InterpretationSection interpretation={submission.interpretation} />
-          <Separator />
-          <TagsSection tags={submission.tags} />
-          <Separator />
-          <TaskSection task={submission.task} subtask={submission.subtask} />
-          <Separator />
-          <InputOutputSection
-            input={submission.input}
-            inputDimension={submission.inputDimension}
-            output={submission.output}
-            outputDimension={submission.outputDimension}
-            outputConsistency={submission.outputConsistency}
-          />
-          <Separator />
-          <BiomedicalAreaSection biomedicalArea={submission.biomedicalArea} />
-          <Separator />
-          <TargetOrganismSection targetOrganism={submission.targetOrganism} />
-          <Separator />
-          <DeploymentInfoSection
-            deployment={submission.deployment}
-            license={submission.license}
-            publicationYear={submission.publicationYear}
-          />
-          <Separator />
-          <ResourcesSection
-            publicationUrl={submission.publicationUrl}
-            publicationType={submission.publicationType}
-            sourceUrl={submission.sourceUrl}
-            sourceType={submission.sourceType}
-          />
-          <Separator />
-          {submission.isContributor && (
-            <>
-              <div>
-                <h2 className="text-lg font-semibold text-plum mb-2">
-                  Contribution
-                </h2>
-                <p className="text-gray-600 text-sm md:text-base">
-                  You will be listed as a contributor with your Github Account
-                </p>
-              </div>
-              <Separator />
-            </>
-          )}
-          <div className="flex flex-col sm:flex-row gap-3 w-full">
-            <Link href="/submissions" className="w-full sm:flex-1">
-              <Button
-                type="button"
-                variant="transparent"
-                className="w-full text-xs sm:text-base"
-              >
-                Back to Submissions
-              </Button>
-            </Link>
-            {submission.status === "DRAFT" && (
-              <Link
-                href={`/new-model/metadata/${submission.slug}`}
-                className="w-full sm:flex-1"
-              >
-                <Button
-                  type="button"
-                  variant="edit"
-                  className="w-full text-xs sm:text-base"
-                >
-                  Edit Metadata
-                </Button>
-              </Link>
-            )}
+      <Separator />
+      <DescriptionSection description={submission.description} />
+
+      <InterpretationSection interpretation={submission.interpretation} />
+      <Separator />
+      <TagsSection tags={submission.tags} />
+      <Separator />
+      <TaskSection task={submission.task} subtask={submission.subtask} />
+      <Separator />
+      <InputOutputSection
+        input={submission.input}
+        inputDimension={submission.inputDimension}
+        output={submission.output}
+        outputDimension={submission.outputDimension}
+        outputConsistency={submission.outputConsistency}
+      />
+      <Separator />
+      <BiomedicalAreaSection biomedicalArea={submission.biomedicalArea} />
+      <Separator />
+      <TargetOrganismSection targetOrganism={submission.targetOrganism} />
+      <Separator />
+      <DeploymentInfoSection
+        deployment={submission.deployment}
+        license={submission.license}
+        publicationYear={submission.publicationYear}
+      />
+      <Separator />
+      <ResourcesSection
+        publicationUrl={submission.publicationUrl}
+        publicationType={submission.publicationType}
+        sourceUrl={submission.sourceUrl}
+        sourceType={submission.sourceType}
+      />
+      <Separator />
+      {submission.isContributor && (
+        <>
+          <div>
+            <h2 className="text-lg font-semibold text-plum mb-2">
+              Contribution
+            </h2>
+            <p className="text-gray-600 text-sm md:text-base">
+              You will be listed as a contributor with your Github Account
+            </p>
           </div>
-        </CardContent>
-      </Card>
+          <Separator />
+        </>
+      )}
+      <div className="flex flex-col sm:flex-row gap-3 w-full">
+        <Link href="/submissions" className="w-full sm:flex-1">
+          <Button
+            type="button"
+            variant="transparent"
+            className="w-full text-xs sm:text-base"
+          >
+            Back to Submissions
+          </Button>
+        </Link>
+        {submission.status === "DRAFT" && (
+          <Link
+            href={`/new-model/metadata/${submission.slug}`}
+            className="w-full sm:flex-1"
+          >
+            <Button
+              type="button"
+              variant="edit"
+              className="w-full text-xs sm:text-base"
+            >
+              Edit Metadata
+            </Button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

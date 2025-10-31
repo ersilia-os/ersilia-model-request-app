@@ -5,19 +5,16 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 
 function getPageTitle(pathname: string): string {
-  // Exact matches
   const exactTitles: Record<string, string> = {
     "/": "Dashboard",
     "/new-model": "Add new model",
     "/submissions": "Submissions",
   };
 
-  // Check exact match first
   if (exactTitles[pathname]) {
     return exactTitles[pathname];
   }
 
-  // Pattern matching for dynamic routes
   if (pathname.startsWith("/submissions/")) {
     return "Submission Details";
   }
@@ -26,7 +23,6 @@ function getPageTitle(pathname: string): string {
     return "Model Details";
   }
 
-  // Default fallback
   return "ersilia";
 }
 export function SiteHeader() {
@@ -41,9 +37,14 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium">{title}</h1>
+        <h1 className="text-base font-medium text-plum">{title}</h1>
         <div className="ml-auto flex items-center gap-2">
-          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
+          <Button
+            variant="ghost"
+            asChild
+            size="sm"
+            className="hidden sm:flex hover:bg-plum/10"
+          >
             <a
               href="https://github.com/ersilia-os/ersilia/issues"
               rel="noopener noreferrer"

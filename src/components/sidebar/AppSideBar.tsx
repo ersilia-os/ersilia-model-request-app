@@ -37,12 +37,12 @@ const navLink = [
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader className="bg-[#f5f4f6]">
+      <SidebarHeader className="bg-ersilia">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:!p-1.5 mb-2"
             >
               <Link href="/">
                 <Image
@@ -58,13 +58,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="bg-[#f5f4f6]">
+      <SidebarContent className="bg-ersilia">
         <NavMain items={navLink} />
       </SidebarContent>
-      <SidebarFooter className="bg-[#f5f4f6]">
+      <SidebarFooter className="bg-ersilia">
         <SidebarMenuButton className="min-w-8 duration-200 ease-linear hover:bg-red-600 hover:text-primary-foreground">
           <LogOut />
-          <a href="/auth/logout">Log out</a>
+          <a href="/auth/logout" className="w-full">
+            Log out
+          </a>
         </SidebarMenuButton>
       </SidebarFooter>
     </Sidebar>

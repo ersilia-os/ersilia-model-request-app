@@ -5,7 +5,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import Container from "@/components/ui/container";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/sidebard/AppSideBar";
+import { AppSidebar } from "@/components/sidebar/AppSideBar";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
@@ -31,7 +31,7 @@ export default function RootLayout({
             } as React.CSSProperties
           }
         >
-          <AppSidebar variant="inset" className="bg-[#f5f4f6]" />
+          <AppSidebar variant="inset" className="bg-ersilia" />
           <SidebarInset>
             <SiteHeader />
             <div className="flex flex-1 flex-col">

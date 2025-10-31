@@ -1,6 +1,5 @@
 "use client";
 
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PublicationInput from "@/components/new-model/PublicationInput";
@@ -10,28 +9,24 @@ import { useAiPublicationAnalysis } from "@/hooks/usePublicationAnalysis";
 import { Separator } from "@/components/ui/separator";
 import ContextInput from "@/components/new-model/ContextInput";
 import CustomSeparator from "@/components/CustomSeparator";
+import { SectionHeader } from "@/components/SectionHeader";
 
 export default function NewModelPage() {
   const { file, setFile, form, onSubmit } = useAiPublicationAnalysis();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white my-6">
-      <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
-        <CardHeader className="text-center p-0 mb-6">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
-            Add New Model to Ersilia
-          </h1>
-          <p className="text-center text-gray-400 text-sm md:text-base lg:text-lg sm:mb-2">
-            Provide a publication and answer a few questions to help our AI
-            extract accurate model metadata
-          </p>
-        </CardHeader>
+    <div className="space-y-8 px-6">
+      <SectionHeader
+        title="Add New Model to Ersilia"
+        description="Provide a publication and answer a few questions to help our AI extract accurate model metadata"
+      />
 
+      <div className="max-w-5xl">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <CardContent className="flex flex-col gap-4 p-0">
+          <div className="flex flex-col gap-4 p-0">
             <PublicationInput control={form.control} disabled={!!file} />
             <CustomSeparator word="OR" />
             <FileDrop
@@ -42,21 +37,18 @@ export default function NewModelPage() {
             />
             <Separator />
             <ContextInput control={form.control} />
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full mt-2">
+            <div className="flex justify-end w-full mt-2">
               <Button
-                asChild
-                variant="transparent"
-                className="w-full sm:flex-1"
+                type="submit"
+                variant="plum"
+                className="w-full sm:w-auto sm:px-12"
               >
-                <Link href="/">Back to Home</Link>
-              </Button>
-              <Button type="submit" variant="plum" className="w-full sm:flex-1">
                 Analyze
               </Button>
             </div>
-          </CardContent>
+          </div>
         </form>
-      </Card>
+      </div>
     </div>
   );
 }

@@ -10,6 +10,8 @@ type MetadataTitle = ModelMetadata["title"];
 type MetadataSlug = ModelMetadata["slug"];
 type MetadataUrlStatus = ModelMetadata["status"];
 type MetadataUpdate = ModelMetadata["updatedAt"];
+type MetadataCreate = ModelMetadata["createdAt"];
+type MetadataTags = ModelMetadata["tags"];
 
 type Metadata = {
   id: MetadataId;
@@ -17,6 +19,8 @@ type Metadata = {
   slug: MetadataSlug;
   status: MetadataUrlStatus;
   updatedAt: MetadataUpdate;
+  createdAt: MetadataCreate;
+  tags: MetadataTags;
 };
 
 export const columns: ColumnDef<Metadata>[] = [
@@ -25,7 +29,33 @@ export const columns: ColumnDef<Metadata>[] = [
     header: "Title",
     cell: ({ row }) => {
       return (
-        <div className="max-w-[400px] truncate">{row.getValue("title")}</div>
+        <div className="truncate max-w-[120px] sm:max-w-[200px] lg:max-w-none">
+          {row.getValue("title")}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "tags",
+    header: "Tags",
+    cell: ({ row }) => {
+      const tags = row.getValue("tags") as string[];
+      const visibleTags = tags.slice(0, 3);
+      const remainingCount = tags.length - 3;
+
+      return (
+        <div className="flex flex-wrap gap-1">
+          {visibleTags.map((tag) => (
+            <Badge className="bg-plum/10 text-plum whitespace-nowrap" key={tag}>
+              {tag}
+            </Badge>
+          ))}
+          {remainingCount > 0 && (
+            <Badge className="bg-plum/10 text-plum">
+              +{remainingCount} more
+            </Badge>
+          )}
+        </div>
       );
     },
   },
@@ -52,9 +82,19 @@ export const columns: ColumnDef<Metadata>[] = [
   },
   {
     accessorKey: "updatedAt",
-    header: "Last update",
+    header: "Updated",
     cell: ({ row }) => {
       const date = new Date(row.getValue("updatedAt"));
+      const formatted = formatDistanceToNow(date, { addSuffix: true });
+
+      return <div>{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Created",
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("createdAt"));
       const formatted = formatDistanceToNow(date, { addSuffix: true });
 
       return <div>{formatted}</div>;

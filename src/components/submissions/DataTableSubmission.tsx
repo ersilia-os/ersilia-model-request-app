@@ -43,7 +43,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
                 return (
                   <TableHead
                     key={header.id}
-                    className="text-plum font-bold text-sm md:text-base p-4"
+                    className="text-plum font-bold text-sm md:text-base p-4 bg-plum/10"
                   >
                     {header.isPlaceholder
                       ? null
@@ -63,7 +63,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className="cursor-pointer hover:bg-muted/50"
+                className="cursor-pointer hover:bg-plum/10"
                 onClick={() => router.push(`/submissions/${row.original.slug}`)}
               >
                 {row.getVisibleCells().map((cell, index) => (
@@ -71,8 +71,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
                     key={cell.id}
                     className={cn(
                       "text-gray-800 text-xs sm:text-base p-4",
-                      index === 0 &&
-                        "max-w-[220px] sm:max-w-none"
+                      index === 0 && "max-w-[220px] sm:max-w-none"
                     )}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

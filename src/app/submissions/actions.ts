@@ -15,7 +15,9 @@ export async function getSubmissionsByUser(sub: string) {
         title: true,
         slug: true,
         status: true,
+        createdAt: true,
         updatedAt: true,
+        tags: true,
       },
     });
 
