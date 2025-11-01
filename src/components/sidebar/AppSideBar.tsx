@@ -11,10 +11,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { HelpCircle, Home, List, LogOut } from "lucide-react";
+import {
+  HelpCircle,
+  Home,
+  List,
+  LogOut,
+  User,
+  UserRoundPen,
+  UsersRound,
+} from "lucide-react";
 import { NavMain } from "./NavMain";
 import Link from "next/link";
 import Image from "next/image";
+import { NavAdmin } from "./NavAdmin";
 
 const navLink = [
   {
@@ -33,8 +42,24 @@ const navLink = [
     icon: HelpCircle,
   },
 ];
+const admin = [
+  {
+    title: "User Submissions",
+    url: "/admin",
+    icon: UserRoundPen,
+  },
+  {
+    title: "Users",
+    url: "#",
+    icon: UsersRound,
+  },
+];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  isAdmin: boolean;
+}
+
+export function AppSidebar({ isAdmin, ...props }: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader className="bg-ersilia">
@@ -60,6 +85,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent className="bg-ersilia">
         <NavMain items={navLink} />
+        {isAdmin && <NavAdmin items={admin} />}
       </SidebarContent>
       <SidebarFooter className="bg-ersilia">
         <SidebarMenuButton className="min-w-8 duration-200 ease-linear hover:bg-red-600 hover:text-primary-foreground">
