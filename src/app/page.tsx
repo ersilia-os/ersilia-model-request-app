@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { PlusCircle } from "lucide-react";
@@ -27,9 +28,11 @@ export default async function Home() {
             description="Get started by adding a new model or viewing your previous
           submissions."
           />
-          <Button variant="plum">
-            <PlusCircle />
-            Add Model
+          <Button asChild variant="plum">
+            <Link href="/new-model">
+              <PlusCircle />
+              Add Model
+            </Link>
           </Button>
         </div>
         <DashboardCard stats={stats} />
