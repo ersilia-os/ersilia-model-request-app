@@ -177,9 +177,9 @@ export default function ModelMetadataForm({
         className="mb-6"
         onSubmit={form.handleSubmit(onSubmit, onInvalid)}
       >
-        <fieldset disabled={isLocked} className="flex flex-col gap-7">
+        <fieldset disabled={isLocked} className="w-full">
           <FieldGroup>
-            <FieldLegend className="text-plum/90">
+            <FieldLegend className="text-plum font-semibold">
               Basic Identification
             </FieldLegend>
             <FieldDescription className="text-gray-400">
@@ -206,7 +206,7 @@ export default function ModelMetadataForm({
             />
             <FieldSeparator />
             <FieldGroup>
-              <FieldLegend className="text-plum/90">
+              <FieldLegend className="text-plum font-semibold">
                 Description & Interpretation
               </FieldLegend>
               <FieldDescription className="text-gray-400">
@@ -234,7 +234,7 @@ export default function ModelMetadataForm({
             <FieldSeparator />
 
             <FieldGroup>
-              <FieldLegend className="text-plum/90">
+              <FieldLegend className="text-plum font-semibold">
                 Classification & Tags
               </FieldLegend>
               <FieldDescription className="text-gray-400">
@@ -253,7 +253,7 @@ export default function ModelMetadataForm({
             </FieldGroup>
             <FieldSeparator />
             <FieldGroup>
-              <FieldLegend className="text-plum/90">
+              <FieldLegend className="text-plum font-semibold">
                 Technical Specifications
               </FieldLegend>
               <FieldDescription className="text-gray-400">
@@ -337,7 +337,7 @@ export default function ModelMetadataForm({
             </FieldGroup>
             <FieldSeparator />
             <FieldGroup>
-              <FieldLegend className="text-plum/90">
+              <FieldLegend className="text-plum font-semibold">
                 Source & Licensing
               </FieldLegend>
               <FieldDescription className="text-gray-400">
@@ -422,7 +422,7 @@ export default function ModelMetadataForm({
             </FieldGroup>
             <FieldSeparator />
             <FieldGroup>
-              <FieldLegend className="text-plum/90">
+              <FieldLegend className="text-plum font-semibold">
                 Research Context
               </FieldLegend>
               <FieldDescription className="text-gray-400">
@@ -453,7 +453,9 @@ export default function ModelMetadataForm({
 
             <FieldSeparator />
             <FieldGroup>
-              <FieldLegend className="text-plum/90">Contribution</FieldLegend>
+              <FieldLegend className="text-plum font-semibold">
+                Contribution
+              </FieldLegend>
               <div className="space-y-4">
                 <Controller
                   name="isContributor"

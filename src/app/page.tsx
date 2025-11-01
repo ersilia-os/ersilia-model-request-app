@@ -14,13 +14,15 @@ export default async function Home() {
   const { stats } = await getUserWithStats(session);
 
   return (
-    <div className="space-y-8 px-6 mx-auto max-w-7xl">
-      <SectionHeader
-        title="Welcome to Ersilia!"
-        description="Get started by adding a new model or viewing your previous
+    <div className="w-full max-w-7xl mx-auto px-6">
+      <div className="space-y-6">
+        <SectionHeader
+          title="Welcome to Ersilia!"
+          description="Get started by adding a new model or viewing your previous
           submissions."
-      />
-      <DashboardCard stats={stats} />
+        />
+        <DashboardCard stats={stats} />
+      </div>
     </div>
   );
 }

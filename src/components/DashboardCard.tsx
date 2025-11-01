@@ -18,7 +18,7 @@ interface DashboardCardProps {
 
 export function DashboardCard({ stats }: DashboardCardProps) {
   return (
-    <div className="*:data-[slot=card]:from-plum/10 *:data-[slot=card]:to-transparent dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4 ">
+    <div className="*:data-[slot=card]:from-plum/10 *:data-[slot=card]:to-transparent dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card min-w-[200px]" data-slot="card">
         <CardHeader>
           <div className="flex items-center justify-between">

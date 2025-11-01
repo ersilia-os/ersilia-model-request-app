@@ -33,7 +33,7 @@ export default function MetadataHeader({
           <Link href={`/new-model/metadata/${slug}`} className="">
             <Button
               type="button"
-              variant="edit"
+              variant="transparent"
               className="w-full text-xs sm:text-base"
             >
               Edit Metadata

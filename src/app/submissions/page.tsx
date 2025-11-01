@@ -15,14 +15,14 @@ export default async function SubmissionPage() {
   const submissions = await getSubmissionsByUser(session.user.sub);
 
   return (
-    <div className="space-y-8  grid place-content-center">
-      <div className="px-6">
+    <div className="w-full max-w-7xl mx-auto px-6">
+      <div className="space-y-6">
         <SectionHeader
           title="List of all your submissions"
           description="View and manage your model submissions"
         />
+        <DataTableSubmission columns={columns} data={submissions} />
       </div>
-      <DataTableSubmission columns={columns} data={submissions} />
     </div>
   );
 }

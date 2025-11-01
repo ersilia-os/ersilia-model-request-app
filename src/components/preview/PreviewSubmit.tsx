@@ -53,98 +53,92 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center py-10">
-      <Card className="w-full shadow-xl border-2 border-plum rounded-2xl p-6 md:p-8 lg:p-10">
-        <CardHeader className="text-center p-0 sm:mb-6">
-          <MetadataHeader
-            title={data.title}
-            status={data.status}
-            updatedAt={data.updatedAt}
-          />
-        </CardHeader>
+    <div className="px-6 mx-auto max-w-7xl">
+      <div className="space-y-8 ">
+        <MetadataHeader
+          title={data.title}
+          status={data.status}
+          updatedAt={data.updatedAt}
+          slug={data.slug}
+        />
 
-        <CardContent className="p-0 space-y-6">
-          <Separator />
-          <DescriptionSection description={data.description} />
-          <Separator />
-          <InterpretationSection interpretation={data.interpretation} />
-          <Separator />
-          <TagsSection tags={data.tags} />
-          <Separator />
-          <TaskSection task={data.task} subtask={data.subtask} />
-          <Separator />
-          <InputOutputSection
-            input={data.input}
-            inputDimension={data.inputDimension}
-            output={data.output}
-            outputDimension={data.outputDimension}
-            outputConsistency={data.outputConsistency}
-          />
-          <Separator />
-          <BiomedicalAreaSection biomedicalArea={data.biomedicalArea} />
-          <Separator />
-          <TargetOrganismSection targetOrganism={data.targetOrganism} />
-          <Separator />
-          <DeploymentInfoSection
-            deployment={data.deployment}
-            license={data.license}
-            publicationYear={data.publicationYear}
-          />
-          <Separator />
-          <ResourcesSection
-            publicationUrl={data.publicationUrl}
-            publicationType={data.publicationType}
-            sourceUrl={data.sourceUrl}
-            sourceType={data.sourceType}
-          />
-          <Separator />
-          {data.isContributor && (
-            <>
-              <div>
-                <h2 className="text-lg font-semibold text-plum mb-2">
-                  Contribution
-                </h2>
-                <p className="text-gray-600 text-sm md:text-base">
-                  You will be listed as a contributor with your Github Account
-                </p>
-              </div>
-              <Separator />
-            </>
-          )}
-          <div className="flex flex-col sm:flex-row items-center gap-2 w-full">
-            <Link
-              href={`/new-model/metadata/${data.slug}`}
-              className="w-full sm:flex-1"
-            >
-              <Button
-                type="button"
-                variant="transparent"
-                className="text-xs sm:text-base w-full"
-                disabled={loading || data.status === "SUBMITTED"}
-              >
-                Edit Metadata
-              </Button>
-            </Link>
+        <Separator />
+        <DescriptionSection description={data.description} />
+        <Separator />
+        <InterpretationSection interpretation={data.interpretation} />
+        <Separator />
+        <TagsSection tags={data.tags} />
+        <Separator />
+        <TaskSection task={data.task} subtask={data.subtask} />
+        <Separator />
+        <InputOutputSection
+          input={data.input}
+          inputDimension={data.inputDimension}
+          output={data.output}
+          outputDimension={data.outputDimension}
+          outputConsistency={data.outputConsistency}
+        />
+        <Separator />
+        <BiomedicalAreaSection biomedicalArea={data.biomedicalArea} />
+        <Separator />
+        <TargetOrganismSection targetOrganism={data.targetOrganism} />
+        <Separator />
+        <DeploymentInfoSection
+          deployment={data.deployment}
+          license={data.license}
+          publicationYear={data.publicationYear}
+        />
+        <Separator />
+        <ResourcesSection
+          publicationUrl={data.publicationUrl}
+          publicationType={data.publicationType}
+          sourceUrl={data.sourceUrl}
+          sourceType={data.sourceType}
+        />
+        <Separator />
+        {data.isContributor && (
+          <>
+            <div>
+              <h2 className="text-lg font-semibold text-plum mb-2">
+                Contribution
+              </h2>
+              <p className="text-gray-600 text-sm md:text-base">
+                You will be listed as a contributor with your Github Account
+              </p>
+            </div>
+            <Separator />
+          </>
+        )}
+        <div className="flex justify-end w-full space-x-2">
+          <Link href={`/new-model/metadata/${data.slug}`}>
             <Button
-              variant={"plum"}
-              className="text-xs sm:text-base w-full sm:flex-1"
-              onClick={handleSend}
+              type="button"
+              variant="transparent"
+              className="text-xs sm:text-base w-full"
               disabled={loading || data.status === "SUBMITTED"}
             >
-              {loading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin mr-2 text-xs sm:text-sm" />
-                  Sending...
-                </>
-              ) : confirmStep ? (
-                "Click again to confirm"
-              ) : (
-                "Send to Ersilia"
-              )}
+              Edit Metadata
             </Button>
-          </div>
-        </CardContent>
-      </Card>
+          </Link>
+          <Button
+            variant={"plum"}
+            className="text-xs sm:text-base"
+            onClick={handleSend}
+            disabled={loading || data.status === "SUBMITTED"}
+          >
+            {loading ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin mr-2 text-xs sm:text-sm" />
+                Sending...
+              </>
+            ) : confirmStep ? (
+              "Click again to confirm"
+            ) : (
+              "Send to Ersilia"
+            )}
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
