@@ -27,7 +27,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTableAdmin<TData, TValue>({
+export function UserSubmissionsTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -73,7 +73,7 @@ export function DataTableAdmin<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="text-plum font-bold text-base p-4"
+                      className="text-plum font-bold text-sm md:text-base p-4 bg-plum/10"
                     >
                       {header.isPlaceholder
                         ? null

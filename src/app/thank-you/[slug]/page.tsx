@@ -27,22 +27,22 @@ export default async function ThankYouPage(props: { params: Params }) {
     <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-white">
       <Card className="w-full border-none shadow-none text-center">
         <CardHeader className="p-0 mb-4">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-plum mb-3 md:mb-4">
             Thank you!
-          </h1>
+          </h2>
           <p className="text-gray-400 text-sm md:text-base lg:text-lg mb-2">
             Your model has been successfully submitted.
           </p>
           {issueUrl && (
             <p className="text-gray-400 text-xs md:text-sm">
               You can track your submission here: <br />
-              <Link
+              <a
                 href={issueUrl}
                 target="_blank"
                 className="text-plum underline"
               >
                 {issueUrl}
-              </Link>
+              </a>
             </p>
           )}
         </CardHeader>

@@ -16,7 +16,6 @@ import {
   Home,
   List,
   LogOut,
-  User,
   UserRoundPen,
   UsersRound,
 } from "lucide-react";
@@ -38,19 +37,19 @@ const navLink = [
   },
   {
     title: "Help",
-    url: "https://ersilia.gitbook.io/ersilia-book/",
+    url: "/help",
     icon: HelpCircle,
   },
 ];
 const admin = [
   {
     title: "User Submissions",
-    url: "/admin",
+    url: "/admin/user-submissions",
     icon: UserRoundPen,
   },
   {
     title: "Users",
-    url: "#",
+    url: "/admin/users",
     icon: UsersRound,
   },
 ];

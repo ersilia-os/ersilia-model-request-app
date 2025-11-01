@@ -1,8 +1,14 @@
 "use client";
-import { ModelMetadata, User, ErsiliaIssue } from "../../../generated/prisma";
+
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "../ui/badge";
+
 import Link from "next/link";
+import {
+  ErsiliaIssue,
+  ModelMetadata,
+  User,
+} from "../../../../generated/prisma";
+import { Badge } from "@/components/ui/badge";
 
 type MetadataSub = User["sub"];
 type MetadataEmail = User["email"];
