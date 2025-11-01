@@ -34,7 +34,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
   const router = useRouter();
 
   return (
-    <div className="overflow-hidden rounded-md border border-plum-hover/30 w-full">
+    <div className="overflow-hidden rounded-md border border-plum-hover/30 max-w-8xl mx-6">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

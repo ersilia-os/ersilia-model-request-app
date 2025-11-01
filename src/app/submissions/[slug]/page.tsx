@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getSubmissionBySlug } from "./actions";
 
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,6 @@ import { BiomedicalAreaSection } from "@/components/BiomedicalAreaSection";
 import { TargetOrganismSection } from "@/components/TargetSection";
 import { DeploymentInfoSection } from "@/components/DeployementSection";
 import { ResourcesSection } from "@/components/RessoucesSection";
-import { SectionHeader } from "@/components/SectionHeader";
 
 type Params = Promise<{ slug: string }>;
 
@@ -30,14 +28,13 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
   }
 
   return (
-    <div className="space-y-8 px-6">
-      <SectionHeader title={submission.title} />
-
+    <div className="space-y-8 px-6 mx-auto max-w-7xl">
       <MetadataHeader
         title={submission.title}
         status={submission.status}
         updatedAt={submission.updatedAt}
         gihublink={submission.ErsiliaIssue?.issueUrl}
+        slug={submission.slug}
       />
 
       <Separator />
@@ -87,21 +84,9 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
           <Separator />
         </>
       )}
-      <div className="flex flex-col sm:flex-row gap-3 w-full">
-        <Link href="/submissions" className="w-full sm:flex-1">
-          <Button
-            type="button"
-            variant="transparent"
-            className="w-full text-xs sm:text-base"
-          >
-            Back to Submissions
-          </Button>
-        </Link>
+      <div className="flex justify-end w-full">
         {submission.status === "DRAFT" && (
-          <Link
-            href={`/new-model/metadata/${submission.slug}`}
-            className="w-full sm:flex-1"
-          >
+          <Link href={`/new-model/metadata/${submission.slug}`} className="">
             <Button
               type="button"
               variant="edit"

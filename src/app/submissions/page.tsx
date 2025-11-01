@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
 import { getSubmissionsByUser } from "./actions";
@@ -17,8 +15,8 @@ export default async function SubmissionPage() {
   const submissions = await getSubmissionsByUser(session.user.sub);
 
   return (
-    <div className="space-y-8 px-6">
-      <div>
+    <div className="space-y-8  grid place-content-center">
+      <div className="px-6">
         <SectionHeader
           title="List of all your submissions"
           description="View and manage your model submissions"

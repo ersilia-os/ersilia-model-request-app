@@ -29,7 +29,7 @@ export const columns: ColumnDef<Metadata>[] = [
     header: "Title",
     cell: ({ row }) => {
       return (
-        <div className="truncate max-w-[120px] sm:max-w-[200px] lg:max-w-none">
+        <div className="truncate max-w-[120px] sm:max-w-[200px] lg:max-w-[500px]">
           {row.getValue("title")}
         </div>
       );
