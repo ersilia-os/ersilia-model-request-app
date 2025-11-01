@@ -1,4 +1,5 @@
-import { Controller, Control, FieldValues, Path } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
+
 import { Field, FieldError } from "../ui/field";
 import {
   Select,
@@ -58,13 +59,11 @@ export function SelectField<T extends FieldValues>({
               <Select
                 name={field.name}
                 value={field.value}
-                onValueChange={field.onChange}
-              >
+                onValueChange={field.onChange}>
                 <SelectTrigger
                   id={selectId}
                   aria-invalid={fieldState.invalid}
-                  className="min-w-[120px] placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
-                >
+                  className="min-w-[120px] text-xs placeholder:text-xs sm:text-sm md:placeholder:text-sm">
                   <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
                 <SelectContent position="item-aligned">

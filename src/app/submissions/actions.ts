@@ -1,4 +1,5 @@
 "use server";
+
 import prisma from "@/lib/prisma";
 
 export async function getSubmissionsByUser(sub: string) {
@@ -15,7 +16,9 @@ export async function getSubmissionsByUser(sub: string) {
         title: true,
         slug: true,
         status: true,
+        createdAt: true,
         updatedAt: true,
+        tags: true,
       },
     });
 

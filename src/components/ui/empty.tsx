@@ -1,7 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils" // optional, see note below
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
+
+// optional, see note below
 
 export function Empty({
   className,
@@ -10,13 +13,12 @@ export function Empty({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center text-center p-8 border border-dashed rounded-xl",
+        "flex flex-col items-center justify-center rounded-xl border border-dashed p-8 text-center",
         className
-      )}
-    >
+      )}>
       {children}
     </div>
-  )
+  );
 }
 
 export function EmptyHeader({
@@ -27,7 +29,7 @@ export function EmptyHeader({
     <div className={cn("flex flex-col items-center space-y-2", className)}>
       {children}
     </div>
-  )
+  );
 }
 
 export function EmptyMedia({
@@ -38,23 +40,20 @@ export function EmptyMedia({
   return (
     <div
       className={cn(
-        variant === "icon" && "mb-3 text-muted-foreground",
+        variant === "icon" && "text-muted-foreground mb-3",
         variant === "image" && "mb-4",
         className
-      )}
-    >
+      )}>
       {children}
     </div>
-  )
+  );
 }
 
 export function EmptyTitle({
   className,
   children,
 }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return (
-    <h2 className={cn("text-lg font-semibold", className)}>{children}</h2>
-  )
+  return <h2 className={cn("text-lg font-semibold", className)}>{children}</h2>;
 }
 
 export function EmptyDescription({
@@ -62,13 +61,13 @@ export function EmptyDescription({
   children,
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={cn("text-sm text-muted-foreground", className)}>{children}</p>
-  )
+    <p className={cn("text-muted-foreground text-sm", className)}>{children}</p>
+  );
 }
 
 export function EmptyContent({
   className,
   children,
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("mt-4", className)}>{children}</div>
+  return <div className={cn("mt-4", className)}>{children}</div>;
 }

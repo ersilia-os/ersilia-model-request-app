@@ -11,8 +11,8 @@ export function InterpretationSection({
 }: InterpretationSectionProps) {
   return (
     <div>
-      <h2 className="text-lg font-semibold text-plum mb-2">Interpretation</h2>
-      <p className="text-gray-600 text-sm md:text-base leading-relaxed text-pretty text-justify">
+      <h2 className="text-plum mb-2 text-lg font-semibold">Interpretation</h2>
+      <p className="text-justify text-sm leading-relaxed text-pretty text-gray-600 md:text-base">
         {interpretation}
       </p>
     </div>

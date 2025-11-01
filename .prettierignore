@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+build
+next-env.d.ts
+generated
+docker-entrypoint.js
+*.lock
+yarn.lock
+.github

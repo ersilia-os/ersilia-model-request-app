@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateObject } from "ai";
-import { google } from "@ai-sdk/google";
 
+import { google } from "@ai-sdk/google";
+import { generateObject } from "ai";
 import { ZodError } from "zod";
+
 import { filterAiResults } from "@/lib/filter-ai-results";
 import { AiAnalysisModelMetadataSchema } from "@/schema/ai-response-schema";
 

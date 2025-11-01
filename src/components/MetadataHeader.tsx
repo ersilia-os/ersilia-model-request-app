@@ -1,15 +1,20 @@
+import Link from "next/link";
+
 import { ErsiliaIssue, ModelMetadata } from "../../generated/prisma";
+import { Button } from "./ui/button";
 
 type MetadataTitle = ModelMetadata["title"];
 type MetadataStatus = ModelMetadata["status"];
 type MetadataUpdated = ModelMetadata["updatedAt"];
 type MetadataGitHubLink = ErsiliaIssue["issueUrl"];
+type MetadataSlug = ModelMetadata["slug"];
 
 interface MetadataHeaderProps {
   title: MetadataTitle;
   status: MetadataStatus;
   updatedAt: MetadataUpdated;
   gihublink?: MetadataGitHubLink;
+  slug: MetadataSlug;
 }
 
 export default function MetadataHeader({
@@ -17,20 +22,32 @@ export default function MetadataHeader({
   updatedAt,
   status,
   gihublink,
+  slug,
 }: MetadataHeaderProps) {
   return (
-    <>
-      <h1 className="mb-2 text-2xl font-bold text-plum md:text-3xl lg:text-4xl text-pretty">
-        {title}
-      </h1>
-      <div className="flex items-center justify-center gap-2 mb-4">
+    <div>
+      <div className="flex w-full justify-between">
+        <h2 className="text-plum mb-4 text-2xl font-semibold text-pretty">
+          {title}
+        </h2>
+        {status === "DRAFT" && (
+          <Link href={`/new-model/metadata/${slug}`} className="">
+            <Button
+              type="button"
+              variant="transparent"
+              className="w-full text-xs sm:text-base">
+              Edit Metadata
+            </Button>
+          </Link>
+        )}
+      </div>
+      <div className="flex items-center justify-start gap-2">
         <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${
+          className={`rounded-full px-3 py-1 text-xs font-medium ${
             status === "DRAFT"
               ? "bg-yellow-100 text-yellow-700"
               : "bg-green-100 text-green-700"
-          }`}
-        >
+          }`}>
           {status}
         </span>
         {status === "DRAFT" ? (
@@ -42,12 +59,11 @@ export default function MetadataHeader({
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-gray-500 underline"
-            href={gihublink}
-          >
+            href={gihublink}>
             Click to view status
           </a>
         )}
       </div>
-    </>
+    </div>
   );
 }

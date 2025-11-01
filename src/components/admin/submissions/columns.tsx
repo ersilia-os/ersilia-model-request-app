@@ -1,8 +1,16 @@
 "use client";
-import { ModelMetadata, User, ErsiliaIssue } from "../../../generated/prisma";
-import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "../ui/badge";
+
 import Link from "next/link";
+
+import { ColumnDef } from "@tanstack/react-table";
+
+import { Badge } from "@/components/ui/badge";
+
+import {
+  ErsiliaIssue,
+  ModelMetadata,
+  User,
+} from "../../../../generated/prisma";
 
 type MetadataSub = User["sub"];
 type MetadataEmail = User["email"];
@@ -70,8 +78,7 @@ export const columns: ColumnDef<Metadata>[] = [
             status === "DRAFT"
               ? "bg-yellow-100 text-yellow-700"
               : "bg-green-100 text-green-700"
-          }`}
-        >
+          }`}>
           {status}
         </Badge>
       );
@@ -93,9 +100,8 @@ export const columns: ColumnDef<Metadata>[] = [
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:underline max-w-[200px] truncate block"
-          title={url}
-        >
+          className="block max-w-[200px] truncate hover:underline"
+          title={url}>
           View Issue
         </Link>
       );

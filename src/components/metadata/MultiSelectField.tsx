@@ -1,8 +1,10 @@
-import { Controller, Control, FieldValues, Path } from "react-hook-form";
-import { Field, FieldError } from "../ui/field";
-import MultiSelect from "../multi-select";
-import { FieldLabelWithAI } from "./FieldLabelWithAI";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
+
 import { cn } from "@/lib/utils";
+
+import MultiSelect from "../multi-select";
+import { Field, FieldError } from "../ui/field";
+import { FieldLabelWithAI } from "./FieldLabelWithAI";
 
 interface MultiSelectOption {
   value: string;

@@ -1,7 +1,14 @@
-import { auth0 } from "@/lib/auth0";
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getOrCreateUser } from "./actions";
-import WelcomeScreen from "@/components/WelcomeScreen";
+
+import { PlusCircle } from "lucide-react";
+
+import { DashboardCard } from "@/components/DashboardCard";
+import { SectionHeader } from "@/components/SectionHeader";
+import { Button } from "@/components/ui/button";
+import { auth0 } from "@/lib/auth0";
+
+import { getUserWithStats } from "./actions";
 
 export default async function Home() {
   const session = await auth0.getSession();
@@ -10,11 +17,26 @@ export default async function Home() {
     redirect("/auth/login");
   }
 
-  await getOrCreateUser(session);
+  const { stats } = await getUserWithStats(session);
 
   return (
-    <>
-      <WelcomeScreen />
-    </>
+    <div className="mx-auto w-full max-w-7xl px-6">
+      <div className="space-y-6">
+        <div className="space-between flex">
+          <SectionHeader
+            title="Welcome to Ersilia!"
+            description="Get started by adding a new model or viewing your previous
+          submissions."
+          />
+          <Button asChild variant="plum">
+            <Link href="/new-model">
+              <PlusCircle />
+              Add Model
+            </Link>
+          </Button>
+        </div>
+        <DashboardCard stats={stats} />
+      </div>
+    </div>
   );
 }

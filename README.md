@@ -40,6 +40,7 @@ A Next.js web application for managing and submitting AI/ML model metadata to th
 ### Development Tools
 
 - **ESLint**
+- **Prettier**
 - **Husky**
 - **Docker**
 - **Fly.io**
@@ -145,8 +146,10 @@ npx prisma generate   # Generate Prisma Client
 npx prisma migrate dev # Run migrations in development
 npx prisma studio     # Open Prisma Studio
 
-# Linting
+# Linting & Formatting
 yarn lint             # Run ESLint
+yarn format           # Format code with Prettier
+yarn format:check     # Check code formatting
 ```
 
 ---

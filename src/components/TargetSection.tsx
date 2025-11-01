@@ -11,13 +11,12 @@ export function TargetOrganismSection({
 }: TargetOrganismSectionProps) {
   return (
     <div>
-      <h2 className="text-lg font-semibold text-plum mb-2">Target Organism</h2>
+      <h2 className="text-plum mb-2 text-lg font-semibold">Target Organism</h2>
       <div className="flex flex-wrap gap-2">
         {targetOrganism.map((organism) => (
           <span
             key={organism}
-            className="px-3 py-1 bg-plum/10 text-plum rounded-full text-sm font-medium"
-          >
+            className="bg-plum/10 text-plum rounded-full px-3 py-1 text-sm font-medium">
             {organism}
           </span>
         ))}

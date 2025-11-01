@@ -1,9 +1,10 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { z } from "zod";
 
+import prisma from "@/lib/prisma";
 import { MetadataFormSchema } from "@/schema/metadata-form-schema";
+
 import { Prisma } from "../../../../../generated/prisma";
 
 type formData = z.infer<typeof MetadataFormSchema>;
