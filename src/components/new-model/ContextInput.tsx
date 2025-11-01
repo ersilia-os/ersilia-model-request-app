@@ -16,7 +16,7 @@ export default function ContextInput({ control }: ContextFormProps) {
         control={control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel className="text-plum/85">
+            <FieldLabel className="text-plum font-semibold">
               What is the model target/endpoint?
             </FieldLabel>
             <FieldDescription>
@@ -39,7 +39,7 @@ export default function ContextInput({ control }: ContextFormProps) {
         control={control}
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
-            <FieldLabel className="text-plum/85">
+            <FieldLabel className="text-plum font-semibold">
               Why is it relevant to drug discovery and global health?
             </FieldLabel>
             <FieldDescription>

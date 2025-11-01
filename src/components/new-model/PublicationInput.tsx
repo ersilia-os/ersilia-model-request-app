@@ -19,7 +19,9 @@ export default function PublicationInput({
       control={control}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
-          <FieldLabel className="text-plum/85">Publication URL</FieldLabel>
+          <FieldLabel className="text-plum font-semibold">
+            Publication URL
+          </FieldLabel>
           <Input
             {...field}
             id={field.name}

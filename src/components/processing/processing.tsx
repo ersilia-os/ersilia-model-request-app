@@ -12,7 +12,7 @@ import TextType from "../TextType";
 
 export function SpinnerEmpty() {
   return (
-    <div className="min-h-[calc(100svh-70px-2px)] grid content-center bg-white-500 w-full">
+    <div className="min-h-[calc(100svh-136px)] grid content-center bg-white-500 w-full">
       <Empty className="w-full border-none p-6 md:p-8 lg:p-10">
         <div className="text-center p-0 mb-4">
           <EmptyHeader>

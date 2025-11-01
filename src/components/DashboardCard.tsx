@@ -18,24 +18,24 @@ interface DashboardCardProps {
 
 export function DashboardCard({ stats }: DashboardCardProps) {
   return (
-    <div className="*:data-[slot=card]:from-ersilia *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-      <Card className="@container/card" data-slot="card">
+    <div className="*:data-[slot=card]:from-ersilia *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4 ">
+      <Card className="@container/card min-w-[200px]" data-slot="card">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardDescription>Total Submissions</CardDescription>
-            <FileText className="h-4 w-4 text-muted-foreground" />
+            <FileText className="h-4 w-4 text-plum" />
           </div>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-plum">
             {stats.totalSubmissions}
           </CardTitle>
         </CardHeader>
       </Card>
 
-      <Card className="@container/card" data-slot="card">
+      <Card className="@container/card min-w-[200px]" data-slot="card">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardDescription>Draft Models</CardDescription>
-            <FilePlus className="h-4 w-4 text-muted-foreground" />
+            <FilePlus className="h-4 w-4 text-plum" />
           </div>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {stats.draftModels}
@@ -43,25 +43,25 @@ export function DashboardCard({ stats }: DashboardCardProps) {
         </CardHeader>
       </Card>
 
-      <Card className="@container/card" data-slot="card">
+      <Card className="@container/card min-w-[200px]" data-slot="card">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardDescription>Submitted Models</CardDescription>
-            <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            <CheckCircle className="h-4 w-4 text-plum" />
           </div>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-plum ">
             {stats.submittedModels}
           </CardTitle>
         </CardHeader>
       </Card>
 
-      <Card className="@container/card" data-slot="card">
+      <Card className="@container/card min-w-[200px]" data-slot="card">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardDescription>Last 7 Days</CardDescription>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-plum" />
           </div>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-plum">
             {stats.recentSubmissions7Days}
           </CardTitle>
           <CardDescription className="text-xs mt-1">
