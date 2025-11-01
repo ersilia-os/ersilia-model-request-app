@@ -1,5 +1,6 @@
-import { Controller, Control, FieldValues, Path } from "react-hook-form";
-import { Field, FieldError, FieldSet, FieldLabel } from "../ui/field";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
+
+import { Field, FieldError, FieldLabel, FieldSet } from "../ui/field";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { FieldLabelWithAI } from "./FieldLabelWithAI";
 
@@ -53,14 +54,12 @@ export function RadioGroupField<T extends FieldValues>({
               value={field.value}
               onValueChange={field.onChange}
               aria-invalid={fieldState.invalid}
-              disabled={disabled}
-            >
+              disabled={disabled}>
               {options.map((option) => (
                 <Field
                   key={option.value}
                   orientation="horizontal"
-                  data-invalid={fieldState.invalid}
-                >
+                  data-invalid={fieldState.invalid}>
                   <RadioGroupItem
                     value={option.value}
                     id={`${field.name}-${option.value}`}
@@ -69,8 +68,7 @@ export function RadioGroupField<T extends FieldValues>({
                   />
                   <FieldLabel
                     htmlFor={`${field.name}-${option.value}`}
-                    className="font-normal text-gray-700 text-xs sm:text-sm"
-                  >
+                    className="text-xs font-normal text-gray-700 sm:text-sm">
                     {option.label}
                   </FieldLabel>
                 </Field>

@@ -1,16 +1,18 @@
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import ModelMetadataForm from "@/components/metadata/ModelMetadataForm";
-
 import { redirect } from "next/navigation";
-import { getGitHubAccount, getModelMetadatBySlug } from "./actions";
-import { auth0 } from "@/lib/auth0";
-import { SectionHeader } from "@/components/SectionHeader";
+
 import {
   CircleArrowRight,
   HeartHandshake,
   MessageCircleWarningIcon,
 } from "lucide-react";
+
+import { SectionHeader } from "@/components/SectionHeader";
+import ModelMetadataForm from "@/components/metadata/ModelMetadataForm";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { auth0 } from "@/lib/auth0";
+
+import { getGitHubAccount, getModelMetadatBySlug } from "./actions";
 
 type Params = Promise<{ slug: string }>;
 
@@ -32,7 +34,7 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6">
+    <div className="mx-auto w-full max-w-7xl px-6">
       <div className="space-y-6">
         <SectionHeader
           title="New Model Metadata"
@@ -41,11 +43,11 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
           className=""
         />
         <div>
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-15">
-            <aside className="lg:w-85 space-y-4">
-              <Card className="bg-linear-to-t from-plum/10 to-transparent border-plum/20">
+          <div className="flex flex-col gap-6 lg:flex-row lg:gap-15">
+            <aside className="space-y-4 lg:w-85">
+              <Card className="from-plum/10 border-plum/20 bg-linear-to-t to-transparent">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-plum">
+                  <CardTitle className="text-plum flex items-center gap-2">
                     <MessageCircleWarningIcon className="h-5 w-5" />
                     Review Model Metadata
                   </CardTitle>
@@ -57,7 +59,7 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
                   <p>
                     Our AI has pre-filled the metadata based on the publication.
                     This step is{" "}
-                    <span className="font-semibold text-plum">critical</span>{" "}
+                    <span className="text-plum font-semibold">critical</span>{" "}
                     for successful Ersilia Hub integration.
                   </p>
                   <p>
@@ -72,9 +74,9 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
                   </p>
                 </CardContent>
               </Card>
-              <Card className="bg-linear-to-t from-plum/10 to-transparent border-plum/20">
+              <Card className="from-plum/10 border-plum/20 bg-linear-to-t to-transparent">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-plum">
+                  <CardTitle className="text-plum flex items-center gap-2">
                     <CircleArrowRight className="h-5 w-5" />
                     Next Steps
                   </CardTitle>
@@ -82,22 +84,22 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
                 <CardContent className="space-y-3 text-sm text-gray-700">
                   <div className="space-y-2">
                     <p>
-                      <span className="font-semibold text-plum">Save: </span>
+                      <span className="text-plum font-semibold">Save: </span>
                       Save your progress and return later to continue editing.
                     </p>
                     <p>
-                      <span className="font-semibold text-plum">Edit: </span>
+                      <span className="text-plum font-semibold">Edit: </span>
                       Make changes to any field in the form as needed.
                     </p>
                     <p>
-                      <span className="font-semibold text-plum">Preview: </span>
+                      <span className="text-plum font-semibold">Preview: </span>
                       Review the final metadata before submitting to Ersilia.
                     </p>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-linear-to-t from-gray-50 to-transparent border-gray-300">
+              <Card className="border-gray-300 bg-linear-to-t from-gray-50 to-transparent">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-gray-900">
                     <HeartHandshake className="h-5 w-5" />
@@ -113,7 +115,7 @@ export default async function ModelMetadataFormPage(props: { params: Params }) {
                 </CardContent>
               </Card>
             </aside>
-            <div className="flex-1 lg:max-w-3xl ">
+            <div className="flex-1 lg:max-w-3xl">
               <ModelMetadataForm
                 aiResults={aiResults.data}
                 gitHubAccount={gitHubAccount.data}

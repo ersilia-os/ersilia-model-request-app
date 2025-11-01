@@ -1,7 +1,8 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
+
 import { Field, FieldError } from "../ui/field";
-import { FieldLabelWithAI } from "./FieldLabelWithAI";
 import { Textarea } from "../ui/textarea";
+import { FieldLabelWithAI } from "./FieldLabelWithAI";
 
 interface TextareaFieldProps<T extends FieldValues> {
   name: Path<T>;
@@ -45,7 +46,7 @@ export function TextAreaField<T extends FieldValues>({
               {...field}
               id={textareaId}
               aria-invalid={fieldState.invalid}
-              className="focus-visible:border-plum placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
+              className="focus-visible:border-plum text-xs placeholder:text-xs sm:text-sm md:placeholder:text-sm"
               placeholder={placeholder}
             />
 

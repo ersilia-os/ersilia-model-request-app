@@ -59,8 +59,7 @@ export const columns: ColumnDef<Metadata>[] = [
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href={`https://github.com/${githubAccount}`}
-        >
+          href={`https://github.com/${githubAccount}`}>
           <div title={githubAccount ?? undefined}>
             @{githubAccount ?? "none"}
           </div>

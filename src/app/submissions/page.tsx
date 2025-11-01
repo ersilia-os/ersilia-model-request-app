@@ -1,9 +1,11 @@
-import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
-import { getSubmissionsByUser } from "./actions";
+
+import { SectionHeader } from "@/components/SectionHeader";
 import { DataTableSubmission } from "@/components/submissions/DataTableSubmission";
 import { columns } from "@/components/submissions/columns";
-import { SectionHeader } from "@/components/SectionHeader";
+import { auth0 } from "@/lib/auth0";
+
+import { getSubmissionsByUser } from "./actions";
 
 export default async function SubmissionPage() {
   const session = await auth0.getSession();
@@ -15,7 +17,7 @@ export default async function SubmissionPage() {
   const submissions = await getSubmissionsByUser(session.user.sub);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6">
+    <div className="mx-auto w-full max-w-7xl px-6">
       <div className="space-y-6">
         <SectionHeader
           title="List of all your submissions"

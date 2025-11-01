@@ -1,19 +1,20 @@
-import { getSubmissionBySlug } from "./actions";
-
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Separator } from "@/components/ui/separator";
-import MetadataHeader from "@/components/MetadataHeader";
-import { DescriptionSection } from "@/components/DescriptionSection";
-import { InterpretationSection } from "@/components/InterpretationSection";
-import { TagsSection } from "@/components/TagsSection";
-import { TaskSection } from "@/components/TasksSection";
-import { InputOutputSection } from "@/components/InputOutputSection";
+
 import { BiomedicalAreaSection } from "@/components/BiomedicalAreaSection";
-import { TargetOrganismSection } from "@/components/TargetSection";
 import { DeploymentInfoSection } from "@/components/DeployementSection";
+import { DescriptionSection } from "@/components/DescriptionSection";
+import { InputOutputSection } from "@/components/InputOutputSection";
+import { InterpretationSection } from "@/components/InterpretationSection";
+import MetadataHeader from "@/components/MetadataHeader";
 import { ResourcesSection } from "@/components/RessoucesSection";
+import { TagsSection } from "@/components/TagsSection";
+import { TargetOrganismSection } from "@/components/TargetSection";
+import { TaskSection } from "@/components/TasksSection";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
+import { getSubmissionBySlug } from "./actions";
 
 type Params = Promise<{ slug: string }>;
 
@@ -28,8 +29,8 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
   }
 
   return (
-    <div className="px-6 mx-auto max-w-7xl">
-      <div className="space-y-8 ">
+    <div className="mx-auto max-w-7xl px-6">
+      <div className="space-y-8">
         <MetadataHeader
           title={submission.title}
           status={submission.status}
@@ -75,24 +76,23 @@ export default async function SubmissionDetailsPage(props: { params: Params }) {
         {submission.isContributor && (
           <>
             <div>
-              <h2 className="text-lg font-semibold text-plum mb-2">
+              <h2 className="text-plum mb-2 text-lg font-semibold">
                 Contribution
               </h2>
-              <p className="text-gray-600 text-sm md:text-base">
+              <p className="text-sm text-gray-600 md:text-base">
                 You will be listed as a contributor with your Github Account
               </p>
             </div>
             <Separator />
           </>
         )}
-        <div className="flex justify-end w-full">
+        <div className="flex w-full justify-end">
           {submission.status === "DRAFT" && (
             <Link href={`/new-model/metadata/${submission.slug}`}>
               <Button
                 type="button"
                 variant="transparent"
-                className="w-full text-xs sm:text-base"
-              >
+                className="w-full text-xs sm:text-base">
                 Edit Metadata
               </Button>
             </Link>

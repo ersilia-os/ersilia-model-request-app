@@ -22,49 +22,48 @@ export function InputOutputSection({
   outputConsistency,
 }: InputOutputSectionProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       <div>
-        <h2 className="text-lg font-semibold text-plum mb-2">Input</h2>
-        <p className="text-gray-700 text-base mt-2">
+        <h2 className="text-plum mb-2 text-lg font-semibold">Input</h2>
+        <p className="mt-2 text-base text-gray-700">
           Type:
-          <span className="ml-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+          <span className="ml-1 rounded bg-gray-100 px-2 py-1 text-sm text-gray-700">
             {input}
           </span>
         </p>
 
-        <p className="text-gray-700 text-base mt-2">
+        <p className="mt-2 text-base text-gray-700">
           Dimension:
-          <span className="ml-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+          <span className="ml-1 rounded bg-gray-100 px-2 py-1 text-sm text-gray-700">
             {inputDimension}
           </span>
         </p>
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold text-plum mb-2">Output</h2>
-        <div className="flex flex-wrap gap-2 items-center">
-          <p className="text-gray-700 text-base">Type:</p>
+        <h2 className="text-plum mb-2 text-lg font-semibold">Output</h2>
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="text-base text-gray-700">Type:</p>
           {output.map((out) => (
             <span
               key={out}
-              className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm"
-            >
+              className="rounded bg-gray-100 px-2 py-1 text-sm text-gray-700">
               {out}
             </span>
           ))}
         </div>
         {outputDimension && (
-          <p className="text-gray-700 text-base mt-2">
+          <p className="mt-2 text-base text-gray-700">
             Dimension:
-            <span className="ml-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+            <span className="ml-1 rounded bg-gray-100 px-2 py-1 text-sm text-gray-700">
               {outputDimension}
             </span>
           </p>
         )}
 
-        <p className="text-gray-700 text-base mt-2">
+        <p className="mt-2 text-base text-gray-700">
           Consistency:
-          <span className="ml-1 px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+          <span className="ml-1 rounded bg-gray-100 px-2 py-1 text-sm text-gray-700">
             {outputConsistency}
           </span>
         </p>

@@ -1,6 +1,18 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import * as React from "react";
+
+import {
+  HelpCircle,
+  Home,
+  List,
+  LogOut,
+  PlusCircle,
+  UserRoundPen,
+  UsersRound,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -11,24 +23,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  HelpCircle,
-  Home,
-  List,
-  LogOut,
-  UserRoundPen,
-  UsersRound,
-} from "lucide-react";
-import { NavMain } from "./NavMain";
-import Link from "next/link";
-import Image from "next/image";
+
 import { NavAdmin } from "./NavAdmin";
+import { NavMain } from "./NavMain";
 
 const navLink = [
   {
     title: "Dashboard",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Add Model",
+    url: "/new-model",
+    icon: PlusCircle,
   },
   {
     title: "Submissions",
@@ -66,8 +74,7 @@ export function AppSidebar({ isAdmin, ...props }: AppSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5 mb-2"
-            >
+              className="mb-2 data-[slot=sidebar-menu-button]:!p-1.5">
               <Link href="/">
                 <Image
                   src="/images/ersilia_logo.png"
@@ -87,7 +94,7 @@ export function AppSidebar({ isAdmin, ...props }: AppSidebarProps) {
         {isAdmin && <NavAdmin items={admin} />}
       </SidebarContent>
       <SidebarFooter className="bg-ersilia">
-        <SidebarMenuButton className="min-w-8 duration-200 ease-linear hover:bg-red-600 hover:text-primary-foreground">
+        <SidebarMenuButton className="hover:bg-plum/10 active:bg-plum/10 min-w-8 duration-200 ease-linear">
           <LogOut />
           <a href="/auth/logout" className="w-full">
             Log out

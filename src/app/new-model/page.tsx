@@ -1,15 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import PublicationInput from "@/components/new-model/PublicationInput";
-import FileDrop from "@/components/new-model/FileDrop";
-
-import { useAiPublicationAnalysis } from "@/hooks/usePublicationAnalysis";
-import { Separator } from "@/components/ui/separator";
-import ContextInput from "@/components/new-model/ContextInput";
-import CustomSeparator from "@/components/CustomSeparator";
-import { SectionHeader } from "@/components/SectionHeader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   CheckCircle2,
   FileUp,
@@ -19,22 +9,32 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import CustomSeparator from "@/components/CustomSeparator";
+import { SectionHeader } from "@/components/SectionHeader";
+import ContextInput from "@/components/new-model/ContextInput";
+import FileDrop from "@/components/new-model/FileDrop";
+import PublicationInput from "@/components/new-model/PublicationInput";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { useAiPublicationAnalysis } from "@/hooks/usePublicationAnalysis";
+
 export default function NewModelPage() {
   const { file, setFile, form, onSubmit } = useAiPublicationAnalysis();
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6">
+    <div className="mx-auto w-full max-w-7xl px-6">
       <div className="space-y-8">
         <SectionHeader
           title="Add New Model to Ersilia"
           description="Provide a publication and answer a few questions to help our AI extract accurate model metadata"
         />
 
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-20">
-          <aside className="lg:w-80 space-y-4">
-            <Card className="bg-linear-to-t from-plum/10 to-transparent border-plum/20">
+        <div className="flex flex-col gap-6 lg:flex-row lg:gap-20">
+          <aside className="space-y-4 lg:w-80">
+            <Card className="from-plum/10 border-plum/20 bg-linear-to-t to-transparent">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-plum text-lg">
+                <CardTitle className="text-plum flex items-center gap-2 text-lg">
                   <MessageCircleWarningIcon className="h-5 w-5" />
                   Help Our AI
                 </CardTitle>
@@ -51,16 +51,16 @@ export default function NewModelPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-linear-to-t from-plum/10 to-transparent border-plum/20">
+            <Card className="from-plum/10 border-plum/20 bg-linear-to-t to-transparent">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-plum text-lg">
+                <CardTitle className="text-plum flex items-center gap-2 text-lg">
                   <Lightbulb className="h-5 w-5" />
                   How does it work?
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm text-gray-700">
                 <div className="flex items-start gap-3">
-                  <FileUp className="h-5 w-5 text-plum shrink-0 mt-0.5" />
+                  <FileUp className="text-plum mt-0.5 h-5 w-5 shrink-0" />
                   <div>
                     <p className="font-medium text-gray-900">
                       Upload Publication
@@ -71,7 +71,7 @@ export default function NewModelPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <MessageSquare className="h-5 w-5 text-plum shrink-0 mt-0.5" />
+                  <MessageSquare className="text-plum mt-0.5 h-5 w-5 shrink-0" />
                   <div>
                     <p className="font-medium text-gray-900">Add Context</p>
                     <p className="text-xs text-gray-600">
@@ -80,7 +80,7 @@ export default function NewModelPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Sparkles className="h-5 w-5 text-plum shrink-0 mt-0.5" />
+                  <Sparkles className="text-plum mt-0.5 h-5 w-5 shrink-0" />
                   <div>
                     <p className="font-medium text-gray-900">AI Analysis</p>
                     <p className="text-xs text-gray-600">
@@ -89,7 +89,7 @@ export default function NewModelPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-plum shrink-0 mt-0.5" />
+                  <CheckCircle2 className="text-plum mt-0.5 h-5 w-5 shrink-0" />
                   <div>
                     <p className="font-medium text-gray-900">Review & Submit</p>
                     <p className="text-xs text-gray-600">
@@ -101,11 +101,10 @@ export default function NewModelPage() {
             </Card>
           </aside>
 
-          <div className="flex-1 lg:max-w-3xl ">
+          <div className="flex-1 lg:max-w-3xl">
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col gap-4"
-            >
+              className="flex flex-col gap-4">
               <div className="flex flex-col gap-4 p-0">
                 <PublicationInput control={form.control} disabled={!!file} />
                 <CustomSeparator word="OR" />
@@ -117,12 +116,11 @@ export default function NewModelPage() {
                 />
                 <Separator />
                 <ContextInput control={form.control} />
-                <div className="flex justify-end w-full mt-2">
+                <div className="mt-2 flex w-full justify-end">
                   <Button
                     type="submit"
                     variant="plum"
-                    className="w-full sm:w-auto sm:px-12"
-                  >
+                    className="w-full sm:w-auto sm:px-12">
                     Analyze
                   </Button>
                 </div>

@@ -1,8 +1,12 @@
 "use client";
-import { Mail, User } from "lucide-react";
-import { Prisma } from "../../../generated/prisma";
-import { useState } from "react";
+
 import Link from "next/link";
+import { useState } from "react";
+
+import { Mail, User } from "lucide-react";
+
+import { Prisma } from "../../../generated/prisma";
+
 type UsersWithSubmissions = Prisma.UserGetPayload<{
   include: {
     metadataRecords: true;
@@ -18,7 +22,7 @@ export default function UserList({ data }: UserListProps) {
 
   if (!data.length) {
     return (
-      <div className="text-center text-plum text-sm md:text-base lg:text-lg mb-2">
+      <div className="text-plum mb-2 text-center text-sm md:text-base lg:text-lg">
         <p className="text-center">There is no users with submissions.</p>
       </div>
     );
@@ -38,10 +42,9 @@ export default function UserList({ data }: UserListProps) {
         <div
           key={user.sub}
           onClick={() => handleToggle(user.sub)}
-          className="border-2 border-plum/20 rounded-lg p-4 hover:bg-gray-50 transition-colors duration-200"
-        >
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-            <div className="flex-1 flex justify-between">
+          className="border-plum/20 rounded-lg border-2 p-4 transition-colors duration-200 hover:bg-gray-50">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-1 justify-between">
               <div className="flex w-full space-x-2">
                 <User className="text-plum/80" />
                 <span className="text-gray-900">{user.name}</span>
@@ -50,7 +53,7 @@ export default function UserList({ data }: UserListProps) {
                 <Mail className="text-plum/80" />
                 <span className="text-gray-900">{user.email}</span>
               </div>
-              <div className="px-3 py-1 rounded-full text-xs font-medium bg-plum text-white">
+              <div className="bg-plum rounded-full px-3 py-1 text-xs font-medium text-white">
                 <span>{user.metadataRecords.length}</span>
               </div>
             </div>
@@ -62,11 +65,10 @@ export default function UserList({ data }: UserListProps) {
                 <Link
                   key={submission.slug}
                   href={`/admin/${submission.slug}`}
-                  className="border-2 border-plum/20 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-200"
-                >
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                  className="border-plum/20 rounded-lg border-2 p-4 transition-colors duration-200 hover:bg-gray-100">
+                  <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-plum text-base md:text-lg">
+                      <h3 className="text-plum text-base font-semibold md:text-lg">
                         {submission.title}
                       </h3>
                       <p className="text-sm text-gray-500">
@@ -76,12 +78,11 @@ export default function UserList({ data }: UserListProps) {
                     </div>
                     <div className="flex items-center gap-2">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        className={`rounded-full px-3 py-1 text-xs font-medium ${
                           submission.status === "SUBMITTED"
                             ? "bg-green-100 text-green-700"
                             : "bg-yellow-100 text-yellow-700"
-                        }`}
-                      >
+                        }`}>
                         {submission.status}
                       </span>
                     </div>

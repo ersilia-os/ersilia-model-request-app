@@ -11,7 +11,7 @@ export function SectionHeader({
 }: PageHeaderProps) {
   return (
     <div className={`w-full ${className}`}>
-      <h2 className="text-2xl mb-2 font-semibold text-plum">{title}</h2>
+      <h2 className="text-plum mb-2 text-2xl font-semibold">{title}</h2>
 
       {description && <p className="text-gray-400">{description}</p>}
     </div>

@@ -18,26 +18,26 @@ export function DeploymentInfoSection({
   publicationYear,
 }: DeploymentInfoSectionProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
       {deployment && (
         <div>
-          <h2 className="text-lg font-semibold text-plum mb-2">Deployment</h2>
-          <p className="text-gray-600 text-sm md:text-base">{deployment}</p>
+          <h2 className="text-plum mb-2 text-lg font-semibold">Deployment</h2>
+          <p className="text-sm text-gray-600 md:text-base">{deployment}</p>
         </div>
       )}
       {license && (
         <div>
-          <h2 className="text-lg font-semibold text-plum mb-2">License</h2>
-          <p className="text-gray-600 text-sm md:text-base">{license}</p>
+          <h2 className="text-plum mb-2 text-lg font-semibold">License</h2>
+          <p className="text-sm text-gray-600 md:text-base">{license}</p>
         </div>
       )}
 
       {publicationYear && (
         <div>
-          <h2 className="text-lg font-semibold text-plum mb-2">
+          <h2 className="text-plum mb-2 text-lg font-semibold">
             Publication Year
           </h2>
-          <p className="text-gray-600 text-sm md:text-base">
+          <p className="text-sm text-gray-600 md:text-base">
             {publicationYear}
           </p>
         </div>

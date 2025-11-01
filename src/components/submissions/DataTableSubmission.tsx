@@ -1,11 +1,16 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+
+import { cn } from "@/lib/utils";
+
 import {
   Table,
   TableBody,
@@ -14,8 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,7 +37,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
   const router = useRouter();
 
   return (
-    <div className="overflow-hidden rounded-md border border-plum-hover/30">
+    <div className="border-plum-hover/30 overflow-hidden rounded-md border">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -43,8 +46,7 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
                 return (
                   <TableHead
                     key={header.id}
-                    className="text-plum font-bold text-sm md:text-base p-4 bg-plum/10"
-                  >
+                    className="text-plum bg-plum/10 p-4 text-sm font-bold md:text-base">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -63,17 +65,17 @@ export function DataTableSubmission<TData extends { slug: string }, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className="cursor-pointer hover:bg-plum/10"
-                onClick={() => router.push(`/submissions/${row.original.slug}`)}
-              >
+                className="hover:bg-plum/10 cursor-pointer"
+                onClick={() =>
+                  router.push(`/submissions/${row.original.slug}`)
+                }>
                 {row.getVisibleCells().map((cell, index) => (
                   <TableCell
                     key={cell.id}
                     className={cn(
-                      "text-gray-800 text-xs sm:text-base p-4",
+                      "p-4 text-xs text-gray-800 sm:text-base",
                       index === 0 && "max-w-[220px] sm:max-w-none"
-                    )}
-                  >
+                    )}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

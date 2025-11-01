@@ -1,12 +1,13 @@
-import { Controller, Control, FieldValues, Path } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
+
+import { Checkbox } from "../ui/checkbox";
 import {
   Field,
   FieldError,
-  FieldSet,
   FieldGroup,
   FieldLabel,
+  FieldSet,
 } from "../ui/field";
-import { Checkbox } from "../ui/checkbox";
 import { FieldLabelWithAI } from "./FieldLabelWithAI";
 
 interface CheckboxOption {
@@ -64,8 +65,7 @@ export function CheckboxGroupField<T extends FieldValues>({
                 <Field
                   key={option.value}
                   orientation="horizontal"
-                  data-invalid={fieldState.invalid}
-                >
+                  data-invalid={fieldState.invalid}>
                   <Checkbox
                     id={`${field.name}-checkbox-${option.value}`}
                     name={field.name}
@@ -83,8 +83,7 @@ export function CheckboxGroupField<T extends FieldValues>({
                   />
                   <FieldLabel
                     htmlFor={`${field.name}-checkbox-${option.value}`}
-                    className="font-normal text-gray-700 text-xs sm:text-sm"
-                  >
+                    className="text-xs font-normal text-gray-700 sm:text-sm">
                     {option.label}
                   </FieldLabel>
                 </Field>

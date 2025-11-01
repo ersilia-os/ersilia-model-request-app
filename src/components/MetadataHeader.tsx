@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { ErsiliaIssue, ModelMetadata } from "../../generated/prisma";
 import { Button } from "./ui/button";
 
@@ -25,8 +26,8 @@ export default function MetadataHeader({
 }: MetadataHeaderProps) {
   return (
     <div>
-      <div className="flex justify-between w-full">
-        <h2 className="mb-4 text-2xl font-semibold text-plum text-pretty">
+      <div className="flex w-full justify-between">
+        <h2 className="text-plum mb-4 text-2xl font-semibold text-pretty">
           {title}
         </h2>
         {status === "DRAFT" && (
@@ -34,8 +35,7 @@ export default function MetadataHeader({
             <Button
               type="button"
               variant="transparent"
-              className="w-full text-xs sm:text-base"
-            >
+              className="w-full text-xs sm:text-base">
               Edit Metadata
             </Button>
           </Link>
@@ -43,12 +43,11 @@ export default function MetadataHeader({
       </div>
       <div className="flex items-center justify-start gap-2">
         <span
-          className={`px-3 py-1 rounded-full text-xs font-medium ${
+          className={`rounded-full px-3 py-1 text-xs font-medium ${
             status === "DRAFT"
               ? "bg-yellow-100 text-yellow-700"
               : "bg-green-100 text-green-700"
-          }`}
-        >
+          }`}>
           {status}
         </span>
         {status === "DRAFT" ? (
@@ -60,8 +59,7 @@ export default function MetadataHeader({
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-gray-500 underline"
-            href={gihublink}
-          >
+            href={gihublink}>
             Click to view status
           </a>
         )}

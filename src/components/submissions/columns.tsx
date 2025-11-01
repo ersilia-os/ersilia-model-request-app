@@ -1,8 +1,9 @@
 "use client";
 
-import { formatDistanceToNow } from "date-fns";
-import { ModelMetadata } from "../../../generated/prisma";
 import { ColumnDef } from "@tanstack/react-table";
+import { formatDistanceToNow } from "date-fns";
+
+import { ModelMetadata } from "../../../generated/prisma";
 import { Badge } from "../ui/badge";
 
 type MetadataId = ModelMetadata["id"];
@@ -29,7 +30,7 @@ export const columns: ColumnDef<Metadata>[] = [
     header: "Title",
     cell: ({ row }) => {
       return (
-        <div className="truncate max-w-[120px] sm:max-w-[200px] lg:max-w-[500px]">
+        <div className="max-w-[120px] truncate sm:max-w-[200px] lg:max-w-[500px]">
           {row.getValue("title")}
         </div>
       );
@@ -72,8 +73,7 @@ export const columns: ColumnDef<Metadata>[] = [
               status === "DRAFT"
                 ? "bg-yellow-100 text-yellow-700"
                 : "bg-green-100 text-green-700"
-            }`}
-          >
+            }`}>
             {status}
           </Badge>
         </div>

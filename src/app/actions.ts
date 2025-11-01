@@ -1,7 +1,8 @@
 "use server";
 
-import prisma from "@/lib/prisma";
 import { SessionData } from "@auth0/nextjs-auth0/types";
+
+import prisma from "@/lib/prisma";
 
 export async function getUserStats(session: SessionData) {
   const { user } = session;

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 import { SpinnerEmpty } from "@/components/processing/processing";
 
 export default function ProcessingPage() {

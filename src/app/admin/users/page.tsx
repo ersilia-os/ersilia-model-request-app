@@ -1,12 +1,11 @@
-import { auth0 } from "@/lib/auth0";
-
 import { redirect } from "next/navigation";
 
 import { SectionHeader } from "@/components/SectionHeader";
-
-import { getAllUsers } from "./actions";
 import { UsersTable } from "@/components/admin/users/UsersTable";
 import { columns } from "@/components/admin/users/columns";
+import { auth0 } from "@/lib/auth0";
+
+import { getAllUsers } from "./actions";
 
 export default async function AdminUsersPage() {
   const session = await auth0.getSession();
@@ -18,7 +17,7 @@ export default async function AdminUsersPage() {
   const usersData = await getAllUsers();
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6">
+    <div className="mx-auto w-full max-w-7xl px-6">
       <div className="space-y-6">
         <SectionHeader
           title="User Submissions"

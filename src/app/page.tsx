@@ -1,8 +1,10 @@
-import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
-import { getUserWithStats } from "./actions";
+
 import { DashboardCard } from "@/components/DashboardCard";
 import { SectionHeader } from "@/components/SectionHeader";
+import { auth0 } from "@/lib/auth0";
+
+import { getUserWithStats } from "./actions";
 
 export default async function Home() {
   const session = await auth0.getSession();
@@ -14,7 +16,7 @@ export default async function Home() {
   const { stats } = await getUserWithStats(session);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6">
+    <div className="mx-auto w-full max-w-7xl px-6">
       <div className="space-y-6">
         <SectionHeader
           title="Welcome to Ersilia!"

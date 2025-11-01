@@ -1,10 +1,11 @@
+import { CheckCircle, Clock, FilePlus, FileText } from "lucide-react";
+
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FileText, FilePlus, CheckCircle, Clock } from "lucide-react";
 
 interface DashboardCardProps {
   stats: {
@@ -18,14 +19,14 @@ interface DashboardCardProps {
 
 export function DashboardCard({ stats }: DashboardCardProps) {
   return (
-    <div className="*:data-[slot=card]:from-plum/10 *:data-[slot=card]:to-transparent dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+    <div className="*:data-[slot=card]:from-plum/10 dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-linear-to-t *:data-[slot=card]:to-transparent *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card min-w-[200px]" data-slot="card">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardDescription>Total Submissions</CardDescription>
-            <FileText className="h-4 w-4 text-plum" />
+            <FileText className="text-plum h-4 w-4" />
           </div>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-plum">
+          <CardTitle className="text-plum text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {stats.totalSubmissions}
           </CardTitle>
         </CardHeader>
@@ -35,7 +36,7 @@ export function DashboardCard({ stats }: DashboardCardProps) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardDescription>Draft Models</CardDescription>
-            <FilePlus className="h-4 w-4 text-plum" />
+            <FilePlus className="text-plum h-4 w-4" />
           </div>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {stats.draftModels}
@@ -47,9 +48,9 @@ export function DashboardCard({ stats }: DashboardCardProps) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardDescription>Submitted Models</CardDescription>
-            <CheckCircle className="h-4 w-4 text-plum" />
+            <CheckCircle className="text-plum h-4 w-4" />
           </div>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-plum ">
+          <CardTitle className="text-plum text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {stats.submittedModels}
           </CardTitle>
         </CardHeader>
@@ -59,12 +60,12 @@ export function DashboardCard({ stats }: DashboardCardProps) {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardDescription>Last 7 Days</CardDescription>
-            <Clock className="h-4 w-4 text-plum" />
+            <Clock className="text-plum h-4 w-4" />
           </div>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-plum">
+          <CardTitle className="text-plum text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {stats.recentSubmissions7Days}
           </CardTitle>
-          <CardDescription className="text-xs mt-1">
+          <CardDescription className="mt-1 text-xs">
             {stats.recentSubmissions30Days} in last 30 days
           </CardDescription>
         </CardHeader>

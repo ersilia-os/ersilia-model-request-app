@@ -1,6 +1,11 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import {
   Controller,
   FieldErrors,
@@ -8,6 +13,20 @@ import {
   PathValue,
   useForm,
 } from "react-hook-form";
+import z from "zod";
+
+import {
+  saveMetadataAction,
+  saveValidatedMetadataAction,
+} from "@/app/new-model/metadata/[slug]/actions";
+import { METADATA_FORM_CFG } from "@/config/form-cfg";
+import { HELP_CFG } from "@/config/help-popover-form";
+import { alertError, alertSuccess } from "@/lib/alerts";
+import { MetadataFormSchema } from "@/schema/metadata-form-schema";
+
+import { ModelMetadata } from "../../../generated/prisma";
+import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 import {
   Field,
   FieldDescription,
@@ -17,32 +36,13 @@ import {
   FieldLegend,
   FieldSeparator,
 } from "../ui/field";
-
-import z from "zod";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../ui/button";
-import { METADATA_FORM_CFG } from "@/config/form-cfg";
-
-import {
-  saveMetadataAction,
-  saveValidatedMetadataAction,
-} from "@/app/new-model/metadata/[slug]/actions";
-import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
-import { HELP_CFG } from "@/config/help-popover-form";
-import { alertError, alertSuccess } from "@/lib/alerts";
-import { MetadataFormSchema } from "@/schema/metadata-form-schema";
-import { ModelMetadata } from "../../../generated/prisma";
-import { TextInputField } from "./TextInputField";
-import { TextAreaField } from "./TextAreaField";
+import { Input } from "../ui/input";
+import { CheckboxGroupField } from "./CheckBoxField";
 import { MultiSelectField } from "./MultiSelectField";
 import { RadioGroupField } from "./RadioGroupField";
-import { CheckboxGroupField } from "./CheckBoxField";
 import { SelectField } from "./SelectField";
-import { Checkbox } from "../ui/checkbox";
-import { Input } from "../ui/input";
-import Link from "next/link";
+import { TextAreaField } from "./TextAreaField";
+import { TextInputField } from "./TextInputField";
 
 interface ModelMetadataFormProps {
   aiResults: ModelMetadata;
@@ -175,8 +175,7 @@ export default function ModelMetadataForm({
       <form
         id="form-metadata"
         className="mb-6"
-        onSubmit={form.handleSubmit(onSubmit, onInvalid)}
-      >
+        onSubmit={form.handleSubmit(onSubmit, onInvalid)}>
         <fieldset disabled={isLocked} className="w-full">
           <FieldGroup>
             <FieldLegend className="text-plum font-semibold">
@@ -463,8 +462,7 @@ export default function ModelMetadataForm({
                   render={({ field, fieldState }) => (
                     <Field
                       orientation="horizontal"
-                      data-invalid={fieldState.invalid}
-                    >
+                      data-invalid={fieldState.invalid}>
                       <Checkbox
                         id="form-metadata-checkbox-contributor"
                         name={field.name}
@@ -475,8 +473,7 @@ export default function ModelMetadataForm({
 
                       <FieldLabel
                         htmlFor="form-metadata-checkbox-contributor"
-                        className="font-normal text-gray-700"
-                      >
+                        className="font-normal text-gray-700">
                         I want to be listed as a contributor
                       </FieldLabel>
 
@@ -494,17 +491,15 @@ export default function ModelMetadataForm({
                     render={({ field, fieldState }) => (
                       <Field
                         data-invalid={fieldState.invalid}
-                        className="w-[300px]"
-                      >
+                        className="w-[300px]">
                         <FieldLabel
                           htmlFor={`field-${field.name}`}
-                          className="text-plum/85"
-                        >
+                          className="text-plum/85">
                           Github Account
                         </FieldLabel>
                         <Input
                           aria-invalid={fieldState.invalid}
-                          className="focus-visible:border-plum placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
+                          className="focus-visible:border-plum text-xs placeholder:text-xs sm:text-sm md:placeholder:text-sm"
                           {...field}
                           id={`field-${field.name}`}
                           placeholder="Enter your Github account name"
@@ -525,17 +520,15 @@ export default function ModelMetadataForm({
       </form>
       <Field
         orientation="horizontal"
-        className="flex justify-between items-center mb-4 sm:mb-2"
-      >
-        <div className="flex gap-1 sm:gap-2 items-center">
+        className="mb-4 flex items-center justify-between sm:mb-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           <Button
             variant="plum"
             type="submit"
             form="form-metadata"
             onClick={handleSaveClick}
             disabled={isLocked || isLoading}
-            className="flex px-4 sm:px-6 md:px-10 items-center gap-2 text-xs sm:text-sm"
-          >
+            className="flex items-center gap-2 px-4 text-xs sm:px-6 sm:text-sm md:px-10">
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -550,16 +543,14 @@ export default function ModelMetadataForm({
             variant="edit"
             onClick={handleEditClick}
             disabled={!isLocked}
-            className="text-xs sm:text-sm px-4 sm:px-6 md:px-10"
-          >
+            className="px-4 text-xs sm:px-6 sm:text-sm md:px-10">
             Edit
           </Button>
           <Link href="/">
             <Button
               type="button"
               variant="transparent"
-              className="text-xs sm:text-sm px-4 sm:px-6 md:px-10"
-            >
+              className="px-4 text-xs sm:px-6 sm:text-sm md:px-10">
               Home
             </Button>
           </Link>
@@ -575,13 +566,12 @@ export default function ModelMetadataForm({
               }
             }}
             variant="plum"
-            className="text-xs sm:text-sm px-4 sm:px-6 md:px-12"
-          >
+            className="px-4 text-xs sm:px-6 sm:text-sm md:px-12">
             Preview
           </Button>
 
           {form.formState.isSubmitted && !form.formState.isValid && (
-            <p className="absolute right-0 mt-2 text-destructive font-bold whitespace-nowrap text-[0.65rem] sm:text-xs">
+            <p className="text-destructive absolute right-0 mt-2 text-[0.65rem] font-bold whitespace-nowrap sm:text-xs">
               *Please fix the highlighted errors first.
             </p>
           )}

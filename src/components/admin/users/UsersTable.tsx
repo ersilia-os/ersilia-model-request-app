@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -62,7 +63,7 @@ export function UsersTable<TData, TValue>({
           className="max-w-sm"
         />
       </div>
-      <div className="overflow-hidden rounded-md border border-plum-hover/30 w-full">
+      <div className="border-plum-hover/30 w-full overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -71,8 +72,7 @@ export function UsersTable<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="text-plum font-bold text-sm md:text-base p-4 bg-plum/10"
-                    >
+                      className="text-plum bg-plum/10 p-4 text-sm font-bold md:text-base">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -90,13 +90,11 @@ export function UsersTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                  data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="text-gray-800 text-base p-4"
-                    >
+                      className="p-4 text-base text-gray-800">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -109,8 +107,7 @@ export function UsersTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                  className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>

@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
+
 import { Check, ChevronsUpDown, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 import { Badge } from "@/components/ui/badge";
 import {
   Command,
@@ -18,6 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 interface MultiSelectProps {
   options?: { label: string; value: string }[];
@@ -60,22 +62,20 @@ export default function MultiSelect({
         <PopoverTrigger
           id={id}
           className={cn(
-            "flex h-12 w-full transition-all items-center justify-between rounded-md border border-input bg-background text-sm",
-            "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+            "border-input bg-background flex h-12 w-full items-center justify-between rounded-md border text-sm transition-all",
+            "focus:ring-ring focus:ring-2 focus:ring-offset-2 focus:outline-none",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "hover:bg-accent hover:text-accent-foreground"
           )}
           disabled={disabled}
-          aria-expanded={open}
-        >
-          <div className="flex justify-between flex-1 overflow-hidden">
+          aria-expanded={open}>
+          <div className="flex flex-1 justify-between overflow-hidden">
             <div
-              className="flex gap-1 flex-1 py-2 px-3 overflow-x-auto"
+              className="flex flex-1 gap-1 overflow-x-auto px-3 py-2"
               style={{
                 scrollbarWidth: "thin",
                 scrollbarColor: "hsl(var(--border)) transparent",
-              }}
-            >
+              }}>
               {value.length === 0 ? (
                 <span className="text-muted-foreground truncate">
                   {placeholder}
@@ -87,18 +87,16 @@ export default function MultiSelect({
                     <Badge
                       key={item}
                       variant="default"
-                      className="text-xs bg-plum"
-                    >
+                      className="bg-plum text-xs">
                       {option?.label}
                       <span
                         role="button"
                         tabIndex={0}
-                        className="ml-1 hover:bg-destructive transition-all hover:text-destructive-foreground rounded-full p-0.5"
+                        className="hover:bg-destructive hover:text-destructive-foreground ml-1 rounded-full p-0.5 transition-all"
                         onKeyDown={(e) =>
                           e.key === "Enter" && handleUnselect(item)
                         }
-                        onClick={() => handleUnselect(item)}
-                      >
+                        onClick={() => handleUnselect(item)}>
                         <X className="h-3 w-3" />
                       </span>
                     </Badge>
@@ -106,7 +104,7 @@ export default function MultiSelect({
                 })
               )}
             </div>
-            <hr className="border-l border-border bg-red-300 h-6 mx-0.5 my-auto" />
+            <hr className="border-border mx-0.5 my-auto h-6 border-l bg-red-300" />
             <span
               role="button"
               onClick={(e) => {
@@ -115,11 +113,10 @@ export default function MultiSelect({
               }}
               tabIndex={0}
               className={cn(
-                "p-1 mx-1.5 my-auto h-full outline-none",
-                "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                "hover:bg-accent/50 rounded-sm cursor-pointer"
-              )}
-            >
+                "mx-1.5 my-auto h-full p-1 outline-none",
+                "focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2",
+                "hover:bg-accent/50 cursor-pointer rounded-sm"
+              )}>
               <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
             </span>
           </div>
@@ -134,12 +131,12 @@ export default function MultiSelect({
                     {Array.from({ length: 6 }).map((_, index) => (
                       <Skeleton
                         key={index}
-                        className="h-4 w-full mb-1 last:mb-0"
+                        className="mb-1 h-4 w-full last:mb-0"
                       />
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center text-sm py-4 text-muted-foreground">
+                  <div className="text-muted-foreground py-4 text-center text-sm">
                     No items found.
                   </div>
                 )}
@@ -149,8 +146,7 @@ export default function MultiSelect({
                   <CommandItem
                     key={option.value}
                     value={option.value}
-                    onSelect={() => handleSelect(option.value)}
-                  >
+                    onSelect={() => handleSelect(option.value)}>
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",

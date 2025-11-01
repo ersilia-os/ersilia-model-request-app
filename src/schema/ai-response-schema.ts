@@ -1,6 +1,7 @@
+import { z } from "zod";
+
 import { SCHEMA_DESCRIPTIONS } from "@/config/ai-prompt";
 import { METADATA_FORM_CFG } from "@/config/form-cfg";
-import { z } from "zod";
 
 const ALLOWED_TAGS = METADATA_FORM_CFG.tags.map((t) => t.value);
 const ALLOWED_TASKS = METADATA_FORM_CFG.tasks.map((t) => t.value);

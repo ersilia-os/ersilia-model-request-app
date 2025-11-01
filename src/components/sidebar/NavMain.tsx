@@ -1,5 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { type LucideIcon } from "lucide-react";
+
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -7,8 +12,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { PlusCircle, type LucideIcon } from "lucide-react";
-import Link from "next/link";
 
 export function NavMain({
   items,
@@ -19,37 +22,32 @@ export function NavMain({
     icon?: LucideIcon;
   }[];
 }) {
+  const pathname = usePathname();
+
+  const isActive = (url: string) => {
+    if (url === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(url);
+  };
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
-        <SidebarMenu>
-          <SidebarMenuItem className="flex items-center gap-2">
-            <SidebarMenuButton
-              tooltip="Add Model"
-              className="bg-plum text-primary-foreground hover:bg-plum-hover hover:text-primary-foreground active:bg-plum/90 active:text-primary-foreground min-w-8 duration-200 ease-linear font-bold"
-            >
-              <Link
-                href="/new-model"
-                className="flex space-x-2 items-center w-full"
-              >
-                <PlusCircle className="size-4" />
-                <span>Add Model</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <SidebarMenu></SidebarMenu>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 tooltip={item.title}
-                className=" hover:bg-plum-hover/10  active:bg-plum/90 active:text-primary-foreground"
-              >
+                className={
+                  isActive(item.url)
+                    ? "bg-plum text-primary-foreground hover:bg-plum active:bg-plum/90 hover:text-primary-foreground active:text-primary-foreground"
+                    : "hover:bg-plum-hover/10 active:bg-plum-hover/5"
+                }>
                 {item.icon && <item.icon />}
                 <Link
                   href={item.url}
-                  className="flex space-x-2 items-center w-full"
-                >
+                  className="flex w-full items-center space-x-2">
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>

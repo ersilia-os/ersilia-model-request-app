@@ -1,11 +1,11 @@
-import { auth0 } from "@/lib/auth0";
-import { getPublishingUsers } from "./actions";
-
 import { redirect } from "next/navigation";
 
-import { UserSubmissionsTable } from "@/components/admin/submissions/UserSubmissionsTable";
 import { SectionHeader } from "@/components/SectionHeader";
+import { UserSubmissionsTable } from "@/components/admin/submissions/UserSubmissionsTable";
 import { columns } from "@/components/admin/submissions/columns";
+import { auth0 } from "@/lib/auth0";
+
+import { getPublishingUsers } from "./actions";
 
 export default async function AdminUserSumbmissionsPage() {
   const session = await auth0.getSession();
@@ -28,7 +28,7 @@ export default async function AdminUserSumbmissionsPage() {
   );
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-6">
+    <div className="mx-auto w-full max-w-7xl px-6">
       <div className="space-y-6">
         <SectionHeader
           title="User Submissions"

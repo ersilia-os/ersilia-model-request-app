@@ -1,8 +1,9 @@
 import { Info, RotateCcw, Sparkles } from "lucide-react";
-import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
-import { FieldLabel } from "../ui/field";
-import { Button } from "../ui/button";
+
 import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import { FieldLabel } from "../ui/field";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface FieldLabelWithAIProps<T = string | string[]> {
   label: string;
@@ -28,28 +29,25 @@ export function FieldLabelWithAI<T = string | string[]>({
     (Array.isArray(aiValue) ? aiValue.length > 0 : Boolean(aiValue));
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex items-center gap-2">
       <FieldLabel
         htmlFor={htmlFor}
-        className="text-plum/85 flex items-center gap-1"
-      >
+        className="text-plum/85 flex items-center gap-1">
         {label}
 
         <Popover>
           <PopoverTrigger asChild>
             <button
               type="button"
-              className="p-0 m-0 bg-transparent border-none cursor-pointer inline-flex"
-              aria-label={`Help for ${label}`}
-            >
+              className="m-0 inline-flex cursor-pointer border-none bg-transparent p-0"
+              aria-label={`Help for ${label}`}>
               <Info size={16} className="relative top-[0.5px]" />
             </button>
           </PopoverTrigger>
           <PopoverContent
-            className="w-64 bg-white text-plum/85 text-sm"
+            className="text-plum/85 w-64 bg-white text-sm"
             side="bottom"
-            align="start"
-          >
+            align="start">
             {helpText}
           </PopoverContent>
         </Popover>
@@ -59,19 +57,18 @@ export function FieldLabelWithAI<T = string | string[]>({
         <Button
           variant="ghost"
           size="sm"
-          className="h-4 px-0 text-xs gap-1"
+          className="h-4 gap-1 px-0 text-xs"
           onClick={onReset}
-          type="button"
-        >
-          <Badge variant="secondary" className="gap-1 text-xs cursor-pointer">
-            <RotateCcw className="w-1 h-1" color="blue" />
+          type="button">
+          <Badge variant="secondary" className="cursor-pointer gap-1 text-xs">
+            <RotateCcw className="h-1 w-1" color="blue" />
             <span className="hidden sm:inline">Reset to AI Suggestion</span>
           </Badge>
         </Button>
       ) : (
         hasAiValue && (
           <Badge variant="secondary" className="gap-1 text-xs">
-            <Sparkles className="w-3 h-3" color="blue" />
+            <Sparkles className="h-3 w-3" color="blue" />
             AI
           </Badge>
         )

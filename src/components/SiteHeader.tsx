@@ -11,7 +11,7 @@ export function SiteHeader() {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium text-plum">
+        <h1 className="text-plum text-base font-medium">
           Contribute to Ersilia
         </h1>
         <div className="ml-auto flex items-center gap-2">
@@ -19,14 +19,12 @@ export function SiteHeader() {
             variant="ghost"
             asChild
             size="sm"
-            className="hidden sm:flex hover:bg-plum/10"
-          >
+            className="hover:bg-plum/10 hidden sm:flex">
             <a
               href="https://www.ersilia.io/"
               rel="noopener noreferrer"
               target="_blank"
-              className="dark:text-foreground"
-            >
+              className="dark:text-foreground">
               Ersilia Website
             </a>
           </Button>

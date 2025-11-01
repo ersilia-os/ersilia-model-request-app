@@ -1,8 +1,10 @@
 import { Control, Controller } from "react-hook-form";
+import z from "zod";
+
+import { UploadFormSchema } from "@/schema/upload-schema";
+
 import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
-import { UploadFormSchema } from "@/schema/upload-schema";
-import z from "zod";
 
 interface ContextFormProps {
   control: Control<z.infer<typeof UploadFormSchema>>;
@@ -26,7 +28,7 @@ export default function ContextInput({ control }: ContextFormProps) {
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
-              className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
+              className="border-plum/50 focus-visible:border-plum focus-visible:ring-plum rounded-lg border-2 text-xs outline-none placeholder:text-xs focus-visible:ring-[1px] disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm md:placeholder:text-sm"
               placeholder="Enter your response here"
             />
 
@@ -50,7 +52,7 @@ export default function ContextInput({ control }: ContextFormProps) {
               {...field}
               id={field.name}
               aria-invalid={fieldState.invalid}
-              className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
+              className="border-plum/50 focus-visible:border-plum focus-visible:ring-plum rounded-lg border-2 text-xs outline-none placeholder:text-xs focus-visible:ring-[1px] disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm md:placeholder:text-sm"
               placeholder="Enter your response here"
             />
 

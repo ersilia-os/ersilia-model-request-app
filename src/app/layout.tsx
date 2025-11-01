@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/sonner";
-import "./globals.css";
-
-import Header from "@/components/header";
-import Container from "@/components/ui/container";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/sidebar/AppSideBar";
-import { SiteHeader } from "@/components/SiteHeader";
-import { auth0 } from "@/lib/auth0";
 import { redirect } from "next/navigation";
+
+import { SiteHeader } from "@/components/SiteHeader";
+import { AppSidebar } from "@/components/sidebar/AppSideBar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
+import { auth0 } from "@/lib/auth0";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Ersilia - Model Submission Platform",
@@ -31,16 +30,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        {/* <Header /> */}
-        {/* <Container>{children}</Container> */}
         <SidebarProvider
           style={
             {
               "--sidebar-width": "calc(var(--spacing) * 72)",
               "--header-height": "calc(var(--spacing) * 12)",
             } as React.CSSProperties
-          }
-        >
+          }>
           <AppSidebar
             variant="inset"
             className="bg-ersilia"

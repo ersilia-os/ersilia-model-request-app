@@ -1,8 +1,10 @@
-import { Input } from "@/components/ui/input";
 import { Control, Controller } from "react-hook-form";
-import { Field, FieldLabel } from "../ui/field";
 import { z } from "zod";
+
+import { Input } from "@/components/ui/input";
 import { UploadFormSchema } from "@/schema/upload-schema";
+
+import { Field, FieldLabel } from "../ui/field";
 
 interface PublicationInputProps {
   control: Control<z.infer<typeof UploadFormSchema>>;
@@ -31,7 +33,7 @@ export default function PublicationInput({
                 ? "Disabled — remove the file to insert a link"
                 : "Enter publication URL (PDF or article link)"
             }
-            className="border-2 border-plum/50 rounded-lg focus-visible:border-plum focus-visible:ring-plum focus-visible:ring-[1px] outline-none disabled:opacity-60 disabled:cursor-not-allowed placeholder:text-xs md:placeholder:text-sm text-xs sm:text-sm"
+            className="border-plum/50 focus-visible:border-plum focus-visible:ring-plum rounded-lg border-2 text-xs outline-none placeholder:text-xs focus-visible:ring-[1px] disabled:cursor-not-allowed disabled:opacity-60 sm:text-sm md:placeholder:text-sm"
             disabled={disabled}
           />
         </Field>

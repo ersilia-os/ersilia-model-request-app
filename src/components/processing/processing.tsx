@@ -8,21 +8,22 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { Spinner } from "@/components/ui/spinner";
+
 import TextType from "../TextType";
 
 export function SpinnerEmpty() {
   return (
-    <div className="min-h-[calc(100svh-136px)] grid content-center bg-white-500 w-full">
+    <div className="bg-white-500 grid min-h-[calc(100svh-136px)] w-full content-center">
       <Empty className="w-full border-none p-6 md:p-8 lg:p-10">
-        <div className="text-center p-0 mb-4">
+        <div className="mb-4 p-0 text-center">
           <EmptyHeader>
-            <div className="flex justify-center mb-6">
+            <div className="mb-6 flex justify-center">
               <EmptyMedia variant="icon">
-                <Spinner className="size-15 text-plum" />
+                <Spinner className="text-plum size-15" />
               </EmptyMedia>
             </div>
 
-            <EmptyTitle className="text-2xl md:text-3xl lg:text-4xl font-bold text-plum mb-3 md:mb-4">
+            <EmptyTitle className="text-plum mb-3 text-2xl font-bold md:mb-4 md:text-3xl lg:text-4xl">
               Processing your request
             </EmptyTitle>
 
@@ -36,10 +37,10 @@ export function SpinnerEmpty() {
               pauseDuration={1500}
               showCursor={true}
               cursorCharacter="_"
-              className="block text-center text-gray-400 text-xs sm:text-sm md:text-base lg:text-lg mt-4 mb-6 w-full"
+              className="mt-4 mb-6 block w-full text-center text-xs text-gray-400 sm:text-sm md:text-base lg:text-lg"
             />
 
-            <EmptyDescription className="text-center text-gray-400 text-xs sm:text-sm md:text-base mb-2">
+            <EmptyDescription className="mb-2 text-center text-xs text-gray-400 sm:text-sm md:text-base">
               Please wait while we process your request. <br />
               Do not refresh the page.
             </EmptyDescription>

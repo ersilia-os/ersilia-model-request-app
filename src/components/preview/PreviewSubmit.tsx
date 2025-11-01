@@ -1,24 +1,26 @@
 "use client";
 
-import { ModelMetadata } from "../../../generated/prisma";
-import { Card, CardContent, CardHeader } from "../ui/card";
-import { Separator } from "../ui/separator";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { useSubmitToErsilia } from "@/hooks/useSubmitToErsilia";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import MetadataHeader from "../MetadataHeader";
-import { DescriptionSection } from "../DescriptionSection";
-import { InterpretationSection } from "../InterpretationSection";
-import { TagsSection } from "../TagsSection";
-import { TaskSection } from "../TasksSection";
-import { InputOutputSection } from "../InputOutputSection";
-import { BiomedicalAreaSection } from "../BiomedicalAreaSection";
-import { TargetOrganismSection } from "../TargetSection";
-import { DeploymentInfoSection } from "../DeployementSection";
-import { ResourcesSection } from "../RessoucesSection";
+
 import { Loader2 } from "lucide-react";
+
+import { useSubmitToErsilia } from "@/hooks/useSubmitToErsilia";
+
+import { ModelMetadata } from "../../../generated/prisma";
+import { BiomedicalAreaSection } from "../BiomedicalAreaSection";
+import { DeploymentInfoSection } from "../DeployementSection";
+import { DescriptionSection } from "../DescriptionSection";
+import { InputOutputSection } from "../InputOutputSection";
+import { InterpretationSection } from "../InterpretationSection";
+import MetadataHeader from "../MetadataHeader";
+import { ResourcesSection } from "../RessoucesSection";
+import { TagsSection } from "../TagsSection";
+import { TargetOrganismSection } from "../TargetSection";
+import { TaskSection } from "../TasksSection";
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 
 interface PreviewSubmitProps {
   data: ModelMetadata;
@@ -53,8 +55,8 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
   }
 
   return (
-    <div className="px-6 mx-auto max-w-7xl">
-      <div className="space-y-8 ">
+    <div className="mx-auto max-w-7xl px-6">
+      <div className="space-y-8">
         <MetadataHeader
           title={data.title}
           status={data.status}
@@ -99,24 +101,23 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
         {data.isContributor && (
           <>
             <div>
-              <h2 className="text-lg font-semibold text-plum mb-2">
+              <h2 className="text-plum mb-2 text-lg font-semibold">
                 Contribution
               </h2>
-              <p className="text-gray-600 text-sm md:text-base">
+              <p className="text-sm text-gray-600 md:text-base">
                 You will be listed as a contributor with your Github Account
               </p>
             </div>
             <Separator />
           </>
         )}
-        <div className="flex justify-end w-full space-x-2">
+        <div className="flex w-full justify-end space-x-2">
           <Link href={`/new-model/metadata/${data.slug}`}>
             <Button
               type="button"
               variant="transparent"
-              className="text-xs sm:text-base w-full"
-              disabled={loading || data.status === "SUBMITTED"}
-            >
+              className="w-full text-xs sm:text-base"
+              disabled={loading || data.status === "SUBMITTED"}>
               Edit Metadata
             </Button>
           </Link>
@@ -124,11 +125,10 @@ export default function PreviewSubmit({ data }: PreviewSubmitProps) {
             variant={"plum"}
             className="text-xs sm:text-base"
             onClick={handleSend}
-            disabled={loading || data.status === "SUBMITTED"}
-          >
+            disabled={loading || data.status === "SUBMITTED"}>
             {loading ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin mr-2 text-xs sm:text-sm" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin text-xs sm:text-sm" />
                 Sending...
               </>
             ) : confirmStep ? (

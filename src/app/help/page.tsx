@@ -1,34 +1,36 @@
-import { SectionHeader } from "@/components/SectionHeader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+
 import {
   BookOpen,
+  ExternalLink,
   FileText,
   HelpCircle,
   Mail,
   MessageSquare,
-  ExternalLink,
 } from "lucide-react";
-import Link from "next/link";
+
+import { SectionHeader } from "@/components/SectionHeader";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function HelpPage() {
   return (
-    <div className="w-full max-w-7xl mx-auto px-6">
+    <div className="mx-auto w-full max-w-7xl px-6">
       <div className="space-y-8">
         <SectionHeader
           title="Get Help"
           description="Find answers to common questions and learn how to submit models to Ersilia"
         />
 
-        <Card className="bg-linear-to-t from-plum/10 to-transparent border-plum/20">
+        <Card className="from-plum/10 border-plum/20 bg-linear-to-t to-transparent">
           <CardContent className="pt-6">
             <div className="flex items-start gap-4">
-              <BookOpen className="h-6 w-6 text-plum shrink-0 mt-1" />
+              <BookOpen className="text-plum mt-1 h-6 w-6 shrink-0" />
               <div className="flex-1">
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">
+                <h3 className="mb-2 text-lg font-semibold text-gray-900">
                   Official Documentation
                 </h3>
-                <p className="text-gray-700 mb-4">
+                <p className="mb-4 text-gray-700">
                   For more information regarding the submission process, please
                   visit the official Ersilia documentation.
                 </p>
@@ -37,8 +39,7 @@ export default async function HelpPage() {
                     href="https://ersilia.gitbook.io/ersilia-book"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2"
-                  >
+                    className="inline-flex items-center gap-2">
                     View Documentation
                     <ExternalLink className="h-4 w-4" />
                   </Link>
@@ -48,17 +49,17 @@ export default async function HelpPage() {
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-linear-to-t from-plum/5 to-transparent">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Card className="from-plum/5 bg-linear-to-t to-transparent">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-plum">
+              <CardTitle className="text-plum flex items-center gap-2">
                 <HelpCircle className="h-5 w-5" />
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="mb-1 font-semibold text-gray-900">
                   What file formats are supported?
                 </h4>
                 <p className="text-sm text-gray-700">
@@ -67,7 +68,7 @@ export default async function HelpPage() {
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="mb-1 font-semibold text-gray-900">
                   How long does the review process take?
                 </h4>
                 <p className="text-sm text-gray-700">
@@ -76,7 +77,7 @@ export default async function HelpPage() {
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="mb-1 font-semibold text-gray-900">
                   Can I edit my submission after submitting?
                 </h4>
                 <p className="text-sm text-gray-700">
@@ -87,16 +88,16 @@ export default async function HelpPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-linear-to-t from-plum/5 to-transparent">
+          <Card className="from-plum/5 bg-linear-to-t to-transparent">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-plum">
+              <CardTitle className="text-plum flex items-center gap-2">
                 <FileText className="h-5 w-5" />
                 Submission Guidelines
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="mb-1 font-semibold text-gray-900">
                   1. Prepare Your Publication
                 </h4>
                 <p className="text-sm text-gray-700">
@@ -105,7 +106,7 @@ export default async function HelpPage() {
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="mb-1 font-semibold text-gray-900">
                   2. Provide Context
                 </h4>
                 <p className="text-sm text-gray-700">
@@ -114,7 +115,7 @@ export default async function HelpPage() {
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="mb-1 font-semibold text-gray-900">
                   3. Review Metadata
                 </h4>
                 <p className="text-sm text-gray-700">
@@ -127,9 +128,9 @@ export default async function HelpPage() {
         </div>
 
         {/* Contact Support */}
-        <Card className="bg-linear-to-t from-plum/10 to-transparent border-plum/20">
+        <Card className="from-plum/10 border-plum/20 bg-linear-to-t to-transparent">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-plum">
+            <CardTitle className="text-plum flex items-center gap-2">
               <MessageSquare className="h-5 w-5" />
               Need More Help?
             </CardTitle>
@@ -139,12 +140,11 @@ export default async function HelpPage() {
               If you can&apos;t find the answer you&apos;re looking for, our
               support team is here to help.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <Button variant="outline" asChild>
                 <Link
                   href="mailto:support@ersilia.io"
-                  className="inline-flex items-center gap-2"
-                >
+                  className="inline-flex items-center gap-2">
                   <Mail className="h-4 w-4" />
                   Email Support
                 </Link>
@@ -154,8 +154,7 @@ export default async function HelpPage() {
                   href="https://github.com/ersilia-os/ersilia/discussions"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
+                  className="inline-flex items-center gap-2">
                   <MessageSquare className="h-4 w-4" />
                   Community Forum
                   <ExternalLink className="h-4 w-4" />
