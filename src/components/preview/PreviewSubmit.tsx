@@ -27,8 +27,8 @@ interface PreviewSubmitProps {
 }
 
 export default function PreviewSubmit({ data }: PreviewSubmitProps) {
-  const owner = process.env.NEXT_PUBLIC_GITHUB_OWNER;
-  const repo = process.env.NEXT_PUBLIC_GITHUB_REPO;
+  const owner = "arobri67";
+  const repo = "testerbot";
 
   const router = useRouter();
   const [confirmStep, setConfirmStep] = useState(false);
