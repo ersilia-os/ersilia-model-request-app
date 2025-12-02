@@ -27,8 +27,8 @@ interface PreviewSubmitProps {
 }
 
 export default function PreviewSubmit({ data }: PreviewSubmitProps) {
-  const owner = "arobri67";
-  const repo = "testerbot";
+  const owner = "ersilia-os";
+  const repo = "ersilia";
 
   const router = useRouter();
   const [confirmStep, setConfirmStep] = useState(false);
