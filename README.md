@@ -1,4 +1,4 @@
-# Ersilia Model Hub
+# Ersilia model request app
 
 A Next.js web application for managing and submitting AI/ML model metadata to the Ersilia Model Hub. This platform enables researchers and contributors to submit, review, and manage biomedical machine learning models.
 
